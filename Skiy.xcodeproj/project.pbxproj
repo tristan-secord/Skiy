@@ -15,6 +15,21 @@
 		3E37EDF91CB95DFC002167CB /* SkiyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E37EDF81CB95DFC002167CB /* SkiyTests.swift */; };
 		3E37EE041CB95DFC002167CB /* SkiyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E37EE031CB95DFC002167CB /* SkiyUITests.swift */; };
 		3E37EE121CC283B7002167CB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E37EE111CC283B7002167CB /* MapKit.framework */; };
+		3E45FEE91CF0CF7700B9A8D4 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E45FEE81CF0CF7700B9A8D4 /* ContainerViewController.swift */; };
+		3E45FEEB1CF0D40400B9A8D4 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E45FEEA1CF0D40400B9A8D4 /* ControlPanelViewController.swift */; };
+		3E45FEEF1CF261E900B9A8D4 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E45FEEE1CF261E900B9A8D4 /* UIImage+ImageEffects.m */; };
+		3E45FEF11CF34CEF00B9A8D4 /* ControlPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E45FEF01CF34CEF00B9A8D4 /* ControlPanel.xib */; };
+		3E97F8241D2F31250053B25D /* ControlPanelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E97F8231D2F31250053B25D /* ControlPanelCell.xib */; };
+		3E97F8261D2F318D0053B25D /* ControlPanelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */; };
+		3E97F82A1D3026DB0053B25D /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F8291D3026DB0053B25D /* SignInViewController.swift */; };
+		3E97F8661D3032120053B25D /* SignInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E97F8651D3032120053B25D /* SignInView.xib */; };
+		3E97F86E1D35B9400053B25D /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F86D1D35B9400053B25D /* HTTPHelper.swift */; };
+		3E97F8701D35BC4D0053B25D /* KeychainAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F86F1D35BC4D0053B25D /* KeychainAccess.swift */; };
+		3E97F8741D39AE7B0053B25D /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F8731D39AE7B0053B25D /* SignUpViewController.swift */; };
+		3E9D73611D3AF12100E2763C /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D735A1D3AF12100E2763C /* AESCrypt.m */; };
+		3E9D73621D3AF12100E2763C /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D735C1D3AF12100E2763C /* NSData+Base64.m */; };
+		3E9D73631D3AF12100E2763C /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D735E1D3AF12100E2763C /* NSData+CommonCrypto.m */; };
+		3E9D73641D3AF12100E2763C /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D73601D3AF12100E2763C /* NSString+Base64.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +64,27 @@
 		3E37EE031CB95DFC002167CB /* SkiyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkiyUITests.swift; sourceTree = "<group>"; };
 		3E37EE051CB95DFC002167CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E37EE111CC283B7002167CB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		3E45FEE81CF0CF7700B9A8D4 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		3E45FEEA1CF0D40400B9A8D4 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
+		3E45FEEC1CF261E900B9A8D4 /* Skiy-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Skiy-Bridging-Header.h"; sourceTree = "<group>"; };
+		3E45FEED1CF261E900B9A8D4 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		3E45FEEE1CF261E900B9A8D4 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		3E45FEF01CF34CEF00B9A8D4 /* ControlPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ControlPanel.xib; sourceTree = "<group>"; };
+		3E97F8231D2F31250053B25D /* ControlPanelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ControlPanelCell.xib; path = ../ControlPanelCell.xib; sourceTree = "<group>"; };
+		3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelCell.swift; sourceTree = "<group>"; };
+		3E97F8291D3026DB0053B25D /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = ../SignInViewController.swift; sourceTree = "<group>"; };
+		3E97F8651D3032120053B25D /* SignInView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInView.xib; sourceTree = "<group>"; };
+		3E97F86D1D35B9400053B25D /* HTTPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
+		3E97F86F1D35BC4D0053B25D /* KeychainAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainAccess.swift; sourceTree = "<group>"; };
+		3E97F8731D39AE7B0053B25D /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		3E9D73591D3AF12100E2763C /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESCrypt.h; sourceTree = "<group>"; };
+		3E9D735A1D3AF12100E2763C /* AESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AESCrypt.m; sourceTree = "<group>"; };
+		3E9D735B1D3AF12100E2763C /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		3E9D735C1D3AF12100E2763C /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		3E9D735D1D3AF12100E2763C /* NSData+CommonCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+CommonCrypto.h"; sourceTree = "<group>"; };
+		3E9D735E1D3AF12100E2763C /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
+		3E9D735F1D3AF12100E2763C /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
+		3E9D73601D3AF12100E2763C /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,11 +138,21 @@
 			isa = PBXGroup;
 			children = (
 				3E37EDE31CB95DFC002167CB /* AppDelegate.swift */,
+				3E97F86D1D35B9400053B25D /* HTTPHelper.swift */,
+				3E97F86F1D35BC4D0053B25D /* KeychainAccess.swift */,
 				3E37EDE51CB95DFC002167CB /* ViewController.swift */,
+				3E45FEE81CF0CF7700B9A8D4 /* ContainerViewController.swift */,
+				3E45FEEA1CF0D40400B9A8D4 /* ControlPanelViewController.swift */,
+				3E45FEF01CF34CEF00B9A8D4 /* ControlPanel.xib */,
+				3E97F8731D39AE7B0053B25D /* SignUpViewController.swift */,
+				3E97F8291D3026DB0053B25D /* SignInViewController.swift */,
+				3E97F8651D3032120053B25D /* SignInView.xib */,
+				3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */,
+				3E97F8231D2F31250053B25D /* ControlPanelCell.xib */,
 				3E37EDE71CB95DFC002167CB /* Main.storyboard */,
 				3E37EDEA1CB95DFC002167CB /* Assets.xcassets */,
 				3E37EDEC1CB95DFC002167CB /* LaunchScreen.storyboard */,
-				3E37EDEF1CB95DFC002167CB /* Info.plist */,
+				3E9D73581D3AF0F100E2763C /* Supporting Files */,
 			);
 			path = Skiy;
 			sourceTree = "<group>";
@@ -127,6 +173,25 @@
 				3E37EE051CB95DFC002167CB /* Info.plist */,
 			);
 			path = SkiyUITests;
+			sourceTree = "<group>";
+		};
+		3E9D73581D3AF0F100E2763C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3E37EDEF1CB95DFC002167CB /* Info.plist */,
+				3E45FEED1CF261E900B9A8D4 /* UIImage+ImageEffects.h */,
+				3E45FEEE1CF261E900B9A8D4 /* UIImage+ImageEffects.m */,
+				3E9D73591D3AF12100E2763C /* AESCrypt.h */,
+				3E9D735A1D3AF12100E2763C /* AESCrypt.m */,
+				3E9D735B1D3AF12100E2763C /* NSData+Base64.h */,
+				3E9D735C1D3AF12100E2763C /* NSData+Base64.m */,
+				3E9D735D1D3AF12100E2763C /* NSData+CommonCrypto.h */,
+				3E9D735E1D3AF12100E2763C /* NSData+CommonCrypto.m */,
+				3E9D735F1D3AF12100E2763C /* NSString+Base64.h */,
+				3E9D73601D3AF12100E2763C /* NSString+Base64.m */,
+				3E45FEEC1CF261E900B9A8D4 /* Skiy-Bridging-Header.h */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +262,12 @@
 				TargetAttributes = {
 					3E37EDDF1CB95DFC002167CB = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 53JNKRDHHA;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					3E37EDF31CB95DFC002167CB = {
 						CreatedOnToolsVersion = 7.3;
@@ -234,7 +305,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E37EDEE1CB95DFC002167CB /* LaunchScreen.storyboard in Resources */,
+				3E97F8241D2F31250053B25D /* ControlPanelCell.xib in Resources */,
 				3E37EDEB1CB95DFC002167CB /* Assets.xcassets in Resources */,
+				3E45FEF11CF34CEF00B9A8D4 /* ControlPanel.xib in Resources */,
+				3E97F8661D3032120053B25D /* SignInView.xib in Resources */,
 				3E37EDE91CB95DFC002167CB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,8 +334,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E97F82A1D3026DB0053B25D /* SignInViewController.swift in Sources */,
+				3E97F8261D2F318D0053B25D /* ControlPanelCell.swift in Sources */,
 				3E37EDE61CB95DFC002167CB /* ViewController.swift in Sources */,
+				3E9D73631D3AF12100E2763C /* NSData+CommonCrypto.m in Sources */,
+				3E9D73611D3AF12100E2763C /* AESCrypt.m in Sources */,
+				3E97F8701D35BC4D0053B25D /* KeychainAccess.swift in Sources */,
+				3E9D73641D3AF12100E2763C /* NSString+Base64.m in Sources */,
+				3E9D73621D3AF12100E2763C /* NSData+Base64.m in Sources */,
+				3E97F8741D39AE7B0053B25D /* SignUpViewController.swift in Sources */,
+				3E97F86E1D35B9400053B25D /* HTTPHelper.swift in Sources */,
+				3E45FEEF1CF261E900B9A8D4 /* UIImage+ImageEffects.m in Sources */,
+				3E45FEE91CF0CF7700B9A8D4 /* ContainerViewController.swift in Sources */,
 				3E37EDE41CB95DFC002167CB /* AppDelegate.swift in Sources */,
+				3E45FEEB1CF0D40400B9A8D4 /* ControlPanelViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,7 +420,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tristan Secord (2F893777Z9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tristan Secord (2F893777Z9)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -356,6 +443,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "1e8a551f-0bdb-450e-9203-7a0004950fea";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -405,10 +493,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tristan Secord (2F893777Z9)";
 				INFOPLIST_FILE = Skiy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tsecord.Skiy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tsecord.skiy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "1e8a551f-0bdb-450e-9203-7a0004950fea";
+				SWIFT_OBJC_BRIDGING_HEADER = "Skiy/Skiy-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -416,10 +509,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Skiy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tsecord.Skiy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tsecord.skiy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Skiy/Skiy-Bridging-Header.h";
 			};
 			name = Release;
 		};

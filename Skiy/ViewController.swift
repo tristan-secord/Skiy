@@ -9,10 +9,12 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController {
+protocol ViewControllerDelegate {
+}
 
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var navbarTitle: UINavigationBar!
+class ViewController: UIViewController {
+    
+    var delegate: ViewControllerDelegate?
     
     let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
     let regionRadius: CLLocationDistance = 1000
@@ -22,56 +24,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        centerMapOnLocation(initialLocation)
+        let viewWidth = self.view.frame.width
         
-        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipes(_:)))
-        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipes(_:)))
-        let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipes(_:)))
-        
-        leftSwipe.direction = .Left
-        rightSwipe.direction = .Right
-        downSwipe.direction = .Down
-        
-        navbarTitle.addGestureRecognizer(leftSwipe)
-        navbarTitle.addGestureRecognizer(rightSwipe)
-        navbarTitle.addGestureRecognizer(downSwipe)
-    }
-    
-    func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-                                                                  regionRadius * 2.0, regionRadius * 2.0)
-        mapView.setRegion(coordinateRegion, animated: true)
-    }
-    
-    func handleSwipes(sender:UISwipeGestureRecognizer) {
-        if (sender.direction == .Left) {
-            if (index != friends.count - 1) {
-                index += 1
-                let dicIndex = friends.startIndex.advancedBy(index)
-                let friendName = friends.keys[dicIndex]
-                navbarTitle.topItem!.title = friendName
-                centerMapOnLocation(friends[friendName]!)
-            }
-        }
-        
-        if (sender.direction == .Right) {
-            if (index != 0) {
-                index -= 1
-                let dicIndex = friends.startIndex.advancedBy(index)
-                let friendName = friends.keys[dicIndex]
-                navbarTitle.topItem!.title = friendName
-                centerMapOnLocation(friends[friendName]!)
-                
-            }
-        }
-        
-        if (sender.direction == .Down) {
-            print("Swipe Down")
-        }
+        //Making Blurred Navigation Bar (PYKE S.)
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = CGRectMake(0, 0, viewWidth, 66)
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
 }
-
