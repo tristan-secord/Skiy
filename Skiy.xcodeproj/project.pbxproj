@@ -18,9 +18,7 @@
 		3E45FEEB1CF0D40400B9A8D4 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E45FEEA1CF0D40400B9A8D4 /* ControlPanelViewController.swift */; };
 		3E45FEEF1CF261E900B9A8D4 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E45FEEE1CF261E900B9A8D4 /* UIImage+ImageEffects.m */; };
 		3E45FEF11CF34CEF00B9A8D4 /* ControlPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E45FEF01CF34CEF00B9A8D4 /* ControlPanel.xib */; };
-		3E97F8241D2F31250053B25D /* ControlPanelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E97F8231D2F31250053B25D /* ControlPanelCell.xib */; };
 		3E97F8261D2F318D0053B25D /* ControlPanelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */; };
-		3E97F82A1D3026DB0053B25D /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F8291D3026DB0053B25D /* SignInViewController.swift */; };
 		3E97F8661D3032120053B25D /* SignInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E97F8651D3032120053B25D /* SignInView.xib */; };
 		3E97F86E1D35B9400053B25D /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F86D1D35B9400053B25D /* HTTPHelper.swift */; };
 		3E97F8701D35BC4D0053B25D /* KeychainAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F86F1D35BC4D0053B25D /* KeychainAccess.swift */; };
@@ -38,6 +36,8 @@
 		3EBFE47F1D5D1ABA00C05C5D /* AddFriend.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EBFE47D1D5D1ABA00C05C5D /* AddFriend.xib */; };
 		3EFEE0E31D60FAE6005DF703 /* FindFriendsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EFEE0E21D60FAE6005DF703 /* FindFriendsCell.xib */; };
 		3EFEE0E51D612057005DF703 /* FindFriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFEE0E41D612057005DF703 /* FindFriendsCell.swift */; };
+		3EFEE0E71D622176005DF703 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFEE0E61D622176005DF703 /* SignInViewController.swift */; };
+		3EFEE0E91D622187005DF703 /* ControlPanelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EFEE0E81D622187005DF703 /* ControlPanelCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,9 +77,7 @@
 		3E45FEED1CF261E900B9A8D4 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		3E45FEEE1CF261E900B9A8D4 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		3E45FEF01CF34CEF00B9A8D4 /* ControlPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ControlPanel.xib; sourceTree = "<group>"; };
-		3E97F8231D2F31250053B25D /* ControlPanelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ControlPanelCell.xib; path = ../ControlPanelCell.xib; sourceTree = "<group>"; };
 		3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelCell.swift; sourceTree = "<group>"; };
-		3E97F8291D3026DB0053B25D /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = ../SignInViewController.swift; sourceTree = "<group>"; };
 		3E97F8651D3032120053B25D /* SignInView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInView.xib; sourceTree = "<group>"; };
 		3E97F86D1D35B9400053B25D /* HTTPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
 		3E97F86F1D35BC4D0053B25D /* KeychainAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainAccess.swift; sourceTree = "<group>"; };
@@ -101,6 +99,8 @@
 		3EBFE47D1D5D1ABA00C05C5D /* AddFriend.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddFriend.xib; sourceTree = "<group>"; };
 		3EFEE0E21D60FAE6005DF703 /* FindFriendsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindFriendsCell.xib; sourceTree = "<group>"; };
 		3EFEE0E41D612057005DF703 /* FindFriendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsCell.swift; sourceTree = "<group>"; };
+		3EFEE0E61D622176005DF703 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		3EFEE0E81D622187005DF703 /* ControlPanelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ControlPanelCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +153,8 @@
 		3E37EDE21CB95DFC002167CB /* Skiy */ = {
 			isa = PBXGroup;
 			children = (
+				3EFEE0E61D622176005DF703 /* SignInViewController.swift */,
+				3EFEE0E81D622187005DF703 /* ControlPanelCell.xib */,
 				3E37EDE31CB95DFC002167CB /* AppDelegate.swift */,
 				3E97F86D1D35B9400053B25D /* HTTPHelper.swift */,
 				3E97F86F1D35BC4D0053B25D /* KeychainAccess.swift */,
@@ -169,10 +171,8 @@
 				3EBFE4721D525A6F00C05C5D /* SignUpNameVC.swift */,
 				3EBFE4761D5397E800C05C5D /* SignUpEmailVC.swift */,
 				3EBFE47A1D53991000C05C5D /* SignUpPasswordVC.swift */,
-				3E97F8291D3026DB0053B25D /* SignInViewController.swift */,
 				3E97F8651D3032120053B25D /* SignInView.xib */,
 				3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */,
-				3E97F8231D2F31250053B25D /* ControlPanelCell.xib */,
 				3EBFE4741D5271C900C05C5D /* Main.storyboard */,
 				3E37EDEA1CB95DFC002167CB /* Assets.xcassets */,
 				3E37EDEC1CB95DFC002167CB /* LaunchScreen.storyboard */,
@@ -330,7 +330,7 @@
 			files = (
 				3EFEE0E31D60FAE6005DF703 /* FindFriendsCell.xib in Resources */,
 				3E37EDEE1CB95DFC002167CB /* LaunchScreen.storyboard in Resources */,
-				3E97F8241D2F31250053B25D /* ControlPanelCell.xib in Resources */,
+				3EFEE0E91D622187005DF703 /* ControlPanelCell.xib in Resources */,
 				3E37EDEB1CB95DFC002167CB /* Assets.xcassets in Resources */,
 				3EBFE4751D5271C900C05C5D /* Main.storyboard in Resources */,
 				3E45FEF11CF34CEF00B9A8D4 /* ControlPanel.xib in Resources */,
@@ -360,7 +360,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E97F82A1D3026DB0053B25D /* SignInViewController.swift in Sources */,
 				3EBFE4771D5397E800C05C5D /* SignUpEmailVC.swift in Sources */,
 				3E97F8261D2F318D0053B25D /* ControlPanelCell.swift in Sources */,
 				3E37EDE61CB95DFC002167CB /* ViewController.swift in Sources */,
@@ -374,6 +373,7 @@
 				3E97F8741D39AE7B0053B25D /* SignUpViewController.swift in Sources */,
 				3EBFE4711D5245D400C05C5D /* SignUpPageViewController.swift in Sources */,
 				3EBFE47B1D53991000C05C5D /* SignUpPasswordVC.swift in Sources */,
+				3EFEE0E71D622176005DF703 /* SignInViewController.swift in Sources */,
 				3E97F86E1D35B9400053B25D /* HTTPHelper.swift in Sources */,
 				3E45FEEF1CF261E900B9A8D4 /* UIImage+ImageEffects.m in Sources */,
 				3E45FEE91CF0CF7700B9A8D4 /* ContainerViewController.swift in Sources */,
