@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3E37EDE41CB95DFC002167CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E37EDE31CB95DFC002167CB /* AppDelegate.swift */; };
 		3E37EDE61CB95DFC002167CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E37EDE51CB95DFC002167CB /* ViewController.swift */; };
-		3E37EDE91CB95DFC002167CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E37EDE71CB95DFC002167CB /* Main.storyboard */; };
 		3E37EDEB1CB95DFC002167CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E37EDEA1CB95DFC002167CB /* Assets.xcassets */; };
 		3E37EDEE1CB95DFC002167CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E37EDEC1CB95DFC002167CB /* LaunchScreen.storyboard */; };
 		3E37EDF91CB95DFC002167CB /* SkiyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E37EDF81CB95DFC002167CB /* SkiyTests.swift */; };
@@ -30,6 +29,15 @@
 		3E9D73621D3AF12100E2763C /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D735C1D3AF12100E2763C /* NSData+Base64.m */; };
 		3E9D73631D3AF12100E2763C /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D735E1D3AF12100E2763C /* NSData+CommonCrypto.m */; };
 		3E9D73641D3AF12100E2763C /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D73601D3AF12100E2763C /* NSString+Base64.m */; };
+		3EBFE4711D5245D400C05C5D /* SignUpPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBFE4701D5245D400C05C5D /* SignUpPageViewController.swift */; };
+		3EBFE4731D525A6F00C05C5D /* SignUpNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBFE4721D525A6F00C05C5D /* SignUpNameVC.swift */; };
+		3EBFE4751D5271C900C05C5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EBFE4741D5271C900C05C5D /* Main.storyboard */; };
+		3EBFE4771D5397E800C05C5D /* SignUpEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBFE4761D5397E800C05C5D /* SignUpEmailVC.swift */; };
+		3EBFE47B1D53991000C05C5D /* SignUpPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBFE47A1D53991000C05C5D /* SignUpPasswordVC.swift */; };
+		3EBFE47E1D5D1ABA00C05C5D /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBFE47C1D5D1ABA00C05C5D /* AddFriendViewController.swift */; };
+		3EBFE47F1D5D1ABA00C05C5D /* AddFriend.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EBFE47D1D5D1ABA00C05C5D /* AddFriend.xib */; };
+		3EFEE0E31D60FAE6005DF703 /* FindFriendsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EFEE0E21D60FAE6005DF703 /* FindFriendsCell.xib */; };
+		3EFEE0E51D612057005DF703 /* FindFriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFEE0E41D612057005DF703 /* FindFriendsCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +61,6 @@
 		3E37EDE01CB95DFC002167CB /* Skiy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skiy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E37EDE31CB95DFC002167CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E37EDE51CB95DFC002167CB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		3E37EDE81CB95DFC002167CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3E37EDEA1CB95DFC002167CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E37EDED1CB95DFC002167CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E37EDEF1CB95DFC002167CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,6 +92,15 @@
 		3E9D735E1D3AF12100E2763C /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
 		3E9D735F1D3AF12100E2763C /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
 		3E9D73601D3AF12100E2763C /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
+		3EBFE4701D5245D400C05C5D /* SignUpPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpPageViewController.swift; sourceTree = "<group>"; };
+		3EBFE4721D525A6F00C05C5D /* SignUpNameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpNameVC.swift; sourceTree = "<group>"; };
+		3EBFE4741D5271C900C05C5D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		3EBFE4761D5397E800C05C5D /* SignUpEmailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpEmailVC.swift; sourceTree = "<group>"; };
+		3EBFE47A1D53991000C05C5D /* SignUpPasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpPasswordVC.swift; sourceTree = "<group>"; };
+		3EBFE47C1D5D1ABA00C05C5D /* AddFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
+		3EBFE47D1D5D1ABA00C05C5D /* AddFriend.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddFriend.xib; sourceTree = "<group>"; };
+		3EFEE0E21D60FAE6005DF703 /* FindFriendsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindFriendsCell.xib; sourceTree = "<group>"; };
+		3EFEE0E41D612057005DF703 /* FindFriendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,12 +160,20 @@
 				3E45FEE81CF0CF7700B9A8D4 /* ContainerViewController.swift */,
 				3E45FEEA1CF0D40400B9A8D4 /* ControlPanelViewController.swift */,
 				3E45FEF01CF34CEF00B9A8D4 /* ControlPanel.xib */,
+				3EBFE47C1D5D1ABA00C05C5D /* AddFriendViewController.swift */,
+				3EFEE0E21D60FAE6005DF703 /* FindFriendsCell.xib */,
+				3EFEE0E41D612057005DF703 /* FindFriendsCell.swift */,
+				3EBFE47D1D5D1ABA00C05C5D /* AddFriend.xib */,
 				3E97F8731D39AE7B0053B25D /* SignUpViewController.swift */,
+				3EBFE4701D5245D400C05C5D /* SignUpPageViewController.swift */,
+				3EBFE4721D525A6F00C05C5D /* SignUpNameVC.swift */,
+				3EBFE4761D5397E800C05C5D /* SignUpEmailVC.swift */,
+				3EBFE47A1D53991000C05C5D /* SignUpPasswordVC.swift */,
 				3E97F8291D3026DB0053B25D /* SignInViewController.swift */,
 				3E97F8651D3032120053B25D /* SignInView.xib */,
 				3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */,
 				3E97F8231D2F31250053B25D /* ControlPanelCell.xib */,
-				3E37EDE71CB95DFC002167CB /* Main.storyboard */,
+				3EBFE4741D5271C900C05C5D /* Main.storyboard */,
 				3E37EDEA1CB95DFC002167CB /* Assets.xcassets */,
 				3E37EDEC1CB95DFC002167CB /* LaunchScreen.storyboard */,
 				3E9D73581D3AF0F100E2763C /* Supporting Files */,
@@ -304,12 +328,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EFEE0E31D60FAE6005DF703 /* FindFriendsCell.xib in Resources */,
 				3E37EDEE1CB95DFC002167CB /* LaunchScreen.storyboard in Resources */,
 				3E97F8241D2F31250053B25D /* ControlPanelCell.xib in Resources */,
 				3E37EDEB1CB95DFC002167CB /* Assets.xcassets in Resources */,
+				3EBFE4751D5271C900C05C5D /* Main.storyboard in Resources */,
 				3E45FEF11CF34CEF00B9A8D4 /* ControlPanel.xib in Resources */,
 				3E97F8661D3032120053B25D /* SignInView.xib in Resources */,
-				3E37EDE91CB95DFC002167CB /* Main.storyboard in Resources */,
+				3EBFE47F1D5D1ABA00C05C5D /* AddFriend.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,17 +361,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E97F82A1D3026DB0053B25D /* SignInViewController.swift in Sources */,
+				3EBFE4771D5397E800C05C5D /* SignUpEmailVC.swift in Sources */,
 				3E97F8261D2F318D0053B25D /* ControlPanelCell.swift in Sources */,
 				3E37EDE61CB95DFC002167CB /* ViewController.swift in Sources */,
+				3EFEE0E51D612057005DF703 /* FindFriendsCell.swift in Sources */,
 				3E9D73631D3AF12100E2763C /* NSData+CommonCrypto.m in Sources */,
 				3E9D73611D3AF12100E2763C /* AESCrypt.m in Sources */,
 				3E97F8701D35BC4D0053B25D /* KeychainAccess.swift in Sources */,
 				3E9D73641D3AF12100E2763C /* NSString+Base64.m in Sources */,
+				3EBFE47E1D5D1ABA00C05C5D /* AddFriendViewController.swift in Sources */,
 				3E9D73621D3AF12100E2763C /* NSData+Base64.m in Sources */,
 				3E97F8741D39AE7B0053B25D /* SignUpViewController.swift in Sources */,
+				3EBFE4711D5245D400C05C5D /* SignUpPageViewController.swift in Sources */,
+				3EBFE47B1D53991000C05C5D /* SignUpPasswordVC.swift in Sources */,
 				3E97F86E1D35B9400053B25D /* HTTPHelper.swift in Sources */,
 				3E45FEEF1CF261E900B9A8D4 /* UIImage+ImageEffects.m in Sources */,
 				3E45FEE91CF0CF7700B9A8D4 /* ContainerViewController.swift in Sources */,
+				3EBFE4731D525A6F00C05C5D /* SignUpNameVC.swift in Sources */,
 				3E37EDE41CB95DFC002167CB /* AppDelegate.swift in Sources */,
 				3E45FEEB1CF0D40400B9A8D4 /* ControlPanelViewController.swift in Sources */,
 			);
@@ -383,14 +415,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		3E37EDE71CB95DFC002167CB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3E37EDE81CB95DFC002167CB /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3E37EDEC1CB95DFC002167CB /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

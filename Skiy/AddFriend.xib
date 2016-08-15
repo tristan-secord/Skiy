@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddFriendViewController" customModule="Skiy" customModuleProvider="target">
+            <connections>
+                <outlet property="findFriend" destination="5mn-q4-CiF" id="O62-Hf-CQO"/>
+                <outlet property="searchResult" destination="2fA-l1-mlQ" id="Dsp-PB-qKv"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find a Friend" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mhf-MB-U5a">
+                    <rect key="frame" x="251" y="12.5" width="99" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2fA-l1-mlQ">
+                    <rect key="frame" x="0.0" y="128.5" width="600" height="471.5"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </tableView>
+                <searchBar contentMode="redraw" prompt="Enter your friends name, username or email" translatesAutoresizingMaskIntoConstraints="NO" id="5mn-q4-CiF">
+                    <rect key="frame" x="0.0" y="53.5" width="600" height="75"/>
+                    <textInputTraits key="textInputTraits"/>
+                </searchBar>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bk2-5B-HtB">
+                    <rect key="frame" x="545" y="8" width="48" height="30"/>
+                    <state key="normal" title="Cancel"/>
+                    <connections>
+                        <action selector="cancelPressed:" destination="-1" eventType="touchUpInside" id="6oT-i1-JXj"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="2fA-l1-mlQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="20m-yk-BX6"/>
+                <constraint firstItem="Bk2-5B-HtB" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="3Y8-05-mED"/>
+                <constraint firstAttribute="trailing" secondItem="5mn-q4-CiF" secondAttribute="trailing" id="3zb-tM-BCk"/>
+                <constraint firstItem="Mhf-MB-U5a" firstAttribute="centerY" secondItem="Bk2-5B-HtB" secondAttribute="centerY" id="Der-PL-mRD"/>
+                <constraint firstAttribute="trailing" secondItem="2fA-l1-mlQ" secondAttribute="trailing" id="HX1-un-ZVs"/>
+                <constraint firstItem="5mn-q4-CiF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VJm-EL-Erp"/>
+                <constraint firstItem="Mhf-MB-U5a" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="VpU-XE-9Ye"/>
+                <constraint firstItem="Mhf-MB-U5a" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" symbolic="YES" id="e6u-hM-I4x"/>
+                <constraint firstItem="5mn-q4-CiF" firstAttribute="top" secondItem="Mhf-MB-U5a" secondAttribute="bottom" constant="20" id="l1C-Ut-YfC"/>
+                <constraint firstItem="2fA-l1-mlQ" firstAttribute="top" secondItem="5mn-q4-CiF" secondAttribute="bottom" symbolic="YES" id="o3y-5g-6YV"/>
+                <constraint firstAttribute="trailing" secondItem="Bk2-5B-HtB" secondAttribute="trailing" constant="7" id="sqk-yY-YGh"/>
+                <constraint firstAttribute="bottom" secondItem="2fA-l1-mlQ" secondAttribute="bottom" constant="32" id="vGa-9v-8i9"/>
+                <constraint firstAttribute="bottom" secondItem="2fA-l1-mlQ" secondAttribute="bottom" id="zbq-CO-f1p"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="vGa-9v-8i9"/>
+                    <exclude reference="e6u-hM-I4x"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

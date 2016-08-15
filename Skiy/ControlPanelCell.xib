@@ -92,11 +92,11 @@
                         <exclude reference="lT9-Tz-hS2"/>
                         <exclude reference="tdk-U7-LJA"/>
                         <exclude reference="vpn-tk-VdK"/>
+                        <exclude reference="5W0-cd-fEe"/>
+                        <exclude reference="Eu0-cv-quy"/>
                         <exclude reference="PNq-Lc-Bfu"/>
                         <exclude reference="gZU-nV-d7J"/>
                         <exclude reference="ror-jD-vo9"/>
-                        <exclude reference="5W0-cd-fEe"/>
-                        <exclude reference="Eu0-cv-quy"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>

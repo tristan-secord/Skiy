@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -69,12 +70,11 @@
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vfo-Re-7Oh">
-                    <rect key="frame" x="20" y="13" width="25" height="25"/>
-                    <state key="normal" image="Add User"/>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zfu-ca-4n5">
-                    <rect key="frame" x="553" y="13" width="25" height="25"/>
+                    <rect key="frame" x="547" y="0.0" width="51" height="51"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Zfu-ca-4n5" secondAttribute="height" multiplier="1:1" id="QzZ-M0-dlN"/>
+                    </constraints>
                     <state key="normal" image="More"/>
                     <connections>
                         <action selector="morePressed:" destination="-1" eventType="touchUpInside" id="kA4-Ax-XOj"/>
@@ -102,6 +102,16 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vfo-Re-7Oh">
+                    <rect key="frame" x="0.0" y="0.0" width="51" height="51"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Vfo-Re-7Oh" secondAttribute="height" multiplier="1:1" id="YrR-tg-mev"/>
+                    </constraints>
+                    <state key="normal" image="Add User"/>
+                    <connections>
+                        <action selector="addFriendPressed:" destination="-1" eventType="touchUpInside" id="O9f-Mr-hcT"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -116,7 +126,7 @@
                 <constraint firstItem="xv2-fJ-Ueh" firstAttribute="top" secondItem="LMZ-du-692" secondAttribute="top" id="IJ3-xk-XHw"/>
                 <constraint firstItem="kKD-zW-JuR" firstAttribute="top" secondItem="U2R-0j-1x3" secondAttribute="bottom" constant="8" symbolic="YES" id="JHs-Rh-S7h"/>
                 <constraint firstItem="U2R-0j-1x3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="LH7-dj-k7B"/>
-                <constraint firstAttribute="trailing" secondItem="Zfu-ca-4n5" secondAttribute="trailing" constant="20" symbolic="YES" id="LWW-gU-97m"/>
+                <constraint firstAttribute="trailing" secondItem="Zfu-ca-4n5" secondAttribute="trailing" id="LWW-gU-97m"/>
                 <constraint firstItem="UBH-wH-vdT" firstAttribute="trailing" secondItem="LMZ-du-692" secondAttribute="trailing" id="Leg-gD-Qna"/>
                 <constraint firstItem="kKD-zW-JuR" firstAttribute="top" secondItem="U2R-0j-1x3" secondAttribute="bottom" constant="8" symbolic="YES" id="SEI-oC-KdM"/>
                 <constraint firstItem="TZY-jF-JPw" firstAttribute="top" secondItem="9wG-ek-WMG" secondAttribute="bottom" constant="8" symbolic="YES" id="SUn-Pj-qqG"/>
@@ -129,6 +139,7 @@
                 <constraint firstItem="caf-QF-guz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="cPl-c3-D3m"/>
                 <constraint firstItem="Ddc-HK-hpH" firstAttribute="centerX" secondItem="caf-QF-guz" secondAttribute="centerX" id="ccA-jV-08v"/>
                 <constraint firstItem="Vfo-Re-7Oh" firstAttribute="leading" secondItem="kKD-zW-JuR" secondAttribute="leading" constant="-12" id="dS1-qh-Fqs"/>
+                <constraint firstItem="Zfu-ca-4n5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dVV-Y1-ZFh"/>
                 <constraint firstItem="kKD-zW-JuR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" constant="12" id="dvt-d9-dPG"/>
                 <constraint firstAttribute="trailing" secondItem="xv2-fJ-Ueh" secondAttribute="trailing" constant="66" id="e23-jJ-YWE"/>
                 <constraint firstItem="9wG-ek-WMG" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="e5e-uz-nDH"/>
@@ -144,9 +155,10 @@
                 <constraint firstItem="U2R-0j-1x3" firstAttribute="leading" secondItem="kKD-zW-JuR" secondAttribute="leading" id="kBc-tg-P8g"/>
                 <constraint firstItem="Ddc-HK-hpH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="289" id="kGH-wq-DZd"/>
                 <constraint firstItem="Ddc-HK-hpH" firstAttribute="top" secondItem="caf-QF-guz" secondAttribute="top" id="oWT-dL-w5y"/>
-                <constraint firstItem="Vfo-Re-7Oh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="pyJ-oo-B1t"/>
+                <constraint firstItem="Vfo-Re-7Oh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="pyJ-oo-B1t"/>
                 <constraint firstItem="Zfu-ca-4n5" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="qTx-Td-W5T"/>
                 <constraint firstAttribute="trailing" secondItem="TZY-jF-JPw" secondAttribute="trailing" id="tyd-sd-nqP"/>
+                <constraint firstItem="Vfo-Re-7Oh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="xXU-CP-n31"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
