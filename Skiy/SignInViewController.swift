@@ -15,7 +15,6 @@ protocol SignInViewControllerDelegate {
 
 class SignInViewController: UIViewController {
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     var delegate : SignInViewControllerDelegate?
@@ -88,8 +87,6 @@ class SignInViewController: UIViewController {
                 return
             }
             
-            // hide activity indicator and update userLoggedInFlag
-            self.activityIndicator.hidden = true
             self.updateUserLoggedInFlag()
             
             do {
@@ -140,9 +137,6 @@ class SignInViewController: UIViewController {
         if self.password.isFirstResponder() {
             self.password.resignFirstResponder()
         }
-        
-        // display activity indicator
-        self.activityIndicator.hidden = false
         
         // validate presense of required parameters
         if (self.username.text!.characters.count) > 0 &&

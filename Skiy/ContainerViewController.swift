@@ -31,6 +31,7 @@ class ContainerViewController: UIViewController {
         
         //instantiate mapViewController
         mapViewController = UIStoryboard.mapViewController()
+        mapViewController.view.frame = CGRectMake(0, 0, viewWidth, viewHeight)
         mapViewController.delegate = self
         view.addSubview(mapViewController.view)
         addChildViewController(mapViewController)
@@ -114,7 +115,6 @@ private extension UIStoryboard {
     class func signUpViewController() -> SignUpViewController? {
         return mainStoryboard().instantiateViewControllerWithIdentifier("SignUpViewController") as? SignUpViewController
     }
-    
 }
 
 extension ContainerViewController: UIGestureRecognizerDelegate {
