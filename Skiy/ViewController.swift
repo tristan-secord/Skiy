@@ -14,6 +14,7 @@ protocol ViewControllerDelegate {
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var mapView: MKMapView!
     var delegate: ViewControllerDelegate?
     
     let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
@@ -25,6 +26,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         let viewWidth = self.view.frame.width
+        //let viewHeight = self.view.frame.height
+        
+        //self.mapView.frame = CGRectMake(0, 0, viewWidth, viewHeight)
         
         //Making Blurred Navigation Bar (PYKE S.)
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)

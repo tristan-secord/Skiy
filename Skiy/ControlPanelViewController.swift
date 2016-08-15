@@ -12,7 +12,7 @@
         func SignedOut()
     }
     
-    class ControlPanelViewController: UIViewController {
+    class ControlPanelViewController: UIViewController, AddFriendDelegate {
         
         @IBOutlet weak var friendsTable: UITableView!
         @IBOutlet weak var nameLabel: UILabel!
@@ -20,6 +20,7 @@
         @IBOutlet weak var dragPill: UIView!
         var delegate: ControlPanelViewControllerDelegate?
         var numberOfDots = 3
+        var addFriendViewController: AddFriendViewController?
         
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -79,15 +80,33 @@
                 }
             }
         }
-        @IBAction func morePressed(sender: AnyObject) {
-            clearLoggedinFlagInUserDefaults()
-            delegate?.SignedOut()
-        }
         
         func clearLoggedinFlagInUserDefaults() {
             let defaults = NSUserDefaults.standardUserDefaults()
             defaults.removeObjectForKey("userLoggedIn")
             defaults.synchronize()
+        }
+        
+        //BUTTON ACTIONS
+        @IBAction func morePressed(sender: AnyObject) {
+            clearLoggedinFlagInUserDefaults()
+            delegate?.SignedOut()
+        }
+        
+        @IBAction func addFriendPressed(sender: UIButton) {
+            addFriendViewController = AddFriendViewController()
+            if (addFriendViewController != nil) {
+                self.dismissViewControllerAnimated(true, completion: nil)
+                presentViewController(addFriendViewController!, animated: true, completion: nil)
+                addFriendViewController!.delegate = self
+            }
+        }
+        
+        func hideAddFriend() {
+            if (addFriendViewController != nil) {
+                //self.dismissViewControllerAnimated(false, completion: nil)
+                addFriendViewController?.dismissViewControllerAnimated(true, completion: nil)
+            }
         }
     }
     
@@ -113,14 +132,14 @@
             }
             return ""
         }
-
+        
         func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
             let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
             header.contentView.backgroundColor = UIColor.grayColor()
             header.textLabel!.textColor = UIColor.whiteColor()
             header.textLabel!.textAlignment = NSTextAlignment.Center
         }
-
+        
         
         func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             let cell: ControlPanelCell = tableView.dequeueReusableCellWithIdentifier("ControlPanelCell", forIndexPath: indexPath) as! ControlPanelCell
@@ -146,10 +165,10 @@
         }
     }
     
+    
     // Mark: Table View Delegate
     
     extension ControlPanelViewController: UITableViewDelegate {
-        
         func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
             
         }
