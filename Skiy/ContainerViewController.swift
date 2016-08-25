@@ -14,14 +14,19 @@ class ContainerViewController: UIViewController {
         case Hidden
         case Visible
     }
+    
     var currentState = controllerState.Hidden
     var controlPanelViewController: ControlPanelViewController!
     var mapViewController: ViewController!
     var signInViewController: SignInViewController!
     var signUpViewController: SignUpViewController!
+    var addFriendViewController: AddFriendViewController?
     var viewWidth: CGFloat = 0.0
     var viewHeight: CGFloat = 0.0
     var blurView = UIImageView()
+    let defaults = NSUserDefaults.standardUserDefaults()
+    let appDelegate =
+        UIApplication.sharedApplication().delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +43,7 @@ class ContainerViewController: UIViewController {
         mapViewController.didMoveToParentViewController(self)
         
         //instantiate controlPanelViewController
-        controlPanelViewController = UIStoryboard.controlPanelViewController()
-        controlPanelViewController.delegate = self
-        controlPanelViewController.view.frame = CGRectMake(0, -viewHeight, viewWidth, viewHeight + 66)
+        instantiateControlPanelViewController()
         
         //instantiate signInViewController
         signInViewController = UIStoryboard.signInViewController()
@@ -50,6 +53,12 @@ class ContainerViewController: UIViewController {
         signUpViewController = UIStoryboard.signUpViewController()
         signUpViewController.delegate = self
         signUpViewController.view.frame = CGRectMake(0, 0, viewWidth, viewHeight);
+    }
+    
+    func instantiateControlPanelViewController() {
+        controlPanelViewController = UIStoryboard.controlPanelViewController()
+        controlPanelViewController.delegate = self
+        controlPanelViewController.view.frame = CGRectMake(0, -viewHeight, viewWidth, viewHeight + 66)
         
         //add Gesture Recognizer to control panel
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ContainerViewController.handlePanGesture(_:)))
@@ -59,12 +68,9 @@ class ContainerViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
-        print(defaults.objectForKey("userLoggedIn"))
-        
         //try and use single map
         if defaults.objectForKey("userLoggedIn") == nil {
+            controlPanelViewController.clearCoreData()
             hideContentController(controlPanelViewController, animation: true)
             displayContentController(signInViewController, animation: true)
         } else {
@@ -75,7 +81,7 @@ class ContainerViewController: UIViewController {
     
     func hideContentController(content: UIViewController, animation: Bool) {
         content.willMoveToParentViewController(nil)
-        if (animation) {
+        if (animation == true) {
             UIView.animateWithDuration(0.5, animations: {content.view.alpha = 0.0},
                                        completion: {(value: Bool) in
                                         content.view.removeFromSuperview()
@@ -88,12 +94,12 @@ class ContainerViewController: UIViewController {
     
     func displayContentController(content: UIViewController, animation: Bool) {
         addChildViewController(content)
+        content.view.alpha = 0.0
         UIView.animateWithDuration(0.5, animations: {content.view.alpha = 1.0},
                                     completion: {(value: Bool) in
                                     self.view.addSubview(content.view)
         })
         content.didMoveToParentViewController(self)
-
     }
 }
 
@@ -174,8 +180,12 @@ extension ContainerViewController: ViewControllerDelegate {
 
 extension ContainerViewController: SignInViewControllerDelegate {
     func SignedIn() {
+        instantiateControlPanelViewController()
         hideContentController(signInViewController, animation: true)
         displayContentController(controlPanelViewController, animation: true)
+        if defaults.objectForKey("userLoggedIn") != nil {
+            appDelegate.updateData()
+        }
     }
     
     func showSignUp() {
@@ -187,12 +197,48 @@ extension ContainerViewController: ControlPanelViewControllerDelegate {
     func SignedOut() {
         animateControlPanel(false)
         hideContentController(controlPanelViewController, animation: true)
+        controlPanelViewController = nil
         displayContentController(signInViewController, animation: true)
+    }
+    
+    func showAddFriendViewController() {
+        addFriendViewController = AddFriendViewController()
+        addFriendViewController!.delegate = self
+        if (addFriendViewController != nil) {
+            hideContentController(controlPanelViewController, animation: true)
+            displayContentController(addFriendViewController!, animation: true)
+        }
+    }
+    
+    func addFriend(username: String, status: String, selectedCell: FindFriendsCell?) {
+        addFriendViewController = AddFriendViewController()
+        addFriendViewController!.delegate = self
+        addFriendViewController!.addFriend(username, status: status, selectedCell: nil)
+    }
+    
+    func removeFriend(username: String, selectedCell: FindFriendsCell?) {
+        addFriendViewController = AddFriendViewController()
+        addFriendViewController!.delegate = self
+        addFriendViewController!.removeFriend(username, selectedCell: nil)
     }
 }
 
 extension ContainerViewController: SignUpViewControllerDelegate {
     func hideSignUp(animation: Bool) {
         hideContentController(signUpViewController, animation: animation)
+    }
+}
+
+extension ContainerViewController: AddFriendDelegate {
+    func hideAddFriend() {
+        if (addFriendViewController != nil) {
+            hideContentController(addFriendViewController!, animation: true)
+            displayContentController(controlPanelViewController, animation: true)
+        }
+    }
+    
+    func updateFriendsTableView() {
+        print("updateFriendsTableView")
+        controlPanelViewController.refreshFriendsTV()
     }
 }

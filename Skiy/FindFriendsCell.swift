@@ -10,10 +10,9 @@ import Foundation
 import UIKit
 
 class FindFriendsCell: UITableViewCell {
-    @IBOutlet weak var addFriendView: UIView!
+    //@IBOutlet weak var addFriendView: UIView!
     @IBOutlet weak var friendName: UILabel!
     @IBOutlet weak var friendUsername: UILabel!
     @IBOutlet weak var friendStatusLabel: UILabel!
-    @IBOutlet weak var friendStatusImage: UIImageView!
-    
+    //@IBOutlet weak var friendStatusImage: UIImageView!
 }

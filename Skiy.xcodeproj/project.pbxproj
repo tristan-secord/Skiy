@@ -38,6 +38,8 @@
 		3EFEE0E51D612057005DF703 /* FindFriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFEE0E41D612057005DF703 /* FindFriendsCell.swift */; };
 		3EFEE0E71D622176005DF703 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFEE0E61D622176005DF703 /* SignInViewController.swift */; };
 		3EFEE0E91D622187005DF703 /* ControlPanelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EFEE0E81D622187005DF703 /* ControlPanelCell.xib */; };
+		3EFEE0EB1D624C7C005DF703 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFEE0EA1D624C7C005DF703 /* Colors.swift */; };
+		3EFEE0EE1D62C5C9005DF703 /* SkiyData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3EFEE0EC1D62C5C9005DF703 /* SkiyData.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +103,8 @@
 		3EFEE0E41D612057005DF703 /* FindFriendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsCell.swift; sourceTree = "<group>"; };
 		3EFEE0E61D622176005DF703 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		3EFEE0E81D622187005DF703 /* ControlPanelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ControlPanelCell.xib; sourceTree = "<group>"; };
+		3EFEE0EA1D624C7C005DF703 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		3EFEE0ED1D62C5C9005DF703 /* SkiyData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SkiyData.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,9 +157,8 @@
 		3E37EDE21CB95DFC002167CB /* Skiy */ = {
 			isa = PBXGroup;
 			children = (
-				3EFEE0E61D622176005DF703 /* SignInViewController.swift */,
-				3EFEE0E81D622187005DF703 /* ControlPanelCell.xib */,
 				3E37EDE31CB95DFC002167CB /* AppDelegate.swift */,
+				3EFEE0E81D622187005DF703 /* ControlPanelCell.xib */,
 				3E97F86D1D35B9400053B25D /* HTTPHelper.swift */,
 				3E97F86F1D35BC4D0053B25D /* KeychainAccess.swift */,
 				3E37EDE51CB95DFC002167CB /* ViewController.swift */,
@@ -163,6 +166,7 @@
 				3E45FEEA1CF0D40400B9A8D4 /* ControlPanelViewController.swift */,
 				3E45FEF01CF34CEF00B9A8D4 /* ControlPanel.xib */,
 				3EBFE47C1D5D1ABA00C05C5D /* AddFriendViewController.swift */,
+				3EFEE0EA1D624C7C005DF703 /* Colors.swift */,
 				3EFEE0E21D60FAE6005DF703 /* FindFriendsCell.xib */,
 				3EFEE0E41D612057005DF703 /* FindFriendsCell.swift */,
 				3EBFE47D1D5D1ABA00C05C5D /* AddFriend.xib */,
@@ -171,11 +175,13 @@
 				3EBFE4721D525A6F00C05C5D /* SignUpNameVC.swift */,
 				3EBFE4761D5397E800C05C5D /* SignUpEmailVC.swift */,
 				3EBFE47A1D53991000C05C5D /* SignUpPasswordVC.swift */,
+				3EFEE0E61D622176005DF703 /* SignInViewController.swift */,
 				3E97F8651D3032120053B25D /* SignInView.xib */,
 				3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */,
 				3EBFE4741D5271C900C05C5D /* Main.storyboard */,
 				3E37EDEA1CB95DFC002167CB /* Assets.xcassets */,
 				3E37EDEC1CB95DFC002167CB /* LaunchScreen.storyboard */,
+				3EFEE0EC1D62C5C9005DF703 /* SkiyData.xcdatamodeld */,
 				3E9D73581D3AF0F100E2763C /* Supporting Files */,
 			);
 			path = Skiy;
@@ -367,9 +373,11 @@
 				3E9D73631D3AF12100E2763C /* NSData+CommonCrypto.m in Sources */,
 				3E9D73611D3AF12100E2763C /* AESCrypt.m in Sources */,
 				3E97F8701D35BC4D0053B25D /* KeychainAccess.swift in Sources */,
+				3EFEE0EE1D62C5C9005DF703 /* SkiyData.xcdatamodeld in Sources */,
 				3E9D73641D3AF12100E2763C /* NSString+Base64.m in Sources */,
 				3EBFE47E1D5D1ABA00C05C5D /* AddFriendViewController.swift in Sources */,
 				3E9D73621D3AF12100E2763C /* NSData+Base64.m in Sources */,
+				3EFEE0EB1D624C7C005DF703 /* Colors.swift in Sources */,
 				3E97F8741D39AE7B0053B25D /* SignUpViewController.swift in Sources */,
 				3EBFE4711D5245D400C05C5D /* SignUpPageViewController.swift in Sources */,
 				3EBFE47B1D53991000C05C5D /* SignUpPasswordVC.swift in Sources */,
@@ -629,6 +637,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3EFEE0EC1D62C5C9005DF703 /* SkiyData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3EFEE0ED1D62C5C9005DF703 /* SkiyData.xcdatamodel */,
+			);
+			currentVersion = 3EFEE0ED1D62C5C9005DF703 /* SkiyData.xcdatamodel */;
+			path = SkiyData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3E37EDD81CB95DFC002167CB /* Project object */;
 }

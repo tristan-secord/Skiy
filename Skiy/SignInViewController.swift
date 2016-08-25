@@ -76,7 +76,9 @@ class SignInViewController: UIViewController {
                                                   authType: HTTPRequestAuthType.HTTPBasicAuth)
         let encrypted_password = AESCrypt.encrypt(userPassword, password: HTTPHelper.API_AUTH_PASSWORD)
         
-        httpRequest.HTTPBody = "{\"email\":\"\(userEmail)\",\"password\":\"\(encrypted_password)\"}".dataUsingEncoding(NSUTF8StringEncoding);
+        let device_id = UIDevice.currentDevice().identifierForVendor
+        
+        httpRequest.HTTPBody = "{\"email\":\"\(userEmail)\",\"password\":\"\(encrypted_password)\", \"device_id\":\"\(device_id)\"}".dataUsingEncoding(NSUTF8StringEncoding);
         
         httpHelper.sendRequest(httpRequest, completion: {(data:NSData!, error:NSError!) in
             // Display error
