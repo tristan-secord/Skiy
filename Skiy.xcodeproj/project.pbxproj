@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15286A0A1121CCF5ABA33EA0 /* Pods_SkiyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754723E90102C998739EC71D /* Pods_SkiyUITests.framework */; };
+		3E1127D41D7495C6005A26FE /* Track Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3E1127D21D7495C6005A26FE /* Track Italic.otf */; };
+		3E1127D51D7495C6005A26FE /* Track.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3E1127D31D7495C6005A26FE /* Track.otf */; };
+		3E1127D81D749AA4005A26FE /* Quicksand_Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3E1127D61D749AA4005A26FE /* Quicksand_Bold.otf */; };
+		3E1127DC1D74C336005A26FE /* Hero Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3E1127DA1D74C336005A26FE /* Hero Light.otf */; };
+		3E1127DD1D74C336005A26FE /* Hero.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3E1127DB1D74C336005A26FE /* Hero.otf */; };
+		3E1127DF1D75E59D005A26FE /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1127DE1D75E59D005A26FE /* CustomTextField.swift */; };
+		3E1127E11D7680EC005A26FE /* SignUpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E1127E01D7680EC005A26FE /* SignUpView.xib */; };
 		3E37EDE41CB95DFC002167CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E37EDE31CB95DFC002167CB /* AppDelegate.swift */; };
 		3E37EDE61CB95DFC002167CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E37EDE51CB95DFC002167CB /* ViewController.swift */; };
 		3E37EDEB1CB95DFC002167CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E37EDEA1CB95DFC002167CB /* Assets.xcassets */; };
@@ -22,16 +30,15 @@
 		3E97F8661D3032120053B25D /* SignInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E97F8651D3032120053B25D /* SignInView.xib */; };
 		3E97F86E1D35B9400053B25D /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F86D1D35B9400053B25D /* HTTPHelper.swift */; };
 		3E97F8701D35BC4D0053B25D /* KeychainAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F86F1D35BC4D0053B25D /* KeychainAccess.swift */; };
-		3E97F8741D39AE7B0053B25D /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F8731D39AE7B0053B25D /* SignUpViewController.swift */; };
 		3E9D73611D3AF12100E2763C /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D735A1D3AF12100E2763C /* AESCrypt.m */; };
 		3E9D73621D3AF12100E2763C /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D735C1D3AF12100E2763C /* NSData+Base64.m */; };
 		3E9D73631D3AF12100E2763C /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D735E1D3AF12100E2763C /* NSData+CommonCrypto.m */; };
 		3E9D73641D3AF12100E2763C /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D73601D3AF12100E2763C /* NSString+Base64.m */; };
-		3EBFE4711D5245D400C05C5D /* SignUpPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBFE4701D5245D400C05C5D /* SignUpPageViewController.swift */; };
-		3EBFE4731D525A6F00C05C5D /* SignUpNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBFE4721D525A6F00C05C5D /* SignUpNameVC.swift */; };
+		3EB56F491D89EDAA00BB9C4E /* Notifications.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB56F481D89EDAA00BB9C4E /* Notifications.xib */; };
+		3EB56F4B1D89EDC200BB9C4E /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB56F4A1D89EDC200BB9C4E /* NotificationsViewController.swift */; };
+		3EB56F4D1D89F0A100BB9C4E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB56F4C1D89F0A100BB9C4E /* NotificationCell.xib */; };
+		3EB56F4F1D89F0AE00BB9C4E /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB56F4E1D89F0AE00BB9C4E /* NotificationCell.swift */; };
 		3EBFE4751D5271C900C05C5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EBFE4741D5271C900C05C5D /* Main.storyboard */; };
-		3EBFE4771D5397E800C05C5D /* SignUpEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBFE4761D5397E800C05C5D /* SignUpEmailVC.swift */; };
-		3EBFE47B1D53991000C05C5D /* SignUpPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBFE47A1D53991000C05C5D /* SignUpPasswordVC.swift */; };
 		3EBFE47E1D5D1ABA00C05C5D /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBFE47C1D5D1ABA00C05C5D /* AddFriendViewController.swift */; };
 		3EBFE47F1D5D1ABA00C05C5D /* AddFriend.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EBFE47D1D5D1ABA00C05C5D /* AddFriend.xib */; };
 		3EFEE0E31D60FAE6005DF703 /* FindFriendsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EFEE0E21D60FAE6005DF703 /* FindFriendsCell.xib */; };
@@ -40,6 +47,8 @@
 		3EFEE0E91D622187005DF703 /* ControlPanelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EFEE0E81D622187005DF703 /* ControlPanelCell.xib */; };
 		3EFEE0EB1D624C7C005DF703 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFEE0EA1D624C7C005DF703 /* Colors.swift */; };
 		3EFEE0EE1D62C5C9005DF703 /* SkiyData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3EFEE0EC1D62C5C9005DF703 /* SkiyData.xcdatamodeld */; };
+		9592B6665C41AB03723D9D8F /* Pods_SkiyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F2EB7B29591FD742C4A7D98 /* Pods_SkiyTests.framework */; };
+		9ECDCD2E5ABAB110B816FD27 /* Pods_Skiy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F3B6F8E06226B06CDBAAA6 /* Pods_Skiy.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +69,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		041F5BF8447F7813649AE8ED /* Pods-SkiyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SkiyUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SkiyUITests/Pods-SkiyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		0F2EB7B29591FD742C4A7D98 /* Pods_SkiyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SkiyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C3860165F0F3F60E33CD753 /* Pods-Skiy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skiy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Skiy/Pods-Skiy.release.xcconfig"; sourceTree = "<group>"; };
+		3E1127D21D7495C6005A26FE /* Track Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Track Italic.otf"; sourceTree = "<group>"; };
+		3E1127D31D7495C6005A26FE /* Track.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Track.otf; sourceTree = "<group>"; };
+		3E1127D61D749AA4005A26FE /* Quicksand_Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quicksand_Bold.otf; sourceTree = "<group>"; };
+		3E1127DA1D74C336005A26FE /* Hero Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hero Light.otf"; sourceTree = "<group>"; };
+		3E1127DB1D74C336005A26FE /* Hero.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Hero.otf; sourceTree = "<group>"; };
+		3E1127DE1D75E59D005A26FE /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		3E1127E01D7680EC005A26FE /* SignUpView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpView.xib; sourceTree = "<group>"; };
 		3E37EDE01CB95DFC002167CB /* Skiy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skiy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E37EDE31CB95DFC002167CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E37EDE51CB95DFC002167CB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,7 +102,6 @@
 		3E97F8651D3032120053B25D /* SignInView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInView.xib; sourceTree = "<group>"; };
 		3E97F86D1D35B9400053B25D /* HTTPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
 		3E97F86F1D35BC4D0053B25D /* KeychainAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainAccess.swift; sourceTree = "<group>"; };
-		3E97F8731D39AE7B0053B25D /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3E9D73591D3AF12100E2763C /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESCrypt.h; sourceTree = "<group>"; };
 		3E9D735A1D3AF12100E2763C /* AESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AESCrypt.m; sourceTree = "<group>"; };
 		3E9D735B1D3AF12100E2763C /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
@@ -92,11 +110,11 @@
 		3E9D735E1D3AF12100E2763C /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
 		3E9D735F1D3AF12100E2763C /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
 		3E9D73601D3AF12100E2763C /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
-		3EBFE4701D5245D400C05C5D /* SignUpPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpPageViewController.swift; sourceTree = "<group>"; };
-		3EBFE4721D525A6F00C05C5D /* SignUpNameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpNameVC.swift; sourceTree = "<group>"; };
+		3EB56F481D89EDAA00BB9C4E /* Notifications.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Notifications.xib; sourceTree = "<group>"; };
+		3EB56F4A1D89EDC200BB9C4E /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		3EB56F4C1D89F0A100BB9C4E /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
+		3EB56F4E1D89F0AE00BB9C4E /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		3EBFE4741D5271C900C05C5D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		3EBFE4761D5397E800C05C5D /* SignUpEmailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpEmailVC.swift; sourceTree = "<group>"; };
-		3EBFE47A1D53991000C05C5D /* SignUpPasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpPasswordVC.swift; sourceTree = "<group>"; };
 		3EBFE47C1D5D1ABA00C05C5D /* AddFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		3EBFE47D1D5D1ABA00C05C5D /* AddFriend.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddFriend.xib; sourceTree = "<group>"; };
 		3EFEE0E21D60FAE6005DF703 /* FindFriendsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindFriendsCell.xib; sourceTree = "<group>"; };
@@ -105,6 +123,12 @@
 		3EFEE0E81D622187005DF703 /* ControlPanelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ControlPanelCell.xib; sourceTree = "<group>"; };
 		3EFEE0EA1D624C7C005DF703 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3EFEE0ED1D62C5C9005DF703 /* SkiyData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SkiyData.xcdatamodel; sourceTree = "<group>"; };
+		487F4CA4F2C842D6626C83E0 /* Pods-SkiyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SkiyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SkiyTests/Pods-SkiyTests.release.xcconfig"; sourceTree = "<group>"; };
+		754723E90102C998739EC71D /* Pods_SkiyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SkiyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		85F3B6F8E06226B06CDBAAA6 /* Pods_Skiy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Skiy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		99105FE94E095AFB66491CE4 /* Pods-SkiyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SkiyUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SkiyUITests/Pods-SkiyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		E974C04FABE2C2DF85AD64F7 /* Pods-Skiy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Skiy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Skiy/Pods-Skiy.debug.xcconfig"; sourceTree = "<group>"; };
+		EE5B9B38BC2DC7E2722DEF5C /* Pods-SkiyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SkiyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SkiyTests/Pods-SkiyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E37EE121CC283B7002167CB /* MapKit.framework in Frameworks */,
+				9ECDCD2E5ABAB110B816FD27 /* Pods_Skiy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9592B6665C41AB03723D9D8F /* Pods_SkiyTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,12 +153,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15286A0A1121CCF5ABA33EA0 /* Pods_SkiyUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E1127D11D7495AF005A26FE /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				3E1127DA1D74C336005A26FE /* Hero Light.otf */,
+				3E1127DB1D74C336005A26FE /* Hero.otf */,
+				3E1127D61D749AA4005A26FE /* Quicksand_Bold.otf */,
+				3E1127D21D7495C6005A26FE /* Track Italic.otf */,
+				3E1127D31D7495C6005A26FE /* Track.otf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		3E37EDD71CB95DFC002167CB = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +180,8 @@
 				3E37EDF71CB95DFC002167CB /* SkiyTests */,
 				3E37EE021CB95DFC002167CB /* SkiyUITests */,
 				3E37EDE11CB95DFC002167CB /* Products */,
+				5928CB47D65133E6E991C4B0 /* Pods */,
+				E49023D4F754135799699B54 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -157,31 +198,33 @@
 		3E37EDE21CB95DFC002167CB /* Skiy */ = {
 			isa = PBXGroup;
 			children = (
+				3EFEE0EA1D624C7C005DF703 /* Colors.swift */,
 				3E37EDE31CB95DFC002167CB /* AppDelegate.swift */,
-				3EFEE0E81D622187005DF703 /* ControlPanelCell.xib */,
 				3E97F86D1D35B9400053B25D /* HTTPHelper.swift */,
 				3E97F86F1D35BC4D0053B25D /* KeychainAccess.swift */,
+				3E1127DE1D75E59D005A26FE /* CustomTextField.swift */,
 				3E37EDE51CB95DFC002167CB /* ViewController.swift */,
 				3E45FEE81CF0CF7700B9A8D4 /* ContainerViewController.swift */,
 				3E45FEEA1CF0D40400B9A8D4 /* ControlPanelViewController.swift */,
 				3E45FEF01CF34CEF00B9A8D4 /* ControlPanel.xib */,
+				3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */,
+				3EFEE0E81D622187005DF703 /* ControlPanelCell.xib */,
 				3EBFE47C1D5D1ABA00C05C5D /* AddFriendViewController.swift */,
-				3EFEE0EA1D624C7C005DF703 /* Colors.swift */,
-				3EFEE0E21D60FAE6005DF703 /* FindFriendsCell.xib */,
-				3EFEE0E41D612057005DF703 /* FindFriendsCell.swift */,
 				3EBFE47D1D5D1ABA00C05C5D /* AddFriend.xib */,
-				3E97F8731D39AE7B0053B25D /* SignUpViewController.swift */,
-				3EBFE4701D5245D400C05C5D /* SignUpPageViewController.swift */,
-				3EBFE4721D525A6F00C05C5D /* SignUpNameVC.swift */,
-				3EBFE4761D5397E800C05C5D /* SignUpEmailVC.swift */,
-				3EBFE47A1D53991000C05C5D /* SignUpPasswordVC.swift */,
+				3EFEE0E41D612057005DF703 /* FindFriendsCell.swift */,
+				3EFEE0E21D60FAE6005DF703 /* FindFriendsCell.xib */,
+				3EB56F4A1D89EDC200BB9C4E /* NotificationsViewController.swift */,
+				3EB56F481D89EDAA00BB9C4E /* Notifications.xib */,
+				3EB56F4E1D89F0AE00BB9C4E /* NotificationCell.swift */,
+				3EB56F4C1D89F0A100BB9C4E /* NotificationCell.xib */,
 				3EFEE0E61D622176005DF703 /* SignInViewController.swift */,
 				3E97F8651D3032120053B25D /* SignInView.xib */,
-				3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */,
+				3E1127E01D7680EC005A26FE /* SignUpView.xib */,
 				3EBFE4741D5271C900C05C5D /* Main.storyboard */,
 				3E37EDEA1CB95DFC002167CB /* Assets.xcassets */,
 				3E37EDEC1CB95DFC002167CB /* LaunchScreen.storyboard */,
 				3EFEE0EC1D62C5C9005DF703 /* SkiyData.xcdatamodeld */,
+				3E1127D11D7495AF005A26FE /* Fonts */,
 				3E9D73581D3AF0F100E2763C /* Supporting Files */,
 			);
 			path = Skiy;
@@ -224,6 +267,29 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		5928CB47D65133E6E991C4B0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E974C04FABE2C2DF85AD64F7 /* Pods-Skiy.debug.xcconfig */,
+				1C3860165F0F3F60E33CD753 /* Pods-Skiy.release.xcconfig */,
+				EE5B9B38BC2DC7E2722DEF5C /* Pods-SkiyTests.debug.xcconfig */,
+				487F4CA4F2C842D6626C83E0 /* Pods-SkiyTests.release.xcconfig */,
+				99105FE94E095AFB66491CE4 /* Pods-SkiyUITests.debug.xcconfig */,
+				041F5BF8447F7813649AE8ED /* Pods-SkiyUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E49023D4F754135799699B54 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				85F3B6F8E06226B06CDBAAA6 /* Pods_Skiy.framework */,
+				0F2EB7B29591FD742C4A7D98 /* Pods_SkiyTests.framework */,
+				754723E90102C998739EC71D /* Pods_SkiyUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -231,9 +297,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3E37EE081CB95DFC002167CB /* Build configuration list for PBXNativeTarget "Skiy" */;
 			buildPhases = (
+				B55C84FEE80749304509025B /* [CP] Check Pods Manifest.lock */,
 				3E37EDDC1CB95DFC002167CB /* Sources */,
 				3E37EDDD1CB95DFC002167CB /* Frameworks */,
 				3E37EDDE1CB95DFC002167CB /* Resources */,
+				BEB01917EE19AA39F160C52A /* [CP] Embed Pods Frameworks */,
+				D1B5BAA76AB64F93B9BFC4E9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -248,9 +317,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3E37EE0B1CB95DFC002167CB /* Build configuration list for PBXNativeTarget "SkiyTests" */;
 			buildPhases = (
+				4236FE9143D112117A989D68 /* [CP] Check Pods Manifest.lock */,
 				3E37EDF01CB95DFC002167CB /* Sources */,
 				3E37EDF11CB95DFC002167CB /* Frameworks */,
 				3E37EDF21CB95DFC002167CB /* Resources */,
+				4BD1DEFD0C2B3333BE0618AB /* [CP] Embed Pods Frameworks */,
+				178C60D4606F74B6916EB72A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -266,9 +338,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3E37EE0E1CB95DFC002167CB /* Build configuration list for PBXNativeTarget "SkiyUITests" */;
 			buildPhases = (
+				8ABE6BF37061841C765F5BE1 /* [CP] Check Pods Manifest.lock */,
 				3E37EDFB1CB95DFC002167CB /* Sources */,
 				3E37EDFC1CB95DFC002167CB /* Frameworks */,
 				3E37EDFD1CB95DFC002167CB /* Resources */,
+				3169E18B0C82CE7626835AD2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -294,6 +368,9 @@
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = 53JNKRDHHA;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -336,11 +413,19 @@
 			files = (
 				3EFEE0E31D60FAE6005DF703 /* FindFriendsCell.xib in Resources */,
 				3E37EDEE1CB95DFC002167CB /* LaunchScreen.storyboard in Resources */,
+				3E1127E11D7680EC005A26FE /* SignUpView.xib in Resources */,
 				3EFEE0E91D622187005DF703 /* ControlPanelCell.xib in Resources */,
+				3E1127DD1D74C336005A26FE /* Hero.otf in Resources */,
+				3E1127DC1D74C336005A26FE /* Hero Light.otf in Resources */,
 				3E37EDEB1CB95DFC002167CB /* Assets.xcassets in Resources */,
 				3EBFE4751D5271C900C05C5D /* Main.storyboard in Resources */,
+				3E1127D51D7495C6005A26FE /* Track.otf in Resources */,
 				3E45FEF11CF34CEF00B9A8D4 /* ControlPanel.xib in Resources */,
+				3E1127D41D7495C6005A26FE /* Track Italic.otf in Resources */,
 				3E97F8661D3032120053B25D /* SignInView.xib in Resources */,
+				3EB56F4D1D89F0A100BB9C4E /* NotificationCell.xib in Resources */,
+				3EB56F491D89EDAA00BB9C4E /* Notifications.xib in Resources */,
+				3E1127D81D749AA4005A26FE /* Quicksand_Bold.otf in Resources */,
 				3EBFE47F1D5D1ABA00C05C5D /* AddFriend.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,31 +446,152 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		178C60D4606F74B6916EB72A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SkiyTests/Pods-SkiyTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3169E18B0C82CE7626835AD2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SkiyUITests/Pods-SkiyUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4236FE9143D112117A989D68 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4BD1DEFD0C2B3333BE0618AB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SkiyTests/Pods-SkiyTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8ABE6BF37061841C765F5BE1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B55C84FEE80749304509025B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BEB01917EE19AA39F160C52A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Skiy/Pods-Skiy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D1B5BAA76AB64F93B9BFC4E9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Skiy/Pods-Skiy-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3E37EDDC1CB95DFC002167CB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EBFE4771D5397E800C05C5D /* SignUpEmailVC.swift in Sources */,
+				3EB56F4B1D89EDC200BB9C4E /* NotificationsViewController.swift in Sources */,
 				3E97F8261D2F318D0053B25D /* ControlPanelCell.swift in Sources */,
 				3E37EDE61CB95DFC002167CB /* ViewController.swift in Sources */,
 				3EFEE0E51D612057005DF703 /* FindFriendsCell.swift in Sources */,
+				3E1127DF1D75E59D005A26FE /* CustomTextField.swift in Sources */,
 				3E9D73631D3AF12100E2763C /* NSData+CommonCrypto.m in Sources */,
 				3E9D73611D3AF12100E2763C /* AESCrypt.m in Sources */,
 				3E97F8701D35BC4D0053B25D /* KeychainAccess.swift in Sources */,
+				3EB56F4F1D89F0AE00BB9C4E /* NotificationCell.swift in Sources */,
 				3EFEE0EE1D62C5C9005DF703 /* SkiyData.xcdatamodeld in Sources */,
 				3E9D73641D3AF12100E2763C /* NSString+Base64.m in Sources */,
 				3EBFE47E1D5D1ABA00C05C5D /* AddFriendViewController.swift in Sources */,
 				3E9D73621D3AF12100E2763C /* NSData+Base64.m in Sources */,
 				3EFEE0EB1D624C7C005DF703 /* Colors.swift in Sources */,
-				3E97F8741D39AE7B0053B25D /* SignUpViewController.swift in Sources */,
-				3EBFE4711D5245D400C05C5D /* SignUpPageViewController.swift in Sources */,
-				3EBFE47B1D53991000C05C5D /* SignUpPasswordVC.swift in Sources */,
 				3EFEE0E71D622176005DF703 /* SignInViewController.swift in Sources */,
 				3E97F86E1D35B9400053B25D /* HTTPHelper.swift in Sources */,
 				3E45FEEF1CF261E900B9A8D4 /* UIImage+ImageEffects.m in Sources */,
 				3E45FEE91CF0CF7700B9A8D4 /* ContainerViewController.swift in Sources */,
-				3EBFE4731D525A6F00C05C5D /* SignUpNameVC.swift in Sources */,
 				3E37EDE41CB95DFC002167CB /* AppDelegate.swift in Sources */,
 				3E45FEEB1CF0D40400B9A8D4 /* ControlPanelViewController.swift in Sources */,
 			);
@@ -475,7 +681,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "1e8a551f-0bdb-450e-9203-7a0004950fea";
+				PROVISIONING_PROFILE = "b7306220-8186-4947-9a6a-ceeac596015b";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -515,6 +721,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "b7306220-8186-4947-9a6a-ceeac596015b";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -523,36 +730,44 @@
 		};
 		3E37EE091CB95DFC002167CB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E974C04FABE2C2DF85AD64F7 /* Pods-Skiy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tristan Secord (2F893777Z9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Skiy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tsecord.skiy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1e8a551f-0bdb-450e-9203-7a0004950fea";
+				PROVISIONING_PROFILE = "b7306220-8186-4947-9a6a-ceeac596015b";
 				SWIFT_OBJC_BRIDGING_HEADER = "Skiy/Skiy-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		3E37EE0A1CB95DFC002167CB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C3860165F0F3F60E33CD753 /* Pods-Skiy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Skiy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tsecord.skiy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b7306220-8186-4947-9a6a-ceeac596015b";
 				SWIFT_OBJC_BRIDGING_HEADER = "Skiy/Skiy-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		3E37EE0C1CB95DFC002167CB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE5B9B38BC2DC7E2722DEF5C /* Pods-SkiyTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SkiyTests/Info.plist;
@@ -565,6 +780,7 @@
 		};
 		3E37EE0D1CB95DFC002167CB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 487F4CA4F2C842D6626C83E0 /* Pods-SkiyTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SkiyTests/Info.plist;
@@ -577,6 +793,7 @@
 		};
 		3E37EE0F1CB95DFC002167CB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 99105FE94E095AFB66491CE4 /* Pods-SkiyUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = SkiyUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -588,6 +805,7 @@
 		};
 		3E37EE101CB95DFC002167CB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 041F5BF8447F7813649AE8ED /* Pods-SkiyUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = SkiyUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

@@ -17,20 +17,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     var delegate: ViewControllerDelegate?
     
-    let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.829444)
     let regionRadius: CLLocationDistance = 1000
-    var friends: [String : CLLocation] = ["Pyke S." : CLLocation(latitude: 21.282778, longitude: -157.829444), "Sandra Secord" : CLLocation(latitude: 43.653226, longitude: -79.383184), "Mike Secord" : CLLocation(latitude: 43.921302, longitude: -79.531294)]
-    var index: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let viewWidth = self.view.frame.width
-        //let viewHeight = self.view.frame.height
         
-        //self.mapView.frame = CGRectMake(0, 0, viewWidth, viewHeight)
+        mapView.delegate = self
+        mapView.showsUserLocation = true
         
-        //Making Blurred Navigation Bar (PYKE S.)
+        //Making Blurred Navigation Bar
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = CGRectMake(0, 0, viewWidth, 66)
@@ -38,5 +35,46 @@ class ViewController: UIViewController {
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
+    }
+
+    func locationUpdate(latitude: Double, longitude: Double, friend: String) {
+        let loc_coords : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude , longitude: longitude)
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(loc_coords, regionRadius * 2.0, regionRadius * 2.0)
+        mapView.setRegion(coordinateRegion, animated: true)
+
+        // Drop a pin
+        let dropPin = MKPointAnnotation()
+        dropPin.coordinate = loc_coords
+        dropPin.title = friend
+        mapView.addAnnotation(dropPin)
+    }
+    
+    func setLocation(location: CLLocation) {
+        let loc_coords: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(loc_coords, regionRadius * 2.0, regionRadius * 2.0)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
+}
+
+extension ViewController: MKMapViewDelegate {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        // If it's the user location, just return nil.
+        if annotation.isKindOfClass(MKUserLocation) { return nil }
+        
+        if annotation.isKindOfClass(MKPointAnnotation) {
+            //var pinView: MKAnnotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("CustomPinAnnotationView")!
+            //if (pinView) {
+            var pinView: MKAnnotationView
+            if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier("CustomPinAnnotationView") {
+                dequeuedView.annotation = annotation
+                pinView = dequeuedView
+            } else {
+                pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: "CustomPinAnnotationView")
+                pinView.canShowCallout = true;
+                pinView.image = UIImage(named: "Location Icon Color")
+            }
+            return pinView
+        }
+        return nil
     }
 }

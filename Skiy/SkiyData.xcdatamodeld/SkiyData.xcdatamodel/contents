@@ -8,7 +8,25 @@
         <attribute name="updated_at" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Notification" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="expiry" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="payload" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Session" syncable="YES">
+        <attribute name="channel_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="expiry_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="friend_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Friend" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="Notification" positionX="-54" positionY="36" width="128" height="120"/>
+        <element name="Session" positionX="-54" positionY="45" width="128" height="150"/>
     </elements>
 </model>

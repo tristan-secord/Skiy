@@ -22,6 +22,7 @@ struct HTTPHelper {
     static let API_AUTH_NAME = "skiyAPI"
     static let API_AUTH_PASSWORD = "9365C1AB4740F0E1AA9FF2943D9FB93B38A7A7F33E5DC499ACB04A42F1B05283"
     static let BASE_URL = "https://immense-forest-45065.herokuapp.com/api"
+
     
     func buildRequest(path: String!, method: String, authType: HTTPRequestAuthType,
                       requestContentType: HTTPRequestContentType = HTTPRequestContentType.HTTPJsonContent, requestBoundary:String = "") -> NSMutableURLRequest {
@@ -69,6 +70,7 @@ struct HTTPHelper {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     completion(data, error)
                 })
+                
                 return
             }
 
@@ -76,6 +78,13 @@ struct HTTPHelper {
                 if let httpResponse = response as? NSHTTPURLResponse {
                     if httpResponse.statusCode == 200 {
                         completion(data, nil)
+                    } else if httpResponse.statusCode == 401 {
+                        let appDelegate =
+                            UIApplication.sharedApplication().delegate as! AppDelegate
+                        var aps = [String: AnyObject]()
+                        aps["alert"] = "Unauthorized Access. Please sign in to continue."
+                        appDelegate.signOutFromPushNotification(aps)
+                        return
                     } else {
                         do {
                             if let errorDict = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as? NSDictionary {

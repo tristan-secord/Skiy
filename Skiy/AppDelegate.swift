@@ -15,7 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var httpHelper = HTTPHelper()
     let defaults = NSUserDefaults.standardUserDefaults()
+    var badgeCount = 0
     typealias Payload = [String: AnyObject]
+    
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "uk.co.plymouthsoftware.core_data" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
@@ -42,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
             
-            dict[NSUnderlyingErrorKey] = error as NSError
+            dict[NSUnderlyingErrorKey] = error as! NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -61,8 +63,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return managedObjectContext
     }()
 
+    
+    func setStatusBarBackgroundColor(color: UIColor) {
+        
+        guard  let statusBar = UIApplication.sharedApplication().valueForKey("statusBarWindow")?.valueForKey("statusBar") as? UIView else {
+            return
+        }
+        
+        statusBar.backgroundColor = color
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        UIApplication.sharedApplication().applicationIconBadgeNumber = badgeCount
+        
+        self.setStatusBarBackgroundColor(UIColor.blackColor())
         
         //Register for push notifications
         let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
@@ -77,16 +92,187 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = containerViewController
         window!.makeKeyAndVisible()
         
+        if let notification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
+            let aps = notification["aps"] as! [String: AnyObject]
+            switch (aps["category"] as! String) {
+            case "SIGNOUT":
+                    signOutFromPushNotification(aps)
+                break
+            default:
+                //PULL ALL DATA INTO CORE DATA
+                //UPDATE EVERYTHING!!!
+                //BRING TO NOTIFICATIONS PAGE
+                break
+            }
+        }
+        
         return true
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        let deviceTokenString = String(format: "\(deviceToken)")
+        defaults.setObject(deviceTokenString, forKey: "deviceToken")
+        defaults.synchronize()
+    }
+
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != .None {
+            application.registerForRemoteNotifications()
+        }
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("Could not register for push notifications")
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        let aps = userInfo["aps"] as! [String: AnyObject]
+        let custom_data = userInfo["custom_data"] as? [String: AnyObject]
+        
+        badgeCount -= 1
+        UIApplication.sharedApplication().applicationIconBadgeNumber = badgeCount
+        
+        switch (aps["category"] as! String) {
+        case "SIGNOUT":
+            //first check if user is even logged in
+            signOutFromPushNotification(aps)
+            break
+        case "FRIEND_REQUEST":
+            showFriendRequest(aps, custom_data: custom_data!)
+            break
+        case "REQUEST_LOCATION":
+            showLocationRequest(aps, custom_data: custom_data!)
+            break
+        case "ACCEPTED":
+            activateRequest(aps, custom_data: custom_data!)
+            break
+        case "UNSUBSCRIBE_REQUESTER":
+            if let session_id = custom_data!["session_id"] as? Int {
+                unsubscribe(aps, session_id: session_id, channel: "RequestChannel")
+            }
+            break
+        case "UNSUBSCRIBE_SENDER":
+            if let session_id = custom_data!["session_id"] as? Int {
+                unsubscribe(aps, session_id: session_id, channel: "SendChannel")
+            }
+            break
+        default:
+            break
+        }
+    }
+    
+    func getControlPanelViewController() -> ControlPanelViewController? {
+        if let containerVC = self.window?.rootViewController as? ContainerViewController {
+            let viewControllers = containerVC.childViewControllers
+            for viewController in viewControllers {
+                if let controlPanelVC = viewController as? ControlPanelViewController {
+                    return controlPanelVC
+                }
+            }
+        }
+        return nil
+    }
+    
+    func unsubscribe(aps: [String: AnyObject], session_id: Int, channel: String) {
+        var alert : UIAlertController
+        
+        switch (channel.lowercaseString) {
+        case "sendchannel":
+            alert = UIAlertController(title: "Unsubscribed", message: "\(aps["alert"] as! String)", preferredStyle: .Alert)
+            break
+        case "requestchannel":
+            alert = UIAlertController(title: "Unsubscribed", message: "\(aps["alert"] as! String) ", preferredStyle: .Alert)
+            break
+        default:
+            alert = UIAlertController(title: "Unsubscribed", message:  "\(aps["alert"] as! String)", preferredStyle: .Alert)
+            break
+        }
+        if let controlPanelVC = self.getControlPanelViewController() as ControlPanelViewController! {
+            controlPanelVC.delegate?.unsubscribe(session_id, channelType: channel)
+        }
+        let OKAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alert.addAction(OKAction)
+        self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func activateRequest(aps: [String: AnyObject], custom_data: [String: AnyObject]) {
+        if let containerVC = self.window?.rootViewController as? ContainerViewController {
+            containerVC.saveSessionToCoreData(custom_data)
+        } else { print ("Could not get container view controller") }
+        
+        let alert = UIAlertController(title: "Request Accepted", message: "\(aps["alert"] as! String)", preferredStyle: .Alert)
+        let showAction = UIAlertAction(title: "Show", style: .Default) { action in
+            if let containerVC = self.window?.rootViewController as? ContainerViewController {
+                containerVC.showSession(custom_data)
+            } else { print("Could not get container view controller") }
+        }
+        let OKAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alert.addAction(OKAction)
+        alert.addAction(showAction)
+        self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func showLocationRequest(aps: [String: AnyObject], custom_data: [String: AnyObject]) {
+        let alert = UIAlertController(title: "Requesting Location", message: "\(aps["alert"] as! String)", preferredStyle: .Alert)
+        let OKAction = UIAlertAction(title: "Accept", style: .Default) { action in
+            if let controlPanelVC = self.getControlPanelViewController() as ControlPanelViewController! {
+                controlPanelVC.delegate?.acceptLocationRequest(custom_data)
+            } else {
+                print ("Could not get control panel")
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Not Now", style: .Cancel, handler: nil)
+        alert.addAction(OKAction)
+        alert.addAction(cancelAction)
+        self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func showFriendRequest(aps: [String: AnyObject], custom_data: [String: AnyObject]) {
+        //save to core data tableview/friends as "pending"
+        let newFriend: Array<Payload> = [custom_data]
+        self.saveFriendsToCoreData("pending", friendArray: newFriend)
+        
+        //Show alert dialog
+        let alert = UIAlertController(title: "Friend Request", message: "\(aps["alert"] as! String)", preferredStyle: .Alert)
+        let OKAction = UIAlertAction(title: "Accept", style: .Default) { action in
+            //sign them out
+            if let controlPanelVC = self.getControlPanelViewController() as ControlPanelViewController! {
+                controlPanelVC.delegate?.addFriend(custom_data["username"] as! String, status: "pending", selectedCell: nil)
+                controlPanelVC.refreshFriendsTV()
+            } else {
+                print("Could not get ControlPanelVC")
+                let controlPanelVC = ControlPanelViewController()
+                controlPanelVC.delegate?.addFriend(custom_data["username"] as! String, status: "pending", selectedCell: nil)
+                controlPanelVC.refreshFriendsTV()
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Not Now", style: .Cancel, handler: nil)
+        alert.addAction(OKAction)
+        alert.addAction(cancelAction)
+        self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func signOutFromPushNotification(aps: [String: AnyObject]) {
+        //Show alert dialog
+        let alert = UIAlertController(title: "Friend Request", message: "\(aps["alert"] as! String)", preferredStyle: .Alert)
+        let OKAction = UIAlertAction(title: "OK", style: .Default) { action in
+            //sign them out
+            if let controlPanelVC = self.getControlPanelViewController() as ControlPanelViewController! {
+                if (controlPanelVC.friendsTable != nil) {
+                    controlPanelVC.signOut()
+                }
+            } else {
+                print("Could not get ControlPanelVC")
+                let controlPanelVC = ControlPanelViewController()
+                controlPanelVC.signOut()
+                //****************************************** Not sure if this will work ********************************
+                //clear Core Data and defaults logged in flag here
+                //show sign in page
+                //******************************************************************************************************
+            }
+        }
+        alert.addAction(OKAction)
+        self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
     }
 
     func applicationWillResignActive(application: UIApplication) {

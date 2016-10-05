@@ -1,0 +1,6 @@
+framework module Pods_SkiyUITests {
+  umbrella header "Pods-SkiyUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

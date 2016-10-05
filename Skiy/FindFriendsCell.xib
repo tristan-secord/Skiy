@@ -3,8 +3,16 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Hero.otf">
+            <string>Hero</string>
+            <string>Hero</string>
+            <string>Hero</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FindFriendsCell" customModule="Skiy" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -16,14 +24,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Tristan Secord" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ata-RV-TXb">
-                        <rect key="frame" x="18" y="8" width="111.5" height="21"/>
+                        <rect key="frame" x="18" y="5.5" width="125.5" height="19"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="164" id="hxS-3Y-QWi"/>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="21" id="xYh-NN-Tiq"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="Hero" family="Hero" pointSize="18"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
+                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <size key="shadowOffset" width="1" height="1"/>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="hxS-3Y-QWi"/>
@@ -32,10 +42,12 @@
                         </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tristan.secord" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHo-4k-ufH">
-                        <rect key="frame" x="20" y="29" width="78.5" height="14.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <rect key="frame" x="20" y="24.5" width="92.5" height="15"/>
+                        <fontDescription key="fontDescription" name="Hero" family="Hero" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
+                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <size key="shadowOffset" width="1" height="1"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jos-4A-Vgt">
                         <rect key="frame" x="211" y="8" width="1" height="32.5"/>
@@ -45,10 +57,12 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pending" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLy-IQ-jmd">
-                        <rect key="frame" x="220" y="14.5" width="91.5" height="19.5"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                        <rect key="frame" x="220" y="16.5" width="91.5" height="16"/>
+                        <fontDescription key="fontDescription" name="Hero" family="Hero" pointSize="15"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
+                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <size key="shadowOffset" width="1" height="1"/>
                     </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -56,14 +70,22 @@
                     <constraint firstAttribute="trailingMargin" secondItem="jos-4A-Vgt" secondAttribute="trailing" constant="100" id="19C-Bl-Wcs"/>
                     <constraint firstItem="RLy-IQ-jmd" firstAttribute="centerY" secondItem="5uD-Jq-W7y" secondAttribute="centerY" id="CsH-PO-sel"/>
                     <constraint firstAttribute="topMargin" secondItem="jos-4A-Vgt" secondAttribute="top" id="Ta9-tK-qz5"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="EHo-4k-ufH" secondAttribute="bottom" id="aEa-Aq-JF7"/>
                     <constraint firstItem="RLy-IQ-jmd" firstAttribute="leading" secondItem="jos-4A-Vgt" secondAttribute="trailing" constant="8" symbolic="YES" id="b9a-EE-J77"/>
                     <constraint firstItem="EHo-4k-ufH" firstAttribute="top" secondItem="Ata-RV-TXb" secondAttribute="bottom" id="eG1-IB-6bm"/>
                     <constraint firstAttribute="topMargin" secondItem="Ata-RV-TXb" secondAttribute="top" id="ftz-VA-0Kd"/>
                     <constraint firstAttribute="bottomMargin" secondItem="jos-4A-Vgt" secondAttribute="bottom" id="s4J-Gp-9iJ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="RLy-IQ-jmd" secondAttribute="trailing" id="v9r-LX-jcd"/>
                     <constraint firstItem="Ata-RV-TXb" firstAttribute="leading" secondItem="5uD-Jq-W7y" secondAttribute="leadingMargin" constant="10" id="xBI-M0-iyx"/>
+                    <constraint firstItem="Ata-RV-TXb" firstAttribute="bottom" secondItem="jos-4A-Vgt" secondAttribute="centerY" id="zjd-3K-YaP"/>
                     <constraint firstItem="EHo-4k-ufH" firstAttribute="leading" secondItem="5uD-Jq-W7y" secondAttribute="leadingMargin" constant="12" id="zpO-z3-TGk"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="ftz-VA-0Kd"/>
+                        <exclude reference="aEa-Aq-JF7"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>

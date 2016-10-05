@@ -30,10 +30,9 @@ class User {
 }
 
 class AddFriendViewController: UIViewController {
-    
     typealias Payload = [String: AnyObject]
+    @IBOutlet weak var findFriend: CustomTextField!
     @IBOutlet weak var searchResult: UITableView!
-    @IBOutlet weak var findFriend: UISearchBar!
     @IBOutlet weak var searchFriendPrompt: UIView!
     var delegate: AddFriendDelegate?
     let httpHelper = HTTPHelper()
@@ -64,15 +63,7 @@ class AddFriendViewController: UIViewController {
         
         //add searchpanel ontop
         view.addSubview(searchPanel)
-        
-        //add vibrancy effect to controlpanel
-        let vibrancyEffect = UIVibrancyEffect(forBlurEffect: blurEffect)
-        let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
-        vibrancyView.frame = CGRectMake(0, 0, viewWidth, viewHeight)
-        vibrancyView.contentView.addSubview(searchPanel)
-        blurView.contentView.addSubview(vibrancyView)
 
-        
         //hide table view and set self to delegate
         searchResult.hidden = true
         searchFriendPrompt.hidden = false
@@ -80,6 +71,9 @@ class AddFriendViewController: UIViewController {
         searchResult.delegate = self
         searchResult.dataSource = self
         searchResult.registerNib(UINib(nibName: "FindFriendsCell", bundle: nil), forCellReuseIdentifier: "FindFriendsCell")
+        
+        findFriend.layer.shadowColor = UIColor.blackColor().CGColor
+        findFriend.layer.shadowOffset = CGSize(width: 1, height: 1)
     }
 
     override func didReceiveMemoryWarning() {
@@ -230,8 +224,7 @@ class AddFriendViewController: UIViewController {
         } catch {
             let fetchError = error as NSError
             print(fetchError)
-        }
-        
+        }        
         self.delegate?.updateFriendsTableView()
     }
     
@@ -308,29 +301,33 @@ class AddFriendViewController: UIViewController {
                 friends[userIndex].status = coreDataResults[i].valueForKey("status") as! String
             }
         }
-        
         self.searchResult.reloadData()
     }
 }
 
-extension AddFriendViewController : UISearchBarDelegate {
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        //hide keyboard
-        if searchBar.isFirstResponder() {
-            searchBar.resignFirstResponder()
-        }
+extension AddFriendViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         
         if friends.count != 0 {
             self.friends.removeAll()
         }
         
         //get and show results
-        if searchBar.text! != "" {
-            coreDataResults = searchCoreData(searchBar.text!)!
-            searchFriends(searchBar.text!)
+        if textField.text! != "" {
+            coreDataResults = searchCoreData(textField.text!)!
+            self.searchFriends(textField.text!)
+            self.searchResult.reloadData()
+            searchResult.hidden = false
+            searchFriendPrompt.hidden = true
+            return true
+        } else {
+            searchResult.hidden = true
+            searchFriendPrompt.hidden = false
+            return true
         }
     }
+    
     
     func searchCoreData(searchBarText: String) -> [NSManagedObject]? {
         let managedContext = appDelegate.managedObjectContext
@@ -359,12 +356,8 @@ extension AddFriendViewController : UISearchBarDelegate {
         return nil
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        //Clear friends array
-        self.friends.removeAll()
-        if searchText == "" {
-            friends = []
-            self.searchResult.reloadData()
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if textField.text! == "" {
             searchResult.hidden = true
             searchFriendPrompt.hidden = false
         } else {

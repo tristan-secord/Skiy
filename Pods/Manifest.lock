@@ -1,0 +1,21 @@
+PODS:
+  - ActionCableClient (0.1.6):
+    - Starscream (~> 1.1.3)
+  - FloatingActionSheetController (1.1.0)
+  - Starscream (1.1.3)
+  - SwiftSpinner (0.9.5)
+
+DEPENDENCIES:
+  - ActionCableClient
+  - FloatingActionSheetController
+  - SwiftSpinner
+
+SPEC CHECKSUMS:
+  ActionCableClient: ccbf6295f1e8c12bc934b62bdd0477cfe8deb844
+  FloatingActionSheetController: 229e0cfe96d691b97c91900f9b6d54ece6bf93bd
+  Starscream: d662732354b40dd19ed1ece3e3c44c80b536b83c
+  SwiftSpinner: c6585a0ae5c67eb33e737695cce88f0262008cce
+
+PODFILE CHECKSUM: a7a12b34dc5be97c375ad680b760d2278ed7e2a7
+
+COCOAPODS: 1.0.1

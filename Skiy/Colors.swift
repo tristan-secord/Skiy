@@ -9,6 +9,11 @@
 import Foundation
 
 public class Colors {
+    
+    class func babyBlue() -> String {
+        return "#54AADE"
+    }
+    
     // Creates a UIColor from a Hex string.
     class func colorWithHexString (hex:String) -> UIColor {
         var cString:String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString

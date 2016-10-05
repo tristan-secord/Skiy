@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Hero.otf">
+            <string>Hero</string>
+            <string>Hero</string>
+            <string>Hero</string>
+            <string>Hero</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NotificationsViewController" customModule="Skiy" customModuleProvider="target">
+            <connections>
+                <outlet property="notificationsPrompt" destination="arh-Vy-8rg" id="zPo-pQ-MaY"/>
+                <outlet property="notificationsTable" destination="wCR-tK-QEV" id="w8B-BP-g3f"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dqQ-ud-yNu">
+                    <rect key="frame" x="246" y="36" width="108.5" height="19"/>
+                    <fontDescription key="fontDescription" name="Hero" family="Hero" pointSize="18"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                    <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <size key="shadowOffset" width="1" height="1"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1yy-01-nXh">
+                    <rect key="frame" x="20" y="32.5" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="KMj-4n-HlC"/>
+                        <constraint firstAttribute="width" constant="25" id="Q3f-VW-gZs"/>
+                    </constraints>
+                    <connections>
+                        <action selector="refreshPressed:" destination="-1" eventType="touchUpInside" id="O2w-TT-2fW"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Refresh" translatesAutoresizingMaskIntoConstraints="NO" id="Nzl-Rn-7uu">
+                    <rect key="frame" x="20" y="33" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="k32-4s-AYB"/>
+                        <constraint firstAttribute="height" constant="25" id="xSy-BY-syP"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4aM-3J-lMc">
+                    <rect key="frame" x="534" y="30" width="46" height="30"/>
+                    <fontDescription key="fontDescription" name="Hero" family="Hero" pointSize="18"/>
+                    <size key="titleShadowOffset" width="1" height="1"/>
+                    <state key="normal" title="Done">
+                        <color key="titleColor" red="0.35294117650000001" green="0.75294117650000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UpA-Jk-YJb">
+                    <rect key="frame" x="534" y="30" width="46" height="30"/>
+                    <fontDescription key="fontDescription" name="Hero" family="Hero" pointSize="18"/>
+                    <size key="titleShadowOffset" width="1" height="1"/>
+                    <state key="normal" title="Done">
+                        <color key="titleColor" red="0.35294117650000001" green="0.75294117650000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="donePressed:" destination="-1" eventType="touchUpInside" id="1GL-Sp-N3W"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="arh-Vy-8rg">
+                    <rect key="frame" x="0.0" y="68" width="600" height="532"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No new notifications found. Please check back later" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGS-un-6U2">
+                            <rect key="frame" x="200" y="70" width="200" height="55"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="p0g-3a-KEU"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Hero" family="Hero" pointSize="18"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <size key="shadowOffset" width="1" height="1"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="BGS-un-6U2" firstAttribute="centerX" secondItem="arh-Vy-8rg" secondAttribute="centerX" id="m6P-F3-5JU"/>
+                        <constraint firstItem="BGS-un-6U2" firstAttribute="top" secondItem="arh-Vy-8rg" secondAttribute="top" constant="70" id="pWg-Iu-SVl"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wCR-tK-QEV">
+                    <rect key="frame" x="0.0" y="68" width="600" height="532"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="wCR-tK-QEV" secondAttribute="bottom" id="0Eu-eS-uYe"/>
+                <constraint firstItem="4aM-3J-lMc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="7km-DO-gRO"/>
+                <constraint firstItem="1yy-01-nXh" firstAttribute="centerY" secondItem="dqQ-ud-yNu" secondAttribute="centerY" id="9Uo-nX-Eio"/>
+                <constraint firstItem="Nzl-Rn-7uu" firstAttribute="centerY" secondItem="dqQ-ud-yNu" secondAttribute="centerY" id="9sK-bV-P5Y"/>
+                <constraint firstAttribute="bottom" secondItem="arh-Vy-8rg" secondAttribute="bottom" id="B91-Bw-tgY"/>
+                <constraint firstItem="dqQ-ud-yNu" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="E0i-nB-Xtm"/>
+                <constraint firstAttribute="trailing" secondItem="UpA-Jk-YJb" secondAttribute="trailing" constant="20" id="G5D-j4-pBJ"/>
+                <constraint firstAttribute="trailing" secondItem="4aM-3J-lMc" secondAttribute="trailing" constant="20" symbolic="YES" id="J65-ig-Vq8"/>
+                <constraint firstItem="Nzl-Rn-7uu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="Nhx-wu-pkD"/>
+                <constraint firstItem="Nzl-Rn-7uu" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="R7q-6F-1kE"/>
+                <constraint firstItem="UpA-Jk-YJb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="WKO-60-qIx"/>
+                <constraint firstItem="1yy-01-nXh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="bio-ea-zQ7"/>
+                <constraint firstAttribute="trailing" secondItem="wCR-tK-QEV" secondAttribute="trailing" id="eNm-aI-T5r"/>
+                <constraint firstItem="arh-Vy-8rg" firstAttribute="top" secondItem="UpA-Jk-YJb" secondAttribute="bottom" constant="8" symbolic="YES" id="fEQ-MX-3ld"/>
+                <constraint firstItem="wCR-tK-QEV" firstAttribute="top" secondItem="UpA-Jk-YJb" secondAttribute="bottom" constant="8" symbolic="YES" id="h6r-IM-1Qq"/>
+                <constraint firstAttribute="trailing" secondItem="arh-Vy-8rg" secondAttribute="trailing" id="hmX-oe-iw9"/>
+                <constraint firstItem="1yy-01-nXh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="huy-62-iJw"/>
+                <constraint firstItem="wCR-tK-QEV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="lN6-Cc-yPE"/>
+                <constraint firstItem="dqQ-ud-yNu" firstAttribute="centerY" secondItem="4aM-3J-lMc" secondAttribute="centerY" id="qDZ-3C-AgE"/>
+                <constraint firstItem="arh-Vy-8rg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="zbd-8D-7X9"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="huy-62-iJw"/>
+                    <exclude reference="R7q-6F-1kE"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+    <resources>
+        <image name="Refresh" width="25" height="25"/>
+    </resources>
+</document>
