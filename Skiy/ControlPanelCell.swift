@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 class ControlPanelCell: UITableViewCell {
-    @IBOutlet weak var friendStatusLabel: UILabel!
-    @IBOutlet weak var friendStatus: UIView!
     @IBOutlet weak var friendName: UILabel!
+    @IBOutlet weak var sessionStatus: UILabel!
+    @IBOutlet weak var statusSeperator: UIView!
+    @IBOutlet weak var expiryLabel: UILabel!
 }

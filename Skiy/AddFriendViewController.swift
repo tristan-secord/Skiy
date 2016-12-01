@@ -42,7 +42,7 @@ class AddFriendViewController: UIViewController {
     var pendingColor: UIColor = Colors.colorWithHexString("#8E8E93") // gray
     var requestColor: UIColor = Colors.colorWithHexString("#5AC8FB") // blue
     let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
+        UIApplication.shared.delegate as! AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,28 +51,28 @@ class AddFriendViewController: UIViewController {
         let viewHeight = view.frame.size.height
         
         //instantiate search panel
-        let searchPanel = UINib(nibName: "AddFriend", bundle: nil).instantiateWithOwner(self, options: nil)[0] as! UIView
-        searchPanel.frame = CGRectMake(0, 0, viewWidth, viewHeight)
+        let searchPanel = UINib(nibName: "AddFriend", bundle: nil).instantiate(withOwner: self, options: nil)[0] as! UIView
+        searchPanel.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
         view.layer.shadowOpacity = 0.8
         
         //Adding Blur Effect
-        let blurEffect = UIBlurEffect(style: .Dark)
+        let blurEffect = UIBlurEffect(style: .dark)
         let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = CGRectMake(0, 0, viewWidth, viewHeight)
-        view.insertSubview(blurView, atIndex: 0)
+        blurView.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
+        view.insertSubview(blurView, at: 0)
         
         //add searchpanel ontop
         view.addSubview(searchPanel)
 
         //hide table view and set self to delegate
-        searchResult.hidden = true
-        searchFriendPrompt.hidden = false
+        searchResult.isHidden = true
+        searchFriendPrompt.isHidden = false
         findFriend.delegate = self
         searchResult.delegate = self
         searchResult.dataSource = self
-        searchResult.registerNib(UINib(nibName: "FindFriendsCell", bundle: nil), forCellReuseIdentifier: "FindFriendsCell")
+        searchResult.register(UINib(nibName: "FindFriendsCell", bundle: nil), forCellReuseIdentifier: "FindFriendsCell")
         
-        findFriend.layer.shadowColor = UIColor.blackColor().CGColor
+        findFriend.layer.shadowColor = UIColor.black.cgColor
         findFriend.layer.shadowOffset = CGSize(width: 1, height: 1)
     }
 
@@ -80,29 +80,29 @@ class AddFriendViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func cancelPressed(sender: UIButton) {
+    @IBAction func cancelPressed(_ sender: UIButton) {
         delegate?.hideAddFriend()
     }
     
-    func searchFriends(searchBarText: String) {
+    func searchFriends(_ searchBarText: String) {
         // 1. Create HTTP request and set request header
         let httpRequest = httpHelper.buildRequest("findFriend", method: "POST",
-                                                  authType: HTTPRequestAuthType.HTTPTokenAuth)
+                                                  authType: HTTPRequestAuthType.httpTokenAuth)
         
         // 3. Send the request Body
-        httpRequest.HTTPBody = "{\"search_text\":\"\(searchBarText)\"}".dataUsingEncoding(NSUTF8StringEncoding)
+        httpRequest.httpBody = "{\"search_text\":\"\(searchBarText)\"}".data(using: String.Encoding.utf8)
 
         // 4. Send the request
-        httpHelper.sendRequest(httpRequest, completion: {(data:NSData!, error:NSError!) in
+        httpHelper.sendRequest(httpRequest as URLRequest, completion: {(data:Data?, error:Error?) in
             if error != nil {
-                let errorMessage = self.httpHelper.getErrorMessage(error)
-                self.displayErrorAlert(errorMessage as String)
+//                let errorMessage = self.httpHelper.getErrorMessage(error)
+                self.displayErrorAlert((error?.localizedDescription)! as String)
                 return
             }
             
             var json : Array<Payload>!
             do {
-                json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? Array<Payload>
+                json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions()) as? Array<Payload>
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
@@ -125,45 +125,45 @@ class AddFriendViewController: UIViewController {
         })
     }
     
-    func addFriend(username: String, status: String, selectedCell: FindFriendsCell?) {
+    func addFriend(_ username: String, status: String, selectedCell: FindFriendsCell?) {
         let httpRequest = httpHelper.buildRequest("addFriend", method: "POST",
-                                                  authType: HTTPRequestAuthType.HTTPTokenAuth)
-        httpRequest.HTTPBody = "{\"username\":\"\(username)\"}".dataUsingEncoding(NSUTF8StringEncoding)
+                                                  authType: HTTPRequestAuthType.httpTokenAuth)
+        httpRequest.httpBody = "{\"username\":\"\(username)\"}".data(using: String.Encoding.utf8)
         
-        httpHelper.sendRequest(httpRequest, completion: {(data:NSData!, error:NSError!) in
+        httpHelper.sendRequest(httpRequest as URLRequest, completion: {(data:Data?, error:Error?) in
             if error != nil {
-                let errorMessage = self.httpHelper.getErrorMessage(error)
-                self.displayErrorAlert(errorMessage as String)
+//                let errorMessage = self.httpHelper.getErrorMessage(error)
+                self.displayErrorAlert((error?.localizedDescription)! as String)
             } else {
                 self.friendAdded(username, status: status, selectedCell: selectedCell)
             }
         })
     }
     
-    func removeFriend(username: String, selectedCell: FindFriendsCell?) {
+    func removeFriend(_ username: String, selectedCell: FindFriendsCell?) {
         let httpRequest = httpHelper.buildRequest("removeFriend", method: "POST",
-                                                  authType: HTTPRequestAuthType.HTTPTokenAuth)
-        httpRequest.HTTPBody = "{\"username\":\"\(username)\"}".dataUsingEncoding(NSUTF8StringEncoding)
+                                                  authType: HTTPRequestAuthType.httpTokenAuth)
+        httpRequest.httpBody = "{\"username\":\"\(username)\"}".data(using: String.Encoding.utf8)
         
-        httpHelper.sendRequest(httpRequest, completion: {(data:NSData!, error:NSError!) in
+        httpHelper.sendRequest(httpRequest as URLRequest, completion: {(data:Data?, error:Error?) in
             if error != nil {
-                let errorMessage = self.httpHelper.getErrorMessage(error)
-                self.displayErrorAlert(errorMessage as String)
+//                let errorMessage = self.httpHelper.getErrorMessage(error)
+                self.displayErrorAlert((error?.localizedDescription)! as String)
             } else {
                 self.friendRemoved(username, selectedCell: selectedCell)
             }
         })
     }
     
-    func friendAdded(username: String, status: String, selectedCell: FindFriendsCell?) {
+    func friendAdded(_ username: String, status: String, selectedCell: FindFriendsCell?) {
         var newStatus : String
         let managedContext = appDelegate.managedObjectContext
         
         // Initialize Fetch Request
-        let fetchRequest = NSFetchRequest()
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Friend")
         
         // Create Entity Description
-        let entityDescription = NSEntityDescription.entityForName("Friend", inManagedObjectContext: managedContext)
+        let entityDescription = NSEntityDescription.entity(forEntityName: "Friend", in: managedContext)
         
         //Configure predicate
         let predicate : NSPredicate = NSPredicate(format: "username == %@", NSString(string: username))
@@ -199,21 +199,21 @@ class AddFriendViewController: UIViewController {
         
         //update Core Data
         do {
-            let result = try managedContext.executeFetchRequest(fetchRequest)
+            let result = try managedContext.fetch(fetchRequest)
             if result.count > 0 {
                 friend = result[0] as! NSManagedObject
                 friend.setValue(newStatus, forKey: "status")
             } else {
                 friend = NSManagedObject(entity: entityDescription!,
-                                         insertIntoManagedObjectContext: managedContext)
-                if let userIndex = friends.indexOf({ $0.userName == username }) {
+                                         insertInto: managedContext)
+                if let userIndex = friends.index(where: { $0.userName == username }) {
                     let user = friends[userIndex]
                     friend.setValue(user.firstName, forKey: "first_name")
                     friend.setValue(user.lastName, forKey: "last_name")
                     friend.setValue(user.userName, forKey: "username")
                     friend.setValue(newStatus, forKey: "status")
                     friend.setValue(user.id, forKey: "id")
-                    friend.setValue(NSDate(), forKey: "updated_at")
+                    friend.setValue(Date(), forKey: "updated_at")
                 }
             }
             do {
@@ -228,14 +228,14 @@ class AddFriendViewController: UIViewController {
         self.delegate?.updateFriendsTableView()
     }
     
-    func friendRemoved(username: String, selectedCell: FindFriendsCell?) {
+    func friendRemoved(_ username: String, selectedCell: FindFriendsCell?) {
         let managedContext = appDelegate.managedObjectContext
         
         // Initialize Fetch Request
-        let fetchRequest = NSFetchRequest()
-        
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Friend")
+
         // Create Entity Description
-        let entityDescription = NSEntityDescription.entityForName("Friend", inManagedObjectContext: managedContext)
+        let entityDescription = NSEntityDescription.entity(forEntityName: "Friend", in: managedContext)
         
         //Configure predicate
         let predicate : NSPredicate = NSPredicate(format: "username == %@", NSString(string: username))
@@ -251,10 +251,10 @@ class AddFriendViewController: UIViewController {
         
         //update Core Data
         do {
-            let result = try managedContext.executeFetchRequest(fetchRequest)
+            let result = try managedContext.fetch(fetchRequest)
             if result.count > 0 {
                 let friend = result[0] as! NSManagedObject
-                managedContext.deleteObject(friend)
+                managedContext.delete(friend)
                 do {
                     try managedContext.save()
                 } catch let error as NSError  {
@@ -269,10 +269,10 @@ class AddFriendViewController: UIViewController {
         self.delegate?.updateFriendsTableView()
     }
     
-    func displayErrorAlert(message: String) {
-        let errorAlert = UIAlertController(title: "", message: message, preferredStyle: .Alert)
-        let OKAction = UIAlertAction(title: "OK", style: .Default, handler: nil);
-        let CancelAction = UIAlertAction(title: "Cancel", style: .Destructive) { action in
+    func displayErrorAlert(_ message: String) {
+        let errorAlert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil);
+        let CancelAction = UIAlertAction(title: "Cancel", style: .destructive) { action in
             self.findFriend.text = ""
         }
         
@@ -292,13 +292,13 @@ class AddFriendViewController: UIViewController {
             break
         }
         
-        self.presentViewController(errorAlert, animated: true, completion: nil)
+        self.present(errorAlert, animated: true, completion: nil)
     }
     
     func updateSearchResults() {
         for i in 0..<coreDataResults.count {
-            if let userIndex = friends.indexOf({ $0.id == coreDataResults[i].valueForKey("id") as! Int }) {
-                friends[userIndex].status = coreDataResults[i].valueForKey("status") as! String
+            if let userIndex = friends.index(where: { $0.id == coreDataResults[i].value(forKey: "id") as! Int }) {
+                friends[userIndex].status = coreDataResults[i].value(forKey: "status") as! String
             }
         }
         self.searchResult.reloadData()
@@ -306,7 +306,7 @@ class AddFriendViewController: UIViewController {
 }
 
 extension AddFriendViewController : UITextFieldDelegate {
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
         if friends.count != 0 {
@@ -318,25 +318,25 @@ extension AddFriendViewController : UITextFieldDelegate {
             coreDataResults = searchCoreData(textField.text!)!
             self.searchFriends(textField.text!)
             self.searchResult.reloadData()
-            searchResult.hidden = false
-            searchFriendPrompt.hidden = true
+            searchResult.isHidden = false
+            searchFriendPrompt.isHidden = true
             return true
         } else {
-            searchResult.hidden = true
-            searchFriendPrompt.hidden = false
+            searchResult.isHidden = true
+            searchFriendPrompt.isHidden = false
             return true
         }
     }
     
     
-    func searchCoreData(searchBarText: String) -> [NSManagedObject]? {
+    func searchCoreData(_ searchBarText: String) -> [NSManagedObject]? {
         let managedContext = appDelegate.managedObjectContext
         
         // Initialize Fetch Request
-        let fetchRequest = NSFetchRequest()
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Friend")
         
         // Create Entity Description
-        let entityDescription = NSEntityDescription.entityForName("Friend", inManagedObjectContext: managedContext)
+        let entityDescription = NSEntityDescription.entity(forEntityName: "Friend", in: managedContext)
         
         //Configure predicate
         let predicate : NSPredicate = NSPredicate(format: "first_name == %@", NSString(string: searchBarText))
@@ -346,7 +346,7 @@ extension AddFriendViewController : UITextFieldDelegate {
         fetchRequest.predicate = predicate
         
         do {
-            let result = try managedContext.executeFetchRequest(fetchRequest)
+            let result = try managedContext.fetch(fetchRequest)
             return (result as? [NSManagedObject])!
         } catch {
             let fetchError = error as NSError
@@ -356,24 +356,24 @@ extension AddFriendViewController : UITextFieldDelegate {
         return nil
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField.text! == "" {
-            searchResult.hidden = true
-            searchFriendPrompt.hidden = false
+            searchResult.isHidden = true
+            searchFriendPrompt.isHidden = false
         } else {
-            searchResult.hidden = false
-            searchFriendPrompt.hidden = true
+            searchResult.isHidden = false
+            searchFriendPrompt.isHidden = true
         }
     }
 }
 
 extension AddFriendViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: FindFriendsCell = tableView.dequeueReusableCellWithIdentifier("FindFriendsCell", forIndexPath: indexPath) as! FindFriendsCell
-        cell.friendName.text = "\(friends[indexPath.row].firstName) \(friends[indexPath.row].lastName)"
-        cell.friendUsername.text = friends[indexPath.row].userName
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
-        switch friends[indexPath.row].status {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: FindFriendsCell = tableView.dequeueReusableCell(withIdentifier: "FindFriendsCell", for: indexPath) as! FindFriendsCell
+        cell.friendName.text = "\(friends[(indexPath as NSIndexPath).row].firstName) \(friends[(indexPath as NSIndexPath).row].lastName)"
+        cell.friendUsername.text = friends[(indexPath as NSIndexPath).row].userName
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        switch friends[(indexPath as NSIndexPath).row].status {
         case "":
             cell.friendStatusLabel.text = "Add Friend"
             cell.friendStatusLabel.textColor = self.requestColor
@@ -396,43 +396,43 @@ extension AddFriendViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return(1)
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (self.friends.count)
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var alert : UIAlertController
-        var OKAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        let CancelAction = UIAlertAction(title: "Cancel", style: .Destructive, handler: nil)
+        var OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let CancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
 
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as? FindFriendsCell
+        let cell = tableView.cellForRow(at: indexPath) as? FindFriendsCell
         switch (cell!.friendStatusLabel.text!) {
             
         case "Pending":
-            alert = UIAlertController(title: "\(cell!.friendName.text!)", message: "\(cell!.friendName.text!) has sent you a friend request. Would you like to accept this request?", preferredStyle: .Alert)
-            OKAction = UIAlertAction(title: "Accept", style: .Default) { action in
+            alert = UIAlertController(title: "\(cell!.friendName.text!)", message: "\(cell!.friendName.text!) has sent you a friend request. Would you like to accept this request?", preferredStyle: .alert)
+            OKAction = UIAlertAction(title: "Accept", style: .default) { action in
                 self.addFriend(cell!.friendUsername.text!, status: cell!.friendStatusLabel.text!, selectedCell: cell!)
             }
             break
             
         case "Requested":
-            alert = UIAlertController(title: "\(cell!.friendName.text!)", message:  "Friend request has already been sent, please wait for \(cell!.friendName.text!) to accept this request.", preferredStyle: .Alert)
+            alert = UIAlertController(title: "\(cell!.friendName.text!)", message:  "Friend request has already been sent, please wait for \(cell!.friendName.text!) to accept this request.", preferredStyle: .alert)
             break
             
         case "Friends":
-            alert = UIAlertController(title: "\(cell!.friendName.text!)", message: "You and \(cell!.friendName.text!) are already friends. Would you like to remove this user from your friends?", preferredStyle: .Alert)
-            OKAction = UIAlertAction(title: "Remove", style: .Default) {action in
+            alert = UIAlertController(title: "\(cell!.friendName.text!)", message: "You and \(cell!.friendName.text!) are already friends. Would you like to remove this user from your friends?", preferredStyle: .alert)
+            OKAction = UIAlertAction(title: "Remove", style: .default) {action in
                 self.removeFriend(cell!.friendUsername.text!, selectedCell: cell)
             }
             break
             
         default:
-            alert = UIAlertController(title: "\(cell!.friendName.text!)", message: "Send friend request to \(cell!.friendName.text!)?", preferredStyle: .Alert)
-            OKAction = UIAlertAction(title: "Request", style: .Default) {action in
+            alert = UIAlertController(title: "\(cell!.friendName.text!)", message: "Send friend request to \(cell!.friendName.text!)?", preferredStyle: .alert)
+            OKAction = UIAlertAction(title: "Request", style: .default) {action in
                 self.addFriend(cell!.friendUsername.text!, status: cell!.friendStatusLabel.text!, selectedCell: cell!)
             }
             break
@@ -441,6 +441,6 @@ extension AddFriendViewController: UITableViewDelegate, UITableViewDataSource {
         alert.addAction(OKAction)
         alert.addAction(CancelAction)
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 }

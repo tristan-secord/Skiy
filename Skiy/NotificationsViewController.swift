@@ -19,10 +19,10 @@ class Notifications {
     var id : Int
     var category : String = ""
     var payload : String = ""
-    var expiry : NSDate
-    var created_on : NSDate
+    var expiry : Date
+    var created_on : Date
     
-    init (_ id: Int, category: String, payload: String, expiry:NSDate, created_on: NSDate) {
+    init (_ id: Int, category: String, payload: String, expiry:Date, created_on: Date) {
         self.id = id
         self.category = category
         self.payload = payload
@@ -39,11 +39,11 @@ class NotificationsViewController: UIViewController {
     
     var httpHelper = HTTPHelper()
     var delegate: NotificationsDelegate?
-    var notifications = [NSManagedObject]?()
+    var notifications : [NSManagedObject]? = nil
     typealias Payload = [String: AnyObject]
-    var timer: NSTimer? = nil
+    var timer: Timer? = nil
     let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
+        UIApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,27 +52,27 @@ class NotificationsViewController: UIViewController {
         let viewHeight = view.frame.size.height
         
         //instantiate search panel
-        let notificationsPanel = UINib(nibName: "Notifications", bundle: nil).instantiateWithOwner(self, options: nil)[0] as! UIView
-        notificationsPanel.frame = CGRectMake(0, 0, viewWidth, viewHeight)
+        let notificationsPanel = UINib(nibName: "Notifications", bundle: nil).instantiate(withOwner: self, options: nil)[0] as! UIView
+        notificationsPanel.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
         view.layer.shadowOpacity = 0.8
         
         //Adding Blur Effect
-        let blurEffect = UIBlurEffect(style: .Dark)
+        let blurEffect = UIBlurEffect(style: .dark)
         let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = CGRectMake(0, 0, viewWidth, viewHeight)
-        view.insertSubview(blurView, atIndex: 0)
+        blurView.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
+        view.insertSubview(blurView, at: 0)
         
         //add searchpanel ontop
         view.addSubview(notificationsPanel)
         
         //hide table view and set self to delegate
-        notificationsTable.hidden = true
-        notificationsPrompt.hidden = false
+        notificationsTable.isHidden = true
+        notificationsPrompt.isHidden = false
 
         notificationsTable.delegate = self
         notificationsTable.dataSource = self
         
-        notificationsTable.registerNib(UINib(nibName: "NotificationCell", bundle: nil), forCellReuseIdentifier: "NotificationCell")
+        notificationsTable.register(UINib(nibName: "NotificationCell", bundle: nil), forCellReuseIdentifier: "NotificationCell")
         
         
         //load Core Data to local variable notifications
@@ -85,16 +85,16 @@ class NotificationsViewController: UIViewController {
         let managedContext = appDelegate.managedObjectContext
         
         // Initialize Fetch Request
-        let fetchRequest = NSFetchRequest()
-        
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Notification")
+
         // Create Entity Description
-        let entityDescription = NSEntityDescription.entityForName("Notification", inManagedObjectContext: managedContext)
+        let entityDescription = NSEntityDescription.entity(forEntityName: "Notification", in: managedContext)
         
         // Configure Fetch Request
         fetchRequest.entity = entityDescription
         
         do {
-            let result = try managedContext.executeFetchRequest(fetchRequest)
+            let result = try managedContext.fetch(fetchRequest)
             return (result as? [NSManagedObject])!
         } catch {
             let fetchError = error as NSError
@@ -104,20 +104,20 @@ class NotificationsViewController: UIViewController {
         return nil
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 1
+        UIApplication.shared.applicationIconBadgeNumber = 1
         self.getNewData()
         
         //Add expiry counter (decreasing)
-        timer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: #selector(updateExpiry), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(updateExpiry), userInfo: nil, repeats: true)
         timer!.fire()
     }
     
     func getNewData() {
-        if UIApplication.sharedApplication().applicationIconBadgeNumber > 0 {
+        if UIApplication.shared.applicationIconBadgeNumber > 0 {
             self.getNotifications()
-            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            UIApplication.shared.applicationIconBadgeNumber = 0
         }
     }
     
@@ -128,20 +128,20 @@ class NotificationsViewController: UIViewController {
     func getNotifications() {
         // Create HTTP request and set request Body
         let httpRequest = httpHelper.buildRequest("getNotifications", method: "POST",
-                                                  authType: HTTPRequestAuthType.HTTPTokenAuth)
+                                                  authType: HTTPRequestAuthType.httpTokenAuth)
         
-        let httpBody = "{\"badge_count\":\"\(UIApplication.sharedApplication().applicationIconBadgeNumber)\"}"
+        let httpBody = "{\"badge_count\":\"\(UIApplication.shared.applicationIconBadgeNumber)\"}"
         
-        httpRequest.HTTPBody = httpBody.dataUsingEncoding(NSUTF8StringEncoding);
+        httpRequest.httpBody = httpBody.data(using: String.Encoding.utf8);
         
-        httpHelper.sendRequest(httpRequest, completion: {(data:NSData!, error:NSError!) in
+        httpHelper.sendRequest(httpRequest as URLRequest, completion: {(data:Data?, error:Error?) in
             // Display error
             if error != nil {
                 return
             }
             
             do {
-                if let responseDict = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as? NSDictionary {
+                if let responseDict = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary {
                     //update data in CoreData
                     self.updateNotifications(responseDict)
                 } else {
@@ -154,11 +154,11 @@ class NotificationsViewController: UIViewController {
     }
     
     //save to core data and to notifications array
-    func updateNotifications(json: NSDictionary) {
+    func updateNotifications(_ json: NSDictionary) {
         let managedContext = appDelegate.managedObjectContext
         
         // Create Entity Description
-        let entityDescription = NSEntityDescription.entityForName("Notification", inManagedObjectContext: managedContext)
+        let entityDescription = NSEntityDescription.entity(forEntityName: "Notification", in: managedContext)
         
         if let newNotifications = json["notifications"] as? Array<Payload>! {
             if newNotifications.count > 0 {
@@ -171,26 +171,26 @@ class NotificationsViewController: UIViewController {
                     createdString = item["created_at"] as? String
                     
                     //IF NEED TO ADD TIME ZONE INFO TO DATE FORMATTER HERE
-                    let dateFormatter = NSDateFormatter()
+                    let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
                     
-                    let expiry: NSDate?
+                    let expiry: Date?
                     if expiryString != nil {
-                        expiry = dateFormatter.dateFromString(expiryString!)! as NSDate
+                        expiry = dateFormatter.date(from: expiryString!)! as Date
                     } else {
                         expiry = nil
                     }
                     
-                    let created: NSDate?
+                    let created: Date?
                     if createdString != nil {
-                        created = dateFormatter.dateFromString(createdString!)! as NSDate
+                        created = dateFormatter.date(from: createdString!)! as Date
                     } else {
                         created = nil
                     }
                     
                     //save to CoreData
                     let notification = NSManagedObject(entity: entityDescription!,
-                                                       insertIntoManagedObjectContext: managedContext)
+                                                       insertInto: managedContext)
                     notification.setValue(id, forKey: "id")
                     notification.setValue(category, forKey: "category")
                     notification.setValue(payload, forKey: "payload")
@@ -209,8 +209,8 @@ class NotificationsViewController: UIViewController {
                 notificationsTable.reloadData()
                 
                 for i in 0..<newNotifications.count {
-                    let cell = notificationsTable.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! NotificationCell
-                    cell.newNotificationBubble.hidden = false
+                    let cell = notificationsTable.cellForRow(at: IndexPath(row: i, section: 0)) as! NotificationCell
+                    cell.newNotificationBubble.isHidden = false
                     cell.newNotificationBubble.layer.cornerRadius = 5.0
                     cell.newNotificationBubble.backgroundColor = Colors.colorWithHexString(Colors.babyBlue())
                 }
@@ -218,22 +218,23 @@ class NotificationsViewController: UIViewController {
         }
     }
 
-    func getUser(notification: NSManagedObject) -> NSManagedObject? {
+    func getUser(_ notification: NSManagedObject) -> NSManagedObject? {
         let managedContext = appDelegate.managedObjectContext
         
         // Initialize Fetch Request
-        let fetchRequest = NSFetchRequest()
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Friend")
+
         
         // Create Entity Description
-        let entityDescription = NSEntityDescription.entityForName("Friend", inManagedObjectContext: managedContext)
-        let predicate : NSPredicate = NSPredicate(format: "id == \(notification.valueForKey("id") as! Int)")
+        let entityDescription = NSEntityDescription.entity(forEntityName: "Friend", in: managedContext)
+        let predicate : NSPredicate = NSPredicate(format: "id == \(notification.value(forKey: "id") as! Int)")
         
         // Configure Fetch Request
         fetchRequest.entity = entityDescription
         fetchRequest.predicate = predicate
         
         do {
-            var result = try managedContext.executeFetchRequest(fetchRequest)
+            var result = try managedContext.fetch(fetchRequest)
             result = (result as? [NSManagedObject])!
             if result.count > 0 { return result[0] as? NSManagedObject }
         } catch {
@@ -243,18 +244,18 @@ class NotificationsViewController: UIViewController {
         return nil
     }
     
-    func getExpiration(notification: NSManagedObject) -> String {
-        let expiry = notification.valueForKey("expiry") as! NSDate
-        let currentDate = NSDate()
-        let Calendar = NSCalendar.currentCalendar()
+    func getExpiration(_ notification: NSManagedObject) -> String {
+        let expiry = notification.value(forKey: "expiry") as! Date
+        let currentDate = Date()
+        let Calendar = Foundation.Calendar.current
         
-        let hourMinute: NSCalendarUnit = [.Hour, .Minute]
-        let hoursToExpire = Calendar.components(hourMinute, fromDate: currentDate, toDate: expiry, options: [])
+        let hourMinute: NSCalendar.Unit = [.hour, .minute]
+        let hoursToExpire = (Calendar as NSCalendar).components(hourMinute, from: currentDate, to: expiry, options: [])
         let expiryString = "\(hoursToExpire.hour)h \(hoursToExpire.minute)m"
         return expiryString
     }
     
-    @IBAction func donePressed(sender: UIButton) {
+    @IBAction func donePressed(_ sender: UIButton) {
         if timer != nil {
             timer!.invalidate()
             timer = nil
@@ -262,7 +263,7 @@ class NotificationsViewController: UIViewController {
         delegate?.hideNotifications()
     }
     
-    @IBAction func refreshPressed(sender: UIButton) {
+    @IBAction func refreshPressed(_ sender: UIButton) {
         self.getNewData()
     }
     
@@ -270,50 +271,50 @@ class NotificationsViewController: UIViewController {
 
 extension NotificationsViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if notifications!.count <= 0 {
-            notificationsTable.hidden = false
-            notificationsPrompt.hidden = false
+            notificationsTable.isHidden = false
+            notificationsPrompt.isHidden = false
         } else {
-            notificationsTable.hidden = false
-            notificationsPrompt.hidden = true
+            notificationsTable.isHidden = false
+            notificationsPrompt.isHidden = true
         }
         return notifications!.count
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: NotificationCell = tableView.dequeueReusableCellWithIdentifier("NotificationCell", forIndexPath: indexPath) as! NotificationCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: NotificationCell = tableView.dequeueReusableCell(withIdentifier: "NotificationCell", for: indexPath) as! NotificationCell
         
-        cell.newNotificationBubble.hidden = true
+        cell.newNotificationBubble.isHidden = true
         
         //sort notifications
-        notifications!.sortInPlace({ ($0.valueForKey("created") as! NSDate).compare($1.valueForKey("created") as! NSDate) == NSComparisonResult.OrderedDescending })
+        notifications!.sort(by: { ($0.value(forKey: "created") as! Date).compare($1.value(forKey: "created") as! Date) == ComparisonResult.orderedDescending })
         
         if notifications!.count > 0 {
-            let notification: NSManagedObject = notifications![indexPath.row]
+            let notification: NSManagedObject = notifications![(indexPath as NSIndexPath).row]
             if let user : NSManagedObject = self.getUser(notification) {
                 //Category
-                var category = notification.valueForKey("category") as! String
-                category = category.stringByReplacingOccurrencesOfString("_", withString: " ")
+                var category = notification.value(forKey: "category") as! String
+                category = category.replacingOccurrences(of: "_", with: " ")
                 
                 //Expiration Date
                 var expiryString: String = "Expired"
-                let expiry = notification.valueForKey("expiry") as? NSDate
+                let expiry = notification.value(forKey: "expiry") as? Date
                 if expiry == nil {
                     expiryString = "Expired"
-                } else if expiry!.compare(NSDate()) == NSComparisonResult.OrderedDescending {
+                } else if expiry!.compare(Date()) == ComparisonResult.orderedDescending {
                     expiryString = self.getExpiration(notification)
                 } else {
                     expiryString = "Expired"
                 }
                 
                 //User info
-                let firstName = user.valueForKey("first_name") as! String
-                let lastName = user.valueForKey("last_name") as! String
+                let firstName = user.value(forKey: "first_name") as! String
+                let lastName = user.value(forKey: "last_name") as! String
                 
                 //set up cell
                 cell.senderName.text! = "\(firstName) \(lastName)"
@@ -321,12 +322,12 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
                 cell.notificationExpiry.text! = "Expires: \(expiryString)"
                 if (expiryString == "Expired") {
                     cell.notificationExpiry.text! = "\(expiryString)"
-                    cell.senderName.textColor = UIColor.lightGrayColor()
-                    cell.notificationExpiry.textColor = UIColor.redColor()
-                    cell.notificationCategory.textColor = UIColor.lightGrayColor()
+                    cell.senderName.textColor = UIColor.lightGray
+                    cell.notificationExpiry.textColor = UIColor.red
+                    cell.notificationCategory.textColor = UIColor.lightGray
                 } else {
-                    cell.senderName.textColor = UIColor.whiteColor()
-                    cell.notificationExpiry.textColor = UIColor.lightGrayColor()
+                    cell.senderName.textColor = UIColor.white
+                    cell.notificationExpiry.textColor = UIColor.lightGray
                     cell.notificationCategory.textColor = Colors.colorWithHexString(Colors.babyBlue())
                 }
             }
@@ -334,7 +335,7 @@ extension NotificationsViewController: UITableViewDelegate, UITableViewDataSourc
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
     

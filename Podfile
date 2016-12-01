@@ -7,8 +7,9 @@ target 'Skiy' do
 
   pod 'SwiftSpinner'
   pod 'FloatingActionSheetController'
-  pod 'ActionCableClient'
-
+  pod 'Starscream', :git => 'https://github.com/daltoniam/Starscream.git', :branch => 'swift3'
+  pod 'ActionCableClient', :git => 'https://github.com/danielrhodes/Swift-ActionCableClient', :branch => 'swift3'
+  
   # Pods for Skiy
 
   target 'SkiyTests' do

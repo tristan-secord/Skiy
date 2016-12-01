@@ -22,66 +22,65 @@
 
 import Foundation
 
-enum SerializationError : ErrorType {
-    case JSON
-    case Encoding
-    case ProtocolViolation
+enum SerializationError : Swift.Error {
+    case json
+    case encoding
+    case protocolViolation
 }
 
-public enum ReceiveError : ErrorType {
-    case InvalidIdentifier
-    case UnknownChannel
-    case Decoding
-    case InvalidFormat
-    case UnknownMessageType
+public enum ReceiveError : Swift.Error {
+    case invalidIdentifier
+    case unknownChannel
+    case decoding
+    case invalidFormat
+    case unknownMessageType
 }
 
-public enum TransmitError : ErrorType {
-    case NotConnected
-    case NotSubscribed
+public enum TransmitError : Swift.Error {
+    case notConnected
+    case notSubscribed
 }
 
-public enum ConnectionError : ErrorType {
-    case NotFound(NSError)
-    case GoingAway(NSError)
-    case Refused(NSError)
-    case SSLHandshake(NSError)
-    case UnknownDomain(NSError)
-    case Closed(NSError)
-    case ProtocolViolation(NSError)
-    case Unknown(NSError)
-    case None
+public enum ConnectionError : Swift.Error {
+    case notFound(Error)
+    case goingAway(Error)
+    case refused(Error)
+    case sslHandshake(Error)
+    case unknownDomain(Error)
+    case closed(Error)
+    case protocolViolation(Error)
+    case unknown(Error)
+    case none
     
     var recoverable : Bool {
         switch self {
-        case .NotFound: return false
-        case .GoingAway: return false
-        case .Refused: return true
-        case .SSLHandshake: return false
-        case .UnknownDomain: return false
-        case .ProtocolViolation: return false
-        case .Closed: return false
-        case .Unknown: return true
-        case .None: return false
+        case .notFound: return false
+        case .goingAway: return false
+        case .refused: return true
+        case .sslHandshake: return false
+        case .unknownDomain: return false
+        case .protocolViolation: return false
+        case .closed: return false
+        case .unknown: return true
+        case .none: return false
         }
     }
-    
-    static func ErrorForErrorCode(error : NSError) -> ConnectionError {
-        switch error.code {
-        case 2: return ConnectionError.UnknownDomain(error)
-        case 61: return ConnectionError.Refused(error)
-        case 404: return ConnectionError.NotFound(error)
-        case 1000: return ConnectionError.Closed(error)
-        case 1002: return ConnectionError.ProtocolViolation(error)
-        case 1003: return ConnectionError.ProtocolViolation(error)
-        case 1005: return ConnectionError.Unknown(error)
-        case 1007: return ConnectionError.ProtocolViolation(error)
-        case 1008: return ConnectionError.ProtocolViolation(error)
-        case 1009: return ConnectionError.ProtocolViolation(error)
-        case 9847: return ConnectionError.SSLHandshake(error)
-        default:
-            return ConnectionError.Unknown(error)
-        }
+  
+    init(from error: Swift.Error) {
+      switch error._code {
+      case 2: self = ConnectionError.unknownDomain(error)
+      case 61: self = ConnectionError.refused(error)
+      case 404: self = ConnectionError.notFound(error)
+      case 1000: self = ConnectionError.closed(error)
+      case 1002: self = ConnectionError.protocolViolation(error)
+      case 1003: self = ConnectionError.protocolViolation(error)
+      case 1005: self = ConnectionError.unknown(error)
+      case 1007: self = ConnectionError.protocolViolation(error)
+      case 1008: self = ConnectionError.protocolViolation(error)
+      case 1009: self = ConnectionError.protocolViolation(error)
+      case 9847: self = ConnectionError.sslHandshake(error)
+      default:
+        self = ConnectionError.unknown(error)
+      }
     }
-
 }

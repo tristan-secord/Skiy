@@ -26,6 +26,8 @@
 		3E45FEEB1CF0D40400B9A8D4 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E45FEEA1CF0D40400B9A8D4 /* ControlPanelViewController.swift */; };
 		3E45FEEF1CF261E900B9A8D4 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E45FEEE1CF261E900B9A8D4 /* UIImage+ImageEffects.m */; };
 		3E45FEF11CF34CEF00B9A8D4 /* ControlPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E45FEF01CF34CEF00B9A8D4 /* ControlPanel.xib */; };
+		3E56DF5D1DCCFB2D00642A30 /* ControlPanelFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E56DF5C1DCCFB2D00642A30 /* ControlPanelFriendCell.xib */; };
+		3E56DF5F1DCCFB4800642A30 /* ControlPanelFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E56DF5E1DCCFB4800642A30 /* ControlPanelFriendCell.swift */; };
 		3E97F8261D2F318D0053B25D /* ControlPanelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */; };
 		3E97F8661D3032120053B25D /* SignInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E97F8651D3032120053B25D /* SignInView.xib */; };
 		3E97F86E1D35B9400053B25D /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E97F86D1D35B9400053B25D /* HTTPHelper.swift */; };
@@ -34,6 +36,7 @@
 		3E9D73621D3AF12100E2763C /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D735C1D3AF12100E2763C /* NSData+Base64.m */; };
 		3E9D73631D3AF12100E2763C /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D735E1D3AF12100E2763C /* NSData+CommonCrypto.m */; };
 		3E9D73641D3AF12100E2763C /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E9D73601D3AF12100E2763C /* NSString+Base64.m */; };
+		3EAB45C01DAAA12A00B289FE /* CustomFloatingActionSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAB45BF1DAAA12A00B289FE /* CustomFloatingActionSheetController.swift */; };
 		3EB56F491D89EDAA00BB9C4E /* Notifications.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB56F481D89EDAA00BB9C4E /* Notifications.xib */; };
 		3EB56F4B1D89EDC200BB9C4E /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB56F4A1D89EDC200BB9C4E /* NotificationsViewController.swift */; };
 		3EB56F4D1D89F0A100BB9C4E /* NotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB56F4C1D89F0A100BB9C4E /* NotificationCell.xib */; };
@@ -98,6 +101,8 @@
 		3E45FEED1CF261E900B9A8D4 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		3E45FEEE1CF261E900B9A8D4 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		3E45FEF01CF34CEF00B9A8D4 /* ControlPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ControlPanel.xib; sourceTree = "<group>"; };
+		3E56DF5C1DCCFB2D00642A30 /* ControlPanelFriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ControlPanelFriendCell.xib; sourceTree = "<group>"; };
+		3E56DF5E1DCCFB4800642A30 /* ControlPanelFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelFriendCell.swift; sourceTree = "<group>"; };
 		3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelCell.swift; sourceTree = "<group>"; };
 		3E97F8651D3032120053B25D /* SignInView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInView.xib; sourceTree = "<group>"; };
 		3E97F86D1D35B9400053B25D /* HTTPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
@@ -110,6 +115,7 @@
 		3E9D735E1D3AF12100E2763C /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
 		3E9D735F1D3AF12100E2763C /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
 		3E9D73601D3AF12100E2763C /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
+		3EAB45BF1DAAA12A00B289FE /* CustomFloatingActionSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFloatingActionSheetController.swift; sourceTree = "<group>"; };
 		3EB56F481D89EDAA00BB9C4E /* Notifications.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Notifications.xib; sourceTree = "<group>"; };
 		3EB56F4A1D89EDC200BB9C4E /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		3EB56F4C1D89F0A100BB9C4E /* NotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCell.xib; sourceTree = "<group>"; };
@@ -117,6 +123,7 @@
 		3EBFE4741D5271C900C05C5D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3EBFE47C1D5D1ABA00C05C5D /* AddFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		3EBFE47D1D5D1ABA00C05C5D /* AddFriend.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddFriend.xib; sourceTree = "<group>"; };
+		3ED992501DA6C5F400479B8F /* Skiy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Skiy.entitlements; sourceTree = "<group>"; };
 		3EFEE0E21D60FAE6005DF703 /* FindFriendsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindFriendsCell.xib; sourceTree = "<group>"; };
 		3EFEE0E41D612057005DF703 /* FindFriendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsCell.swift; sourceTree = "<group>"; };
 		3EFEE0E61D622176005DF703 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -198,6 +205,7 @@
 		3E37EDE21CB95DFC002167CB /* Skiy */ = {
 			isa = PBXGroup;
 			children = (
+				3ED992501DA6C5F400479B8F /* Skiy.entitlements */,
 				3EFEE0EA1D624C7C005DF703 /* Colors.swift */,
 				3E37EDE31CB95DFC002167CB /* AppDelegate.swift */,
 				3E97F86D1D35B9400053B25D /* HTTPHelper.swift */,
@@ -206,7 +214,10 @@
 				3E37EDE51CB95DFC002167CB /* ViewController.swift */,
 				3E45FEE81CF0CF7700B9A8D4 /* ContainerViewController.swift */,
 				3E45FEEA1CF0D40400B9A8D4 /* ControlPanelViewController.swift */,
+				3EAB45BF1DAAA12A00B289FE /* CustomFloatingActionSheetController.swift */,
 				3E45FEF01CF34CEF00B9A8D4 /* ControlPanel.xib */,
+				3E56DF5E1DCCFB4800642A30 /* ControlPanelFriendCell.swift */,
+				3E56DF5C1DCCFB2D00642A30 /* ControlPanelFriendCell.xib */,
 				3E97F8251D2F318D0053B25D /* ControlPanelCell.swift */,
 				3EFEE0E81D622187005DF703 /* ControlPanelCell.xib */,
 				3EBFE47C1D5D1ABA00C05C5D /* AddFriendViewController.swift */,
@@ -361,12 +372,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Tristan Secord";
 				TargetAttributes = {
 					3E37EDDF1CB95DFC002167CB = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = 53JNKRDHHA;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -378,10 +390,13 @@
 					};
 					3E37EDF31CB95DFC002167CB = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 53JNKRDHHA;
+						LastSwiftMigration = 0800;
 						TestTargetID = 3E37EDDF1CB95DFC002167CB;
 					};
 					3E37EDFE1CB95DFC002167CB = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 						TestTargetID = 3E37EDDF1CB95DFC002167CB;
 					};
 				};
@@ -426,6 +441,7 @@
 				3EB56F4D1D89F0A100BB9C4E /* NotificationCell.xib in Resources */,
 				3EB56F491D89EDAA00BB9C4E /* Notifications.xib in Resources */,
 				3E1127D81D749AA4005A26FE /* Quicksand_Bold.otf in Resources */,
+				3E56DF5D1DCCFB2D00642A30 /* ControlPanelFriendCell.xib in Resources */,
 				3EBFE47F1D5D1ABA00C05C5D /* AddFriend.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -586,10 +602,12 @@
 				3EFEE0EE1D62C5C9005DF703 /* SkiyData.xcdatamodeld in Sources */,
 				3E9D73641D3AF12100E2763C /* NSString+Base64.m in Sources */,
 				3EBFE47E1D5D1ABA00C05C5D /* AddFriendViewController.swift in Sources */,
+				3E56DF5F1DCCFB4800642A30 /* ControlPanelFriendCell.swift in Sources */,
 				3E9D73621D3AF12100E2763C /* NSData+Base64.m in Sources */,
 				3EFEE0EB1D624C7C005DF703 /* Colors.swift in Sources */,
 				3EFEE0E71D622176005DF703 /* SignInViewController.swift in Sources */,
 				3E97F86E1D35B9400053B25D /* HTTPHelper.swift in Sources */,
+				3EAB45C01DAAA12A00B289FE /* CustomFloatingActionSheetController.swift in Sources */,
 				3E45FEEF1CF261E900B9A8D4 /* UIImage+ImageEffects.m in Sources */,
 				3E45FEE91CF0CF7700B9A8D4 /* ContainerViewController.swift in Sources */,
 				3E37EDE41CB95DFC002167CB /* AppDelegate.swift in Sources */,
@@ -654,8 +672,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Tristan Secord (2F893777Z9)";
@@ -702,8 +722,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -723,6 +745,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "b7306220-8186-4947-9a6a-ceeac596015b";
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -732,8 +755,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E974C04FABE2C2DF85AD64F7 /* Pods-Skiy.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Skiy/Skiy.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Skiy/Info.plist;
@@ -743,6 +768,7 @@
 				PROVISIONING_PROFILE = "b7306220-8186-4947-9a6a-ceeac596015b";
 				SWIFT_OBJC_BRIDGING_HEADER = "Skiy/Skiy-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -751,8 +777,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1C3860165F0F3F60E33CD753 /* Pods-Skiy.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Skiy/Skiy.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Skiy/Info.plist;
@@ -761,6 +789,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "b7306220-8186-4947-9a6a-ceeac596015b";
 				SWIFT_OBJC_BRIDGING_HEADER = "Skiy/Skiy-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -770,10 +799,14 @@
 			baseConfigurationReference = EE5B9B38BC2DC7E2722DEF5C /* Pods-SkiyTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 53JNKRDHHA;
 				INFOPLIST_FILE = SkiyTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tsecord.SkiyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Skiy.app/Skiy";
 			};
 			name = Debug;
@@ -787,6 +820,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tsecord.SkiyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Skiy.app/Skiy";
 			};
 			name = Release;
@@ -799,6 +834,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tsecord.SkiyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Skiy;
 			};
 			name = Debug;
@@ -811,6 +848,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tsecord.SkiyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Skiy;
 			};
 			name = Release;

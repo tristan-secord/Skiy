@@ -14,37 +14,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var httpHelper = HTTPHelper()
-    let defaults = NSUserDefaults.standardUserDefaults()
+    let defaults = UserDefaults.standard
     var badgeCount = 0
     typealias Payload = [String: AnyObject]
     
-    lazy var applicationDocumentsDirectory: NSURL = {
+    lazy var applicationDocumentsDirectory: URL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "uk.co.plymouthsoftware.core_data" in the application's documents Application Support directory.
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return urls[urls.count-1]
     }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = NSBundle.mainBundle().URLForResource("SkiyData", withExtension: "momd")!
-        return NSManagedObjectModel(contentsOfURL: modelURL)!
+        let modelURL = Bundle.main.url(forResource: "SkiyData", withExtension: "momd")!
+        return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Skiy.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("Skiy.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
-            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
-            dict[NSLocalizedFailureReasonErrorKey] = failureReason
+            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject?
+            dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject?
             
-            dict[NSUnderlyingErrorKey] = error as! NSError
+            dict[NSUnderlyingErrorKey] = error as NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -58,41 +58,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var managedObjectContext: NSManagedObjectContext = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()
 
-    
-    func setStatusBarBackgroundColor(color: UIColor) {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        guard  let statusBar = UIApplication.sharedApplication().valueForKey("statusBarWindow")?.valueForKey("statusBar") as? UIView else {
-            return
-        }
+        UIApplication.shared.applicationIconBadgeNumber = badgeCount
         
-        statusBar.backgroundColor = color
-    }
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        UIApplication.sharedApplication().applicationIconBadgeNumber = badgeCount
-        
-        self.setStatusBarBackgroundColor(UIColor.blackColor())
+//        self.setStatusBarBackgroundColor(UIColor.black)
+        UIApplication.shared.statusBarStyle = .lightContent
         
         //Register for push notifications
-        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
-        let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.alert, UIUserNotificationType.badge, UIUserNotificationType.sound]
+        let pushNotificationSettings = UIUserNotificationSettings(types: notificationTypes, categories: nil)
         application.registerUserNotificationSettings(pushNotificationSettings)
         application.registerForRemoteNotifications()
         
         
         //Set launch screen
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window = UIWindow(frame: UIScreen.main.bounds)
         let containerViewController = ContainerViewController()
         window!.rootViewController = containerViewController
         window!.makeKeyAndVisible()
         
-        if let notification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
+        if let notification = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: AnyObject] {
             let aps = notification["aps"] as! [String: AnyObject]
             switch (aps["category"] as! String) {
             case "SIGNOUT":
@@ -109,55 +100,88 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        let deviceTokenString = String(format: "\(deviceToken)")
-        defaults.setObject(deviceTokenString, forKey: "deviceToken")
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+        defaults.set(deviceTokenString, forKey: "deviceToken")
         defaults.synchronize()
     }
 
-    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        if notificationSettings.types != .None {
+    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != UIUserNotificationType() {
             application.registerForRemoteNotifications()
         }
     }
     
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        print("Could not register for push notifications")
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Could not register for push notifications \(error.localizedDescription)")
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+            }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         let aps = userInfo["aps"] as! [String: AnyObject]
         let custom_data = userInfo["custom_data"] as? [String: AnyObject]
         
-        badgeCount -= 1
-        UIApplication.sharedApplication().applicationIconBadgeNumber = badgeCount
+        print ("APS: \(aps)")
         
-        switch (aps["category"] as! String) {
-        case "SIGNOUT":
-            //first check if user is even logged in
-            signOutFromPushNotification(aps)
-            break
-        case "FRIEND_REQUEST":
-            showFriendRequest(aps, custom_data: custom_data!)
-            break
-        case "REQUEST_LOCATION":
-            showLocationRequest(aps, custom_data: custom_data!)
-            break
-        case "ACCEPTED":
-            activateRequest(aps, custom_data: custom_data!)
-            break
-        case "UNSUBSCRIBE_REQUESTER":
-            if let session_id = custom_data!["session_id"] as? Int {
-                unsubscribe(aps, session_id: session_id, channel: "RequestChannel")
+        if aps["content-available"] as? Int == 1 {
+            switch (aps["category"] as! String) {
+            case "UNSUBSCRIBE_REQUESTER":
+                if let session_id = custom_data!["session_id"] as? Int {
+                    unsubscribe(aps, session_id: session_id, channel: "RequestChannel")
+                }
+                break
+            case "UNSUBSCRIBE_SENDER":
+                if let session_id = custom_data!["session_id"] as? Int {
+                    unsubscribe(aps, session_id: session_id, channel: "SendChannel")
+                }
+            default:
+                break
             }
-            break
-        case "UNSUBSCRIBE_SENDER":
-            if let session_id = custom_data!["session_id"] as? Int {
-                unsubscribe(aps, session_id: session_id, channel: "SendChannel")
+        } else {
+            badgeCount -= 1
+            UIApplication.shared.applicationIconBadgeNumber = badgeCount
+            
+            switch (aps["category"] as! String) {
+            case "SIGNOUT":
+                //first check if user is even logged in
+                signOutFromPushNotification(aps)
+                break
+            case "FRIEND_REQUEST":
+                showFriendRequest(aps, custom_data: custom_data!)
+                break
+            case "REQUEST_LOCATION":
+                showLocationRequest(aps, custom_data: custom_data!)
+                break
+            case "SHARE_LOCATION":
+                showLocationShare(aps, custom_data: custom_data!)
+                break
+            case "ACCEPTED":
+                activateRequest(aps, custom_data: custom_data!)
+                break
+            case "SHARE_ACCEPTED":
+                activateShareRequest(aps, custom_data: custom_data!)
+            case "REMOVE_FRIEND":
+                if let username = custom_data!["username"] as? String {
+                    removeFriend(username)
+                }
+                break
+            default:
+                break
             }
-            break
-        default:
-            break
+        }
+    }
+    
+    func removeFriends(_ friends: Array<Payload>) {
+        for i in 0..<friends.count {
+            removeFriend(friends[i]["username"] as! String)
+        }
+    }
+    
+    func removeFriend(_ username: String) {
+        if let controlPanelVC = self.getControlPanelViewController() {
+            controlPanelVC.delegate?.friendRemoved(username, selectedCell: nil)
         }
     }
     
@@ -173,68 +197,116 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return nil
     }
     
-    func unsubscribe(aps: [String: AnyObject], session_id: Int, channel: String) {
+    func unsubscribe(_ aps: [String: AnyObject], session_id: Int, channel: String) {
         var alert : UIAlertController
         
-        switch (channel.lowercaseString) {
+        switch (channel.lowercased()) {
         case "sendchannel":
-            alert = UIAlertController(title: "Unsubscribed", message: "\(aps["alert"] as! String)", preferredStyle: .Alert)
+            alert = UIAlertController(title: "Unsubscribed", message: "\(aps["alert"] as! String)", preferredStyle: .alert)
             break
         case "requestchannel":
-            alert = UIAlertController(title: "Unsubscribed", message: "\(aps["alert"] as! String) ", preferredStyle: .Alert)
+            alert = UIAlertController(title: "Unsubscribed", message: "\(aps["alert"] as! String) ", preferredStyle: .alert)
             break
         default:
-            alert = UIAlertController(title: "Unsubscribed", message:  "\(aps["alert"] as! String)", preferredStyle: .Alert)
+            alert = UIAlertController(title: "Unsubscribed", message:  "\(aps["alert"] as! String)", preferredStyle: .alert)
             break
         }
         if let controlPanelVC = self.getControlPanelViewController() as ControlPanelViewController! {
             controlPanelVC.delegate?.unsubscribe(session_id, channelType: channel)
+            controlPanelVC.updateMap(nil)
         }
-        let OKAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(OKAction)
-        self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
     
-    func activateRequest(aps: [String: AnyObject], custom_data: [String: AnyObject]) {
+    func activateShareRequest(_ aps: [String: AnyObject], custom_data: [String: AnyObject]) {
+        if let sendSession = custom_data["send_session"] as? [String: AnyObject], let reqSession = custom_data["req_session"] as? [String: AnyObject] {
+            if let containerVC = self.window?.rootViewController as? ContainerViewController {
+                containerVC.saveSessionToCoreData(sendSession)
+                containerVC.saveSessionToCoreData(reqSession)
+                containerVC.showSession(reqSession)
+                if let sendChannel = sendSession["channel_name"] as? String, let sendSessionID = sendSession["id"] as? Int {
+                    containerVC.connectToSendingWebSocket(sendChannel, session_id: sendSessionID)
+                }
+            }
+            
+            let alert = UIAlertController(title: "Request Accepted", message: "\(aps["alert"] as! String)", preferredStyle: .alert)
+            let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(OKAction)
+            self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+        } else {
+            print("COULD NOT PARSE CUSTOM DATA: \(custom_data)")
+        }
+    }
+
+    func activateRequest(_ aps: [String: AnyObject], custom_data: [String: AnyObject]) {
         if let containerVC = self.window?.rootViewController as? ContainerViewController {
             containerVC.saveSessionToCoreData(custom_data)
+            containerVC.showSession(custom_data)
         } else { print ("Could not get container view controller") }
         
-        let alert = UIAlertController(title: "Request Accepted", message: "\(aps["alert"] as! String)", preferredStyle: .Alert)
-        let showAction = UIAlertAction(title: "Show", style: .Default) { action in
-            if let containerVC = self.window?.rootViewController as? ContainerViewController {
-                containerVC.showSession(custom_data)
-            } else { print("Could not get container view controller") }
-        }
-        let OKAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let alert = UIAlertController(title: "Request Accepted", message: "\(aps["alert"] as! String)", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(OKAction)
-        alert.addAction(showAction)
-        self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
     
-    func showLocationRequest(aps: [String: AnyObject], custom_data: [String: AnyObject]) {
-        let alert = UIAlertController(title: "Requesting Location", message: "\(aps["alert"] as! String)", preferredStyle: .Alert)
-        let OKAction = UIAlertAction(title: "Accept", style: .Default) { action in
+    func showLocationRequest(_ aps: [String: AnyObject], custom_data: [String: AnyObject]) {
+        if let containerVC = self.window?.rootViewController as? ContainerViewController {
+            containerVC.saveSessionToCoreData(custom_data)
+        }
+        
+        let alert = UIAlertController(title: "Requesting Location", message: "\(aps["alert"] as! String)", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "Accept", style: .default) { action in
             if let controlPanelVC = self.getControlPanelViewController() as ControlPanelViewController! {
                 controlPanelVC.delegate?.acceptLocationRequest(custom_data)
             } else {
                 print ("Could not get control panel")
             }
         }
-        let cancelAction = UIAlertAction(title: "Not Now", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Not Now", style: .cancel, handler: nil)
         alert.addAction(OKAction)
         alert.addAction(cancelAction)
-        self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
     
-    func showFriendRequest(aps: [String: AnyObject], custom_data: [String: AnyObject]) {
+    func showLocationShare(_ aps: [String: AnyObject], custom_data: [String: AnyObject]) {
+        if let send_session = custom_data["send_session"] as? [String: AnyObject] {
+            if let request_session = custom_data["request_session"] as? [String: AnyObject] {
+                //Have both sessions - save both
+                if let containerVC = self.window?.rootViewController as? ContainerViewController {
+                    containerVC.saveSessionToCoreData(send_session)
+                    containerVC.saveSessionToCoreData(request_session)
+                }
+                //Show alert
+                let alert = UIAlertController(title: "Share Location", message: "\(aps["alert"] as! String)", preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "Accept", style: .default) { action in
+                    if let controlPanelVC = self.getControlPanelViewController() as ControlPanelViewController! {
+                        controlPanelVC.delegate?.acceptShareRequest(send_session, requestDict: request_session)
+                        if let containerVC = self.window?.rootViewController as? ContainerViewController {
+                            containerVC.showSession(request_session)
+                        }
+                    } else {
+                        print ("Could not get control panel")
+                    }
+                }
+                let cancelAction = UIAlertAction(title: "Not Now", style: .cancel, handler: nil)
+                alert.addAction(OKAction)
+                alert.addAction(cancelAction)
+                self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func showFriendRequest(_ aps: [String: AnyObject], custom_data: [String: AnyObject]) {
         //save to core data tableview/friends as "pending"
         let newFriend: Array<Payload> = [custom_data]
         self.saveFriendsToCoreData("pending", friendArray: newFriend)
         
         //Show alert dialog
-        let alert = UIAlertController(title: "Friend Request", message: "\(aps["alert"] as! String)", preferredStyle: .Alert)
-        let OKAction = UIAlertAction(title: "Accept", style: .Default) { action in
+        let alert = UIAlertController(title: "Friend Request", message: "\(aps["alert"] as! String)", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "Accept", style: .default) { action in
             //sign them out
             if let controlPanelVC = self.getControlPanelViewController() as ControlPanelViewController! {
                 controlPanelVC.delegate?.addFriend(custom_data["username"] as! String, status: "pending", selectedCell: nil)
@@ -246,16 +318,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 controlPanelVC.refreshFriendsTV()
             }
         }
-        let cancelAction = UIAlertAction(title: "Not Now", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Not Now", style: .cancel, handler: nil)
         alert.addAction(OKAction)
         alert.addAction(cancelAction)
-        self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
     
-    func signOutFromPushNotification(aps: [String: AnyObject]) {
+    func signOutFromPushNotification(_ aps: [String: AnyObject]) {
         //Show alert dialog
-        let alert = UIAlertController(title: "Friend Request", message: "\(aps["alert"] as! String)", preferredStyle: .Alert)
-        let OKAction = UIAlertAction(title: "OK", style: .Default) { action in
+        let alert = UIAlertController(title: "Friend Request", message: "\(aps["alert"] as! String)", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default) { action in
             //sign them out
             if let controlPanelVC = self.getControlPanelViewController() as ControlPanelViewController! {
                 if (controlPanelVC.friendsTable != nil) {
@@ -272,25 +344,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         alert.addAction(OKAction)
-        self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        if let containerVC = self.window?.rootViewController as? ContainerViewController {
+            containerVC.backgroundLocationUpdates()
+        }
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        if let containerVC = self.window?.rootViewController as? ContainerViewController {
+            containerVC.allowBackgroundLocationUpdates()
+        }
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
-        if defaults.objectForKey("userLoggedIn") != nil {
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        if defaults.object(forKey: "userLoggedIn") != nil {
             updateData()
         }
     }
@@ -300,20 +378,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let managedContext = managedObjectContext
         
         //2
-        let fetchRequest = NSFetchRequest(entityName: "Friend")
-        
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Friend")
+
         //3
         do {
             let results =
-                try managedContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]
+                try managedContext.fetch(fetchRequest) as! [NSManagedObject]
             
             var httpBody: String = "{\"data_refresh\":["
             for i in 0 ..< results.count {
                 //create HTTP Body
                 if (i != 0) { httpBody = "\(httpBody)," }
                 let person = results[i]
-                let id = person.valueForKey("id")!
-                let updated_at = person.valueForKey("updated_at")!
+                let id = person.value(forKey: "id")!
+                let updated_at = person.value(forKey: "updated_at")!
                 httpBody = "\(httpBody){\"id\":\"\(id)\",\"updated_at\":\"\(updated_at)\"}"
             }
             httpBody = "\(httpBody)]}"
@@ -325,21 +403,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func getFriends(httpBody : String) {
+    func getFriends(_ httpBody : String) {
         // Create HTTP request and set request Body
         let httpRequest = httpHelper.buildRequest("checkOldData", method: "POST",
-                                                  authType: HTTPRequestAuthType.HTTPTokenAuth)
+                                                  authType: HTTPRequestAuthType.httpTokenAuth)
         
-        httpRequest.HTTPBody = httpBody.dataUsingEncoding(NSUTF8StringEncoding);
+        httpRequest.httpBody = httpBody.data(using: String.Encoding.utf8);
         
-        httpHelper.sendRequest(httpRequest, completion: {(data:NSData!, error:NSError!) in
+        httpHelper.sendRequest(httpRequest as URLRequest, completion: {(data:Data?, error:Error?) in
             // Display error
             if error != nil {
                 return
             }
             
             do {
-                if let responseDict = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as? NSDictionary {
+                if let responseDict = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary {
                     //update data in CoreData
                     self.updateFriends(responseDict)
                 } else {
@@ -351,7 +429,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
     }
     
-    func updateFriends(json: NSDictionary) {
+    func updateFriends(_ json: NSDictionary) {
         if let pendingFriends = json["pending"] as? Array<Payload>! {
             saveFriendsToCoreData("pending", friendArray: pendingFriends)
         }
@@ -364,20 +442,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             saveFriendsToCoreData("friends", friendArray: friends)
         }
         
+        if let removedFriends = json["removed"] as? Array<Payload>! {
+            removeFriends(removedFriends)
+        }
         
-        if let containerVC = window?.rootViewController as? ContainerViewController {
-            let viewControllers = containerVC.childViewControllers
-            for viewController in viewControllers {
-                if let controlPanelVC = viewController as? ControlPanelViewController {
-                    if (controlPanelVC.friendsTable != nil) {
-                        controlPanelVC.refreshFriendsTV()
-                    }
-                }
+        
+        if let controlPanelVC = self.getControlPanelViewController() {
+            if (controlPanelVC.friendsTable != nil) {
+                controlPanelVC.refreshFriendsTV()
             }
         }
     }
     
-    func saveFriendsToCoreData(friendStatus: String, friendArray: Array<Payload>!) {
+    func saveFriendsToCoreData(_ friendStatus: String, friendArray: Array<Payload>!) {
         for i in 0 ..< friendArray.count {
             let item = friendArray[i],
             firstName = item["first_name"] as? String,
@@ -385,23 +462,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             username = item["username"] as? String,
             status = friendStatus,
             id = item["id"] as? Int,
-            updated_at = NSDate()
+            updated_at = Date()
             
             
             //Update Record if in Core Data or Save if not in Core Data
             let appDelegate =
-                UIApplication.sharedApplication().delegate as! AppDelegate
+                UIApplication.shared.delegate as! AppDelegate
             
             let managedContext = appDelegate.managedObjectContext
             
             // Initialize Fetch Request
-            let fetchRequest = NSFetchRequest()
+            let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Friend")
+
             
             // Create Entity Description
-            let entityDescription = NSEntityDescription.entityForName("Friend", inManagedObjectContext: managedContext)
+            let entityDescription = NSEntityDescription.entity(forEntityName: "Friend", in: managedContext)
             
             //Configure predicate
-            let predicate : NSPredicate = NSPredicate(format: "id == %@", NSNumber(integer: id!))
+            let predicate : NSPredicate = NSPredicate(format: "id == %@", NSNumber(value: id! as Int))
             
             // Configure Fetch Request
             fetchRequest.entity = entityDescription
@@ -410,7 +488,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             var friend : NSManagedObject
         
             do {
-                let result = try managedContext.executeFetchRequest(fetchRequest)
+                let result = try managedContext.fetch(fetchRequest)
                 if (result.count > 0) {
                     friend = result[0] as! NSManagedObject
                     
@@ -418,7 +496,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     friend.setValue(updated_at, forKey: "updated_at")
                 } else {
                     friend = NSManagedObject(entity: entityDescription!,
-                                                 insertIntoManagedObjectContext: managedContext)
+                                                 insertInto: managedContext)
                     friend.setValue(firstName, forKey: "first_name")
                     friend.setValue(lastName, forKey: "last_name")
                     friend.setValue(username, forKey: "username")
@@ -426,7 +504,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     friend.setValue(id, forKey: "id")
                     friend.setValue(updated_at, forKey: "updated_at")
                 }
-                
+
                 do {
                     try friend.managedObjectContext?.save()
                 } catch let error as NSError {
@@ -440,7 +518,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         self.saveContext()
     }

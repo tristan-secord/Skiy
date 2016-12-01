@@ -14,14 +14,17 @@
         func SignedOut()
         func showAddFriendViewController()
         func showNotificationsViewController()
-        func addFriend(username: String, status: String, selectedCell: FindFriendsCell?)
-        func removeFriend(username: String, selectedCell: FindFriendsCell?)
-        func acceptLocationRequest(responseDict: [String: AnyObject])
-        func sendRequest(type: String, friend_id: Int)
+        func addFriend(_ username: String, status: String, selectedCell: FindFriendsCell?)
+        func removeFriend(_ username: String, selectedCell: FindFriendsCell?)
+        func friendRemoved(_ username: String, selectedCell: FindFriendsCell?)
+        func acceptLocationRequest(_ responseDict: [String: AnyObject])
+        func acceptShareRequest(_ sendDict: [String: AnyObject], requestDict: [String: AnyObject])
+        func sendRequest(_ type: String, friend_id: Int)
         func updateFriendsTableView()
-        func unsubscribe(session_id: Int?, channelType: String)
-        func getSessionsCount(type: String) -> Int
-        func getSessions(type: String) -> Array<NSManagedObject>
+        func unsubscribe(_ session_id: Int?, channelType: String)
+        func getSessionsCount(_ type: String) -> Int
+        func getSessions(_ type: String) -> Array<NSManagedObject>
+        func removeReceiver(session: NSManagedObject)
     }
     
     class ControlPanelViewController: UIViewController {
@@ -42,15 +45,16 @@
         var friends = [NSManagedObject]()
         typealias Payload = [String: AnyObject]
         var httpHelper = HTTPHelper()
-        let defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = UserDefaults.standard
         let appDelegate =
-            UIApplication.sharedApplication().delegate as! AppDelegate
+            UIApplication.shared.delegate as! AppDelegate
         let statusBarHeight =
-            UIApplication.sharedApplication().statusBarFrame.size.height
+            UIApplication.shared.statusBarFrame.size.height
         
-        var activeColor: UIColor = Colors.colorWithHexString("#4CD964") // green
+        var requestColor: UIColor = Colors.colorWithHexString("#4CD964") // green
         var pendingColor: UIColor = Colors.colorWithHexString("#8E8E93") // gray
-        var requestColor: UIColor = Colors.colorWithHexString("#5AC8FB") // blue
+        var sendColor: UIColor = Colors.colorWithHexString("#5AC8FB") // blue
+        var stopColor: UIColor = Colors.colorWithHexString("#EF4836") //red
         
         enum mapState {
             case homeMap
@@ -65,20 +69,20 @@
             let viewHeight = view.frame.size.height
             
             //instantiate control panel
-            let controlPanel = UINib(nibName: "ControlPanel", bundle: nil).instantiateWithOwner(self, options: nil)[0] as! UIView
-            controlPanel.frame = CGRectMake(0, 0, viewWidth, viewHeight)
+            let controlPanel = UINib(nibName: "ControlPanel", bundle: nil).instantiate(withOwner: self, options: nil)[0] as! UIView
+            controlPanel.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
             view.layer.shadowOpacity = 0.8
             dragPill.layer.cornerRadius = 5
             
             //Add animation to statusLabel
-            let timer = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: #selector(applySearchingEffect), userInfo: nil, repeats: true)
+            let timer = Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(applySearchingEffect), userInfo: nil, repeats: true)
             timer.fire()
             
             //Adding Blur Effect
-            let blurEffect = UIBlurEffect(style: .Dark)
+            let blurEffect = UIBlurEffect(style: .dark)
             let blurView = UIVisualEffectView(effect: blurEffect)
-            blurView.frame = CGRectMake(0, 0, viewWidth, viewHeight + 66 + statusBarHeight)
-            view.insertSubview(blurView, atIndex: 0)
+            blurView.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight + 66 + statusBarHeight)
+            view.insertSubview(blurView, at: 0)
             
             //add controlPanel ontop
             view.addSubview(controlPanel)
@@ -86,7 +90,8 @@
             //add friends table view delegate and data source to self
             friendsTable.delegate = self
             friendsTable.dataSource = self
-            friendsTable.registerNib(UINib(nibName: "ControlPanelCell", bundle: nil), forCellReuseIdentifier: "ControlPanelCell")
+            friendsTable.register(UINib(nibName: "ControlPanelCell", bundle: nil), forCellReuseIdentifier: "ControlPanelCell")
+            friendsTable.register(UINib(nibName: "ControlPanelFriendCell", bundle: nil), forCellReuseIdentifier: "ControlPanelFriendCell")
         
             if self.tableViewControl.selectedSegmentIndex == 0 {
                 friendsPromptMessage.text = "Unable to find any sessions at the moment. Please check back later."
@@ -94,8 +99,8 @@
                 friendsPromptMessage.text = "Unable to find any friends at the moment. Please check back later."
             }
             
-            friendsTable.hidden = true
-            friendsPrompt.hidden = false
+            friendsTable.isHidden = true
+            friendsPrompt.isHidden = false
             
             self.setTableViewControl()
             self.updateMap(nil)
@@ -104,23 +109,23 @@
         func setTableViewControl() {
             let normalFont = UIFont(name: "Hero", size: 16.0)
             let fontShadow = NSShadow()
-            fontShadow.shadowColor = UIColor.blackColor()
+            fontShadow.shadowColor = UIColor.black
             fontShadow.shadowOffset = CGSize(width: 1, height: 1)
 
-            let normalTextAttributes: [NSObject : AnyObject] = [
+            let normalTextAttributes: [AnyHashable: Any] = [
                 NSForegroundColorAttributeName: Colors.colorWithHexString(Colors.babyBlue()),
                 NSFontAttributeName: normalFont!,
                 NSShadowAttributeName: fontShadow
             ]
             
-            let selectedTextAttributes: [NSObject : AnyObject] = [
-                NSForegroundColorAttributeName: UIColor.whiteColor(),
+            let selectedTextAttributes: [AnyHashable: Any] = [
+                NSForegroundColorAttributeName: UIColor.white,
                 NSFontAttributeName: normalFont!,
                 NSShadowAttributeName: fontShadow
             ]
             
-            tableViewControl.setTitleTextAttributes(normalTextAttributes, forState: .Normal)
-            tableViewControl.setTitleTextAttributes(selectedTextAttributes, forState: .Selected)
+            tableViewControl.setTitleTextAttributes(normalTextAttributes, for: UIControlState())
+            tableViewControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
             tableViewControl.tintColor = Colors.colorWithHexString(Colors.babyBlue())
         }
         
@@ -132,7 +137,7 @@
             if let str = statusLabel.text {
                 let range = NSMakeRange(str.characters.count - numberOfDots, numberOfDots)
                 let string = NSMutableAttributedString(string: str)
-                string.addAttribute(NSForegroundColorAttributeName, value: UIColor.clearColor(), range: range)
+                string.addAttribute(NSForegroundColorAttributeName, value: UIColor.clear, range: range)
                 
                 statusLabel.attributedText = string
                 numberOfDots-=1
@@ -143,29 +148,30 @@
         }
         
         func clearLoggedinFlagInUserDefaults() {
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.removeObjectForKey("userLoggedIn")
+            let defaults = UserDefaults.standard
+            defaults.removeObject(forKey: "userLoggedIn")
             defaults.synchronize()
         }
         
-        func clearCoreData(entityName: String) {
+        func clearCoreData(_ entityName: String) {
             //1
             let appDelegate =
-                UIApplication.sharedApplication().delegate as! AppDelegate
+                UIApplication.shared.delegate as! AppDelegate
             
             let managedContext = appDelegate.managedObjectContext
             
             //2
-            let fetchRequest = NSFetchRequest(entityName: entityName)
+            let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: entityName)
+
             
             //3
             do {
                 let results =
-                    try managedContext.executeFetchRequest(fetchRequest)
+                    try managedContext.fetch(fetchRequest)
                 
                 if results.count > 0 {
-                    for result: AnyObject in results {
-                        managedContext.deleteObject(result as! NSManagedObject)
+                    for result in results {
+                        managedContext.delete(result as! NSManagedObject)
                     }
                     try managedContext.save()
                 }
@@ -175,38 +181,38 @@
         }
         
         //BUTTON ACTIONS
-        @IBAction func morePressed(sender: AnyObject) {
+        @IBAction func morePressed(_ sender: AnyObject) {
             
             let viewProfile = FloatingAction(title: "View Profile") { action in
                 print ("View Profile")
             }
             
-            let notifications = FloatingAction(title: "Notifications ( \(UIApplication.sharedApplication().applicationIconBadgeNumber) )") { action in
+            let notifications = FloatingAction(title: "Notifications ( \(UIApplication.shared.applicationIconBadgeNumber) )") { action in
                 self.delegate?.showNotificationsViewController()
             }
             
             let signOut = FloatingAction(title: "Sign Out") { action in
                 self.sendSignOut()
                 self.signOut()
-                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+                UIApplication.shared.applicationIconBadgeNumber = 0
             }
             
             let cancel = FloatingAction(title: "Cancel") { action in }
-            cancel.customTextColor = UIColor.whiteColor()
+            cancel.textColor = UIColor.white
             
             let actionGroup = FloatingActionGroup(action: viewProfile, notifications, signOut, cancel)
-            let actionSheet = FloatingActionSheetController(actionGroup: actionGroup, animationStyle: .SlideUp)
+            let actionSheet = FloatingActionSheetController(actionGroup: actionGroup, animationStyle: .slideUp)
 
             // Color of action sheet
-            actionSheet.itemTintColor = .blackColor()
+            actionSheet.itemTintColor = UIColor.black
             // Color of title texts
             actionSheet.textColor = Colors.colorWithHexString(Colors.babyBlue())
             // Font of title texts
             actionSheet.font = UIFont(name: "Hero", size: 18.0)!
             // background dimming color
-            actionSheet.dimmingColor = UIColor.grayColor().colorWithAlphaComponent(0.8)
+            actionSheet.dimmingColor = UIColor.gray.withAlphaComponent(0.8)
             
-            actionSheet.present(self)
+            actionSheet.present(in: self)
         }
         
         func signOut() {
@@ -220,27 +226,27 @@
         func sendSignOut() {
             // 1. Create HTTP request and set request header
             let httpRequest = httpHelper.buildRequest("signout", method: "GET",
-                                                      authType: HTTPRequestAuthType.HTTPTokenAuth)
+                                                      authType: HTTPRequestAuthType.httpTokenAuth)
             
             // 2. Send the request
-            httpHelper.sendRequest(httpRequest, completion: {(data:NSData!, error:NSError!) in
+            httpHelper.sendRequest(httpRequest as URLRequest, completion: {(data:Data?, error:Error?) in
                 if error != nil {
-                    let errorMessage = self.httpHelper.getErrorMessage(error)
-                    self.displayErrorAlert(errorMessage as String)
+//                    let errorMessage = self.httpHelper.getErrorMessage(error)
+                    self.displayErrorAlert((error?.localizedDescription)! as String)
                     return
                 }
             })
         }
         
-        @IBAction func addFriendPressed(sender: UIButton) {
+        @IBAction func addFriendPressed(_ sender: UIButton) {
             //self.view.hidden = true
             self.delegate?.showAddFriendViewController()
         }
         
-        func displayErrorAlert(message: String) {
-            let errorAlert = UIAlertController(title: "", message: message, preferredStyle: .Alert)
-            let OKAction = UIAlertAction(title: "OK", style: .Default, handler: nil);
-            let CancelAction = UIAlertAction(title: "Cancel", style: .Destructive, handler: nil)
+        func displayErrorAlert(_ message: String) {
+            let errorAlert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+            let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil);
+            let CancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
             
             errorAlert.addAction(OKAction)
             errorAlert.addAction(CancelAction)
@@ -258,18 +264,18 @@
                 break
             }
             
-            self.presentViewController(errorAlert, animated: true, completion: nil)
+            self.present(errorAlert, animated: true, completion: nil)
         }
         
         func refreshFriendsTV() {
             //get Context
             let managedContext = appDelegate.managedObjectContext
             
-            let fetchRequest = NSFetchRequest(entityName: "Friend")
+            let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Friend")
             
             do {
                 let results =
-                    try managedContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]
+                    try managedContext.fetch(fetchRequest) as! [NSManagedObject]
                 friends = []
                 friends = results
             } catch let error as NSError {
@@ -281,31 +287,31 @@
             }
         }
         
-        func removeFriend(firstName: String, username: String) {
+        func removeFriend(_ firstName: String, username: String) {
             //Create are you sure alert
-            let areYouSureAlert = UIAlertController(title: "Remove \(firstName)", message: "Are you sure you would like to remove this friend?", preferredStyle: .Alert)
-            let removeFriend = UIAlertAction(title: "Remove", style: .Destructive) { action in
+            let areYouSureAlert = UIAlertController(title: "Remove \(firstName)", message: "Are you sure you would like to remove this friend?", preferredStyle: .alert)
+            let removeFriend = UIAlertAction(title: "Remove", style: .destructive) { action in
                 self.delegate?.removeFriend(username, selectedCell: nil)
             }
-            let cancelRemove = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            let cancelRemove = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             areYouSureAlert.addAction(removeFriend)
             areYouSureAlert.addAction(cancelRemove)
             
             //Show are you sure alert
-            self.presentViewController(areYouSureAlert, animated: true, completion: nil)
+            self.present(areYouSureAlert, animated: true, completion: nil)
         }
         
-        func updateMap(sessionData: [String: AnyObject]?) {
+        func updateMap(_ sessionData: [String: AnyObject]?) {
             if (sessionData != nil) {
                 self.cancelButton.imageView!.image = UIImage(named:"Delete")
                 if let friendId = sessionData!["friend_id"] as? Int {
-                    if let userIndex = friends.indexOf({ $0.valueForKey("id") as! Int == friendId }) {
-                        let firstName = friends[userIndex].valueForKey("first_name") as! String
-                        let lastName = friends[userIndex].valueForKey("last_name") as! String
-                        nameLabel.text = "\(firstName) \(lastName[lastName.startIndex.advancedBy(0)])."
+                    if let userIndex = friends.index(where: { $0.value(forKey: "id") as! Int == friendId }) {
+                        let firstName = friends[userIndex].value(forKey: "first_name") as! String
+                        let lastName = friends[userIndex].value(forKey: "last_name") as! String
+                        nameLabel.text = "\(firstName) \(lastName[lastName.characters.index(lastName.startIndex, offsetBy: 0)])."
                         
                         if let status = sessionData!["status"] as? String {
-                            switch(status.lowercaseString) {
+                            switch(status.lowercased()) {
                             case "requested":
                                 statusLabel.text = "Currently Requesting Location..."
                                 break
@@ -316,13 +322,13 @@
                         }
                     }
                 }
-                self.toggleCancelButton()
+                self.toggleCancelButton(cancel: true)
                 self.currentMap = mapState.trackingMap
             } else {
                 //unsubscribed - switch to my current location
-                if let firstname = defaults.objectForKey("first_name") as? String,
-                    lastname = defaults.objectForKey("last_name") as? String {
-                    nameLabel.text = "\(firstname) \(lastname[lastname.startIndex.advancedBy(0)])."
+                if let firstname = defaults.object(forKey: "first_name") as? String,
+                    let lastname = defaults.object(forKey: "last_name") as? String {
+                    nameLabel.text = "\(firstname) \(lastname[lastname.characters.index(lastname.startIndex, offsetBy: 0)])."
                 } else {
                     nameLabel.text = "SKIY HOME"
                 }
@@ -332,47 +338,78 @@
                 } else {
                     statusLabel.text = "Currently tracking \(activeSessions!) people..."
                 }
-                self.toggleCancelButton()
+                self.toggleCancelButton(cancel: false)
+                self.currentMap = mapState.homeMap
             }
         }
         
-        func toggleCancelButton() {
-            if self.cancelButton.hidden == true {
-                self.cancelButton.hidden = false
-                self.removeMarkersButton.hidden = true
+        func toggleCancelButton(cancel: Bool) {
+            if cancel {
+                self.cancelButton.isHidden = false
+                self.removeMarkersButton.isHidden = true
             } else {
-                self.cancelButton.hidden = true
-                self.removeMarkersButton.hidden = false
+                self.cancelButton.isHidden = true
+                self.removeMarkersButton.isHidden = false
             }
         }
         
-        @IBAction func cancelPressed(sender: UIButton) {
+        @IBAction func cancelPressed(_ sender: UIButton) {
             self.delegate?.unsubscribe(nil, channelType: "RequestChannel")
             self.updateMap(nil)
             self.currentMap = mapState.homeMap
+            refreshFriendsTV()
         }
         
-        @IBAction func removeMarkersPressed(sender: UIButton) {
+        @IBAction func removeMarkersPressed(_ sender: UIButton) {
             
         }
         
-        @IBAction func tableViewChanged(sender: UISegmentedControl) {
+        @IBAction func tableViewChanged(_ sender: UISegmentedControl) {
             self.friendsTable.reloadData()
+            
+            //print out CoreData -- DELETE!!!!
+            let managedContext = appDelegate.managedObjectContext
+            
+            if tableViewControl.selectedSegmentIndex == 0 {
+                let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Session")
+                
+                do {
+                    let results =
+                        try managedContext.fetch(fetchRequest) as! [NSManagedObject]
+                    for i in 0..<results.count {
+                        print(results[i])
+                    }
+                } catch let error as NSError {
+                    print("Could not fetch \(error), \(error.userInfo)")
+                }
+            } else {
+                let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Friend")
+                
+                do {
+                    let results =
+                        try managedContext.fetch(fetchRequest) as! [NSManagedObject]
+                    for i in 0..<results.count {
+                        print(results[i])
+                    }
+                } catch let error as NSError {
+                    print("Could not fetch \(error), \(error.userInfo)")
+                }
+
+            }
         }
-        
     }
     
 
     
     extension ControlPanelViewController: UITableViewDataSource {
-        func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        func numberOfSections(in tableView: UITableView) -> Int {
             if tableViewControl.selectedSegmentIndex == 0 {
                 return 4
             }
             return 3
         }
         
-        func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             
             if tableViewControl.selectedSegmentIndex == 0 {
                 let activeSessionsCount = (self.delegate?.getSessionsCount("active"))!
@@ -381,12 +418,12 @@
                 let cancelledSessionsCount = (self.delegate?.getSessionsCount("cancelled"))!
                 
                 if activeSessionsCount > 0 || pendingSessionsCount > 0 || cancelledSessionsCount > 0 || requestedSessionsCount > 0 {
-                    friendsTable.hidden = false
-                    friendsPrompt.hidden = true
+                    friendsTable.isHidden = false
+                    friendsPrompt.isHidden = true
                 } else {
                     friendsPromptMessage.text = "Unable to find any sessions at the moment. Please check back later."
-                    friendsTable.hidden = true
-                    friendsPrompt.hidden = false
+                    friendsTable.isHidden = true
+                    friendsPrompt.isHidden = false
                 }
                 
                 switch (section) {
@@ -401,29 +438,29 @@
                 }
             } else {
                 if friends.count > 0 {
-                    friendsTable.hidden = false
-                    friendsPrompt.hidden = true
+                    friendsTable.isHidden = false
+                    friendsPrompt.isHidden = true
                 } else {
-                    friendsPromptMessage.text = "Unable to find any sessions at the moment. Please check back later."
-                    friendsTable.hidden = true
-                    friendsPrompt.hidden = false
+                    friendsPromptMessage.text = "Unable to find any friends at the moment. Please check back later."
+                    friendsTable.isHidden = true
+                    friendsPrompt.isHidden = false
                 }
                 
                 switch (section) {
                 case 0:
-                    let pendingArray = friends.filter({ $0.valueForKey("status") as! String == "pending" })
+                    let pendingArray = friends.filter({ $0.value(forKey: "status") as! String == "pending" })
                     return pendingArray.count
                 case 1:
-                    let requestedArray = friends.filter({ $0.valueForKey("status") as! String == "requested" })
+                    let requestedArray = friends.filter({ $0.value(forKey: "status") as! String == "requested" })
                     return requestedArray.count
                 default:
-                    let friendsArray = friends.filter({ $0.valueForKey("status") as! String == "friends" })
+                    let friendsArray = friends.filter({ $0.value(forKey: "status") as! String == "friends" })
                     return friendsArray.count
                 }
             }
         }
         
-        func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
             if tableView.dataSource!.tableView(tableView, numberOfRowsInSection: section) == 0 { return "" }
             
             if self.tableViewControl.selectedSegmentIndex == 0 {
@@ -449,19 +486,18 @@
             }
         }
         
-        func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
             let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
-            header.contentView.backgroundColor = UIColor.grayColor()
-            header.textLabel!.textColor = UIColor.whiteColor()
-            header.textLabel!.textAlignment = NSTextAlignment.Center
+            header.contentView.backgroundColor = UIColor.gray
+            header.textLabel!.textColor = UIColor.white
+            header.textLabel!.textAlignment = NSTextAlignment.center
             header.textLabel!.font = UIFont(name: "Hero", size: 20.0)
-            header.textLabel!.shadowColor = UIColor.blackColor()
+            header.textLabel!.shadowColor = UIColor.black
             header.textLabel!.shadowOffset = CGSize(width: 1, height: 1)
         }
         
-        func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-            let cell: ControlPanelCell = tableView.dequeueReusableCellWithIdentifier("ControlPanelCell", forIndexPath: indexPath) as! ControlPanelCell
-            let topConstraint:NSLayoutConstraint = NSLayoutConstraint(item: cell.friendName, attribute: .CenterY, relatedBy: .Equal, toItem: cell, attribute: .CenterY, multiplier: 1.0, constant: 0.0)
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+           
             
             let activeArray = self.delegate?.getSessions("active")
             let requestedArray = self.delegate?.getSessions("requested")
@@ -471,74 +507,117 @@
             
             //get session based on section and indexPath
             if self.tableViewControl.selectedSegmentIndex == 0 {
-                switch(indexPath.section) {
+                let cell: ControlPanelCell = tableView.dequeueReusableCell(withIdentifier: "ControlPanelCell", for: indexPath) as! ControlPanelCell
+                let centerName: NSLayoutConstraint = NSLayoutConstraint(item: cell.friendName, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1.0, constant: 0.0)
+                switch((indexPath as NSIndexPath).section) {
                 case 0:
+                    cell.addConstraint(centerName)
+                    cell.expiryLabel.isHidden = true
                     tableView.rowHeight = 60
-                    cell.friendStatus.backgroundColor = self.activeColor
-                    cell.friendStatusLabel.text = "Currently Tracking Location"
-                    session = activeArray![indexPath.row]
+                    session = activeArray![(indexPath as NSIndexPath).row]
+                    switch(session.value(forKey: "type") as! String) {
+                    case "REQUEST":
+                        cell.sessionStatus.text = "Receiving Location"
+                        cell.sessionStatus.textColor = self.requestColor
+                        break
+                    default:
+                        cell.sessionStatus.text = "Sending Location"
+                        cell.sessionStatus.textColor = self.sendColor
+                        break
+                    }
                     break
                 case 1:
+                    cell.removeConstraint(centerName)
+                    cell.expiryLabel.isHidden = false
                     tableView.rowHeight = 60
-                    cell.friendStatus.backgroundColor = self.pendingColor
-                    cell.friendStatusLabel.text = "Expires: 3h 29m"
-                    session = requestedArray![indexPath.row]
+                    cell.expiryLabel.text = "Expires: 3h 29m"
+                    session = pendingArray![(indexPath as NSIndexPath).row]
+                    switch(session.value(forKey: "type") as! String) {
+                    case "REQUEST":
+                        cell.sessionStatus.text = "Receiving Location"
+                        cell.sessionStatus.textColor = self.pendingColor
+                        break
+                    default:
+                        cell.sessionStatus.text = "Sending Location"
+                        cell.expiryLabel.text = "Currently Sending Location"
+                        cell.sessionStatus.textColor = self.pendingColor
+                        break
+                    }
                     break
                 case 2:
+                    cell.removeConstraint(centerName)
+                    cell.expiryLabel.isHidden = false
                     tableView.rowHeight = 60
-                    cell.friendStatus.backgroundColor = self.requestColor
-                    cell.friendStatusLabel.text = "Expires: 3h 29m"
-                    session = pendingArray![indexPath.row]
+                    cell.expiryLabel.text = "Expires: 3h 29m"
+                    session = requestedArray![(indexPath as NSIndexPath).row]
+                    switch(session.value(forKey: "type") as! String) {
+                    case "REQUEST":
+                        cell.sessionStatus.text = "Receiving Location"
+                        cell.sessionStatus.textColor = self.pendingColor
+                        break
+                    default:
+                        cell.sessionStatus.text = "Sending Location"
+                        cell.sessionStatus.textColor = self.pendingColor
+                        break
+                    }
                     break
                 default:
-                    tableView.rowHeight = 44
-                    cell.friendStatus.removeFromSuperview()
-                    cell.friendStatusLabel.removeFromSuperview()
-                    cell.addConstraint(topConstraint)
-                    session = cancelledArray![indexPath.row]
+                    cell.removeConstraint(centerName)
+                    cell.expiryLabel.isHidden = false
+                    tableView.rowHeight = 60
+                    cell.sessionStatus.isHidden = true
+                    cell.statusSeperator.isHidden = true
+                    session = cancelledArray![(indexPath as NSIndexPath).row]
+                    switch(session.value(forKey: "type") as! String) {
+                    case "REQUEST":
+                        cell.expiryLabel.text = "Stopped Tracking Location"
+                        break
+                    default:
+                        cell.expiryLabel.text = "Stopped Sending Location"
+                        break
+                    }
                     break
                 }
                 
                 //get friend from session
                 var friend: NSManagedObject?
-                if let friend_id = session.valueForKey("friend_id") as? Int {
-                    if let friendIndex = friends.indexOf({ $0.valueForKey("id") as! Int == friend_id }) {
+                
+                
+                if let friend_id = session.value(forKey: "friend_id") as? Int {
+                    if let friendIndex = friends.index(where: { $0.value(forKey: "id") as! Int == friend_id }) {
                         friend = friends[friendIndex]
                     }
                 }
                 
                 //fill in labels for cell
                 if friend != nil {
-                    cell.friendName.text = "\(friend!.valueForKey("first_name")!) \(friend!.valueForKey("last_name")!)"
+                    cell.friendName.text = "\(friend!.value(forKey: "first_name")!) \(friend!.value(forKey: "last_name")!)"
                 }
-                cell.friendStatus.layer.cornerRadius = 3;
-                cell.friendStatus.layer.masksToBounds = true;
                 return cell
             } else {
-                let pendingArray = friends.filter({ $0.valueForKey("status") as! String == "pending" })
-                let requestedArray = friends.filter({ $0.valueForKey("status") as! String == "requested" })
-                let friendsArray = friends.filter({ $0.valueForKey("status") as! String == "friends" })
+                let cell: ControlPanelFriendCell = tableView.dequeueReusableCell(withIdentifier: "ControlPanelFriendCell", for: indexPath) as! ControlPanelFriendCell
+                
+                let pendingArray = friends.filter({ $0.value(forKey: "status") as! String == "pending" })
+                let requestedArray = friends.filter({ $0.value(forKey: "status") as! String == "requested" })
+                let friendsArray = friends.filter({ $0.value(forKey: "status") as! String == "friends" })
                 var person: NSManagedObject
                 
                 tableView.rowHeight = 44
-                cell.friendStatus.removeFromSuperview()
-                cell.friendStatusLabel.removeFromSuperview()
-                cell.addConstraint(topConstraint)
                 
-                switch (indexPath.section) {
+                switch ((indexPath as NSIndexPath).section) {
                 case 0:
-                    person = pendingArray[indexPath.row]
+                    person = pendingArray[(indexPath as NSIndexPath).row]
                     break
                 case 1:
-                    person = requestedArray[indexPath.row]
+                    person = requestedArray[(indexPath as NSIndexPath).row]
                     break
                 default:
-                    person = friendsArray[indexPath.row]
+                    person = friendsArray[(indexPath as NSIndexPath).row]
                     break
                 }
                 
                 //Set cell attributes
-                cell.friendName.text = "\(person.valueForKey("first_name")!) \(person.valueForKey("last_name")!)"
+                cell.friendName.text = "\(person.value(forKey: "first_name")!) \(person.value(forKey: "last_name")!)"
                 return cell
             }
         }
@@ -548,94 +627,129 @@
     // Mark: Table View Delegate
     
     extension ControlPanelViewController: UITableViewDelegate {
-        func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             var person: NSManagedObject
             var alert : UIAlertController
-            var OKAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-            let CancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            var OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             
-            switch (indexPath.section) {
-            case 0:
-                break
-            case 1:
-                //get person
-                let pendingArray = friends.filter({ $0.valueForKey("status") as! String == "pending" })
-                person = pendingArray[indexPath.row]
-                
-                //Get attributes
-                let firstName = person.valueForKey("first_name") as! String
-                let lastName = person.valueForKey("last_name") as! String
-                let username = person.valueForKey("username") as! String
-                let status = person.valueForKey("status") as! String
-                
-                //show alert
-                alert = UIAlertController(title: "\(firstName) \(lastName)", message: "\(firstName) has sent you a friend request. Would you like to accept this request?", preferredStyle: .Alert)
-                OKAction = UIAlertAction(title: "Accept", style: .Default) { action in
-                    self.delegate?.addFriend(username, status: status, selectedCell: nil)
+            if self.tableViewControl.selectedSegmentIndex == 0 {
+                switch ((indexPath as NSIndexPath).section) {
+                case 0:
+                    //get session
+                    let activeSessions = self.delegate?.getSessions("active")
+                    let session = activeSessions![(indexPath as NSIndexPath).row]
+                    
+                    let cancelSession = FloatingAction(title: "Cancel Session") { action in
+                        if session.value(forKey: "type") as! String == "REQUEST" {
+                            self.delegate?.unsubscribe(session.value(forKey: "id") as? Int, channelType: "RequestChannel")
+                        } else {
+                            self.delegate?.removeReceiver(session: session)
+                        }
+                        self.updateMap(nil)
+                        self.currentMap = mapState.homeMap
+                        self.refreshFriendsTV()
+                    }
+                    
+                    let showSession = FloatingAction(title: "Show Session") { action in
+                        if session.value(forKey: "type") as! String == "REQUEST" {
+                            //SHOW SESSION
+                        }
+                    }
+                    
+                    let cancel = FloatingAction(title: "Cancel") { action in }
+                    cancel.textColor = UIColor.red
+                    
+                    let actionGroup = FloatingActionGroup(action: showSession, cancelSession, cancel)
+                    let actionSheet = CustomFloatingActionSheetController(actionGroup: actionGroup, animationStyle: .slideUp).actionSheet
+                    
+                    actionSheet.present(in: self)
+                    break
+                case 1:
+                    break
+                case 2:
+                    break
+                default:
+                    break
                 }
-                alert.addAction(OKAction)
-                alert.addAction(CancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-                break
-            case 2:
-                //get person
-                let requestedArray = friends.filter({ $0.valueForKey("status") as! String == "requested" })
-                person = requestedArray[indexPath.row]
-                
-                //get attributes
-                let firstName = person.valueForKey("first_name") as! String
-                let lastName = person.valueForKey("last_name") as! String
-                
-                //show alert
-                alert = UIAlertController(title: "\(firstName) \(lastName)", message: "Friend request has already been sent, please wait for \(firstName) to accept this request.", preferredStyle: .Alert)
-                alert.addAction(OKAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-                break
-            default:
-                //get person
-                let friendsArray = friends.filter({ $0.valueForKey("status") as! String == "friends" })
-                person = friendsArray[indexPath.row]
-                
-                //get attributes
-                let firstName = person.valueForKey("first_name") as! String
-                let username = person.valueForKey("username") as! String
-                let id = person.valueForKey("id") as! Int
-                
-                
-                let requestLocation = FloatingAction(title: "Request Location") { action in
-                    //send to request to server
-                    self.delegate?.sendRequest("REQUEST", friend_id: id)
+            } else {
+                switch ((indexPath as NSIndexPath).section) {
+                case 0:
+                    //get person
+                    let pendingArray = friends.filter({ $0.value(forKey: "status") as! String == "pending" })
+                    person = pendingArray[(indexPath as NSIndexPath).row]
+                    
+                    //Get attributes
+                    let firstName = person.value(forKey: "first_name") as! String
+                    let lastName = person.value(forKey: "last_name") as! String
+                    let username = person.value(forKey: "username") as! String
+                    let status = person.value(forKey: "status") as! String
+                    
+                    //show alert
+                    alert = UIAlertController(title: "\(firstName) \(lastName)", message: "\(firstName) has sent you a friend request. Would you like to accept this request?", preferredStyle: .alert)
+                    OKAction = UIAlertAction(title: "Accept", style: .default) { action in
+                        self.delegate?.addFriend(username, status: status, selectedCell: nil)
+                    }
+                    alert.addAction(OKAction)
+                    alert.addAction(CancelAction)
+                    self.present(alert, animated: true, completion: nil)
+                    break
+                case 1:
+                    //get person
+                    let requestedArray = friends.filter({ $0.value(forKey: "status") as! String == "requested" })
+                    person = requestedArray[(indexPath as NSIndexPath).row]
+                    
+                    //get attributes
+                    let firstName = person.value(forKey: "first_name") as! String
+                    let lastName = person.value(forKey: "last_name") as! String
+                    
+                    //show alert
+                    alert = UIAlertController(title: "\(firstName) \(lastName)", message: "Friend request has already been sent, please wait for \(firstName) to accept this request.", preferredStyle: .alert)
+                    alert.addAction(OKAction)
+                    self.present(alert, animated: true, completion: nil)
+                    break
+                default:
+                    //get person
+                    let friendsArray = friends.filter({ $0.value(forKey: "status") as! String == "friends" })
+                    person = friendsArray[(indexPath as NSIndexPath).row]
+                    
+                    //get attributes
+                    let firstName = person.value(forKey: "first_name") as! String
+                    let username = person.value(forKey: "username") as! String
+                    let id = person.value(forKey: "id") as! Int
+                    
+                    
+                    let requestLocation = FloatingAction(title: "Request Location") { action in
+                        //send to request to server
+                        self.delegate?.sendRequest("REQUEST", friend_id: id)
+                    }
+                    
+                    let shareLocation = FloatingAction(title: "Share Location") { action in
+                        //share locations
+                        self.delegate?.sendRequest("SHARE", friend_id: id)
+                    }
+                    
+                    let sendLocation = FloatingAction(title: "Send Location") { action in
+                        print ("Send Location")
+                    }
+                    
+                    let profileAction = FloatingAction(title: "View Profile") { action in
+                        print ("View Profile")
+                    }
+                    
+                    let removeFriend = FloatingAction(title: "Remove Friend") { action in
+                        self.removeFriend(firstName, username: username)
+                    }
+                    
+                    let cancel = FloatingAction(title: "Cancel") { action in }
+                    cancel.textColor = UIColor.white
+                    
+                    let actionGroup = FloatingActionGroup(action: requestLocation, shareLocation, sendLocation, profileAction, removeFriend, cancel)
+                    let actionSheet = CustomFloatingActionSheetController(actionGroup: actionGroup, animationStyle: .slideUp).actionSheet
+                    
+                    actionSheet.present(in: self)
+                    break
                 }
-                
-                let sendLocation = FloatingAction(title: "Send Location") { action in
-                    print ("Send Location")
-                }
-                
-                let profileAction = FloatingAction(title: "View Profile") { action in
-                    print ("View Profile")
-                }
-                
-                let removeFriend = FloatingAction(title: "Remove Friend") { action in
-                    self.removeFriend(firstName, username: username)
-                }
-                
-                let cancel = FloatingAction(title: "Cancel") { action in }
-                cancel.customTextColor = UIColor.whiteColor()
-                
-                let actionGroup = FloatingActionGroup(action: requestLocation, sendLocation, profileAction, removeFriend, cancel)
-                let actionSheet = FloatingActionSheetController(actionGroup: actionGroup, animationStyle: .SlideUp)
-                
-                // Color of action sheet
-                actionSheet.itemTintColor = .blackColor()
-                // Color of title texts
-                actionSheet.textColor = Colors.colorWithHexString(Colors.babyBlue())
-                // Font of title texts
-                actionSheet.font = UIFont(name: "Hero", size: 18.0)!
-                // background dimming color
-                actionSheet.dimmingColor = UIColor.grayColor().colorWithAlphaComponent(0.8)
-                
-                actionSheet.present(self)
-                break
             }
         }
     }

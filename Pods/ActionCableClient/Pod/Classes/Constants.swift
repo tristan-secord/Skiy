@@ -23,62 +23,62 @@
 import Foundation
 import Accelerate
 
-internal let ActionCableSerialQueue = dispatch_queue_create("com.ActionCableClient.SerialQueue", DISPATCH_QUEUE_SERIAL);
-internal let ActionCableConcurrentQueue = dispatch_queue_create("com.ActionCableClient.Conccurent", DISPATCH_QUEUE_CONCURRENT)
+internal let ActionCableSerialQueue = DispatchQueue(label: "com.ActionCableClient.SerialQueue", attributes: []);
+internal let ActionCableConcurrentQueue = DispatchQueue(label: "com.ActionCableClient.Conccurent", attributes: DispatchQueue.Attributes.concurrent)
 
 internal enum Command {
-    case Subscribe
-    case Unsubscribe
-    case Message
+    case subscribe
+    case unsubscribe
+    case message
     
     var string : String {
         switch self {
-        case .Subscribe: return "subscribe"
-        case .Unsubscribe: return "unsubscribe"
-        case .Message: return "message"
+        case .subscribe: return "subscribe"
+        case .unsubscribe: return "unsubscribe"
+        case .message: return "message"
         }
     }
 }
 
 internal enum MessageType {
-    case ConfirmSubscription
-    case RejectSubscription
-    case CancelSubscription
-    case HibernateSubscription
-    case Ping
-    case Message
-    case Welcome
-    case Unrecognized
+    case confirmSubscription
+    case rejectSubscription
+    case cancelSubscription
+    case hibernateSubscription
+    case ping
+    case message
+    case welcome
+    case unrecognized
     
     var string: String {
         switch self {
-            case .ConfirmSubscription: return "confirm_subscription"
-            case .RejectSubscription: return "reject_subscription"
-            case .Ping: return "ping"
-            case .Welcome: return "welcome"
-            case .Message: return "message" // STUB!
-            case .CancelSubscription: return "cancel_subscription" // STUB!
-            case .HibernateSubscription: return "hibernate_subscription" //STUB!
-            case .Unrecognized: return "___unrecognized"
+            case .confirmSubscription: return "confirm_subscription"
+            case .rejectSubscription: return "reject_subscription"
+            case .ping: return "ping"
+            case .welcome: return "welcome"
+            case .message: return "message" // STUB!
+            case .cancelSubscription: return "cancel_subscription" // STUB!
+            case .hibernateSubscription: return "hibernate_subscription" //STUB!
+            case .unrecognized: return "___unrecognized"
         }
     }
     
     init(string: String) {
         switch(string) {
-            case MessageType.Welcome.string:
-                self = MessageType.Welcome
-            case MessageType.Ping.string:
-                self = MessageType.Ping
-            case MessageType.ConfirmSubscription.string:
-                self = MessageType.ConfirmSubscription
-            case MessageType.RejectSubscription.string:
-                self = MessageType.RejectSubscription
-            case MessageType.CancelSubscription.string:
-                self = MessageType.CancelSubscription
-            case MessageType.HibernateSubscription.string:
-                self = MessageType.HibernateSubscription
+            case MessageType.welcome.string:
+                self = MessageType.welcome
+            case MessageType.ping.string:
+                self = MessageType.ping
+            case MessageType.confirmSubscription.string:
+                self = MessageType.confirmSubscription
+            case MessageType.rejectSubscription.string:
+                self = MessageType.rejectSubscription
+            case MessageType.cancelSubscription.string:
+                self = MessageType.cancelSubscription
+            case MessageType.hibernateSubscription.string:
+                self = MessageType.hibernateSubscription
             default:
-                self = MessageType.Unrecognized
+                self = MessageType.unrecognized
         }
     }
 }
@@ -87,10 +87,10 @@ internal struct Message {
     var channelName : String?
     var actionName : String?
     var messageType : MessageType
-    var data : AnyObject?
-    var error: ErrorType?
-    
-    static func simple(channel: Channel, messageType: MessageType) -> Message {
+    var data : Any?
+    var error: Swift.Error?
+  
+    static func simple(_ channel: Channel, messageType: MessageType) -> Message {
         return Message(channelName: channel.name,
                         actionName: nil,
                        messageType: messageType,
@@ -101,17 +101,17 @@ internal struct Message {
 
 internal struct Action {
     var name : String
-    var params: Dictionary<String, AnyObject>?
+    var params: Dictionary<String, Any>?
 }
 
-func exp2(x: [Double]) -> [Double] {
-  var results = [Double](count: x.count, repeatedValue: 0.0)
+func exp2(_ x: [Double]) -> [Double] {
+  var results = [Double](repeating: 0.0, count: x.count)
   vvexp2(&results, x, [Int32(x.count)])
   
   return results
 }
 
 
-func clamp<T: Comparable>(value: T, lower: T, upper: T) -> T {
+func clamp<T: Comparable>(_ value: T, lower: T, upper: T) -> T {
     return min(max(value, lower), upper)
 }
